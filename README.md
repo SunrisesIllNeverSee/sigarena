@@ -29,7 +29,7 @@ npm run dev    # localhost:3001
 
 ## Deploy
 
-Push to `main` → Vercel auto-builds. Domain: `arena.sig-rank.com` (placeholder).
+Push to `main` → Vercel auto-builds. Domain: `arena.signalaf.com` (subdomain of signalaf.com).
 
 ## Design
 

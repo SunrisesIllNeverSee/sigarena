@@ -36,7 +36,7 @@ export default async function OperatorPage({
   const maxPillar = Math.max(...pillars.map((p) => p.value));
 
   const shareText = `I'm #${op.current_rank.global} on the AI User Leaderboard with Υ ${formatYield(op.current_metrics.yield_)}. Where do you rank?`;
-  const shareUrl = `https://arena.sig-rank.com/operator/${op.codename}`;
+  const shareUrl = `https://arena.signalaf.com/operator/${op.codename}`;
 
   return (
     <div className="space-y-6">

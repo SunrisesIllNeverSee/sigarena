@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description:
       "Who's the best AI user? See how you rank on SigRank.",
     type: "website",
-    url: "https://arena.sig-rank.com",
+    url: "https://arena.signalaf.com",
   },
   twitter: {
     card: "summary_large_image",
