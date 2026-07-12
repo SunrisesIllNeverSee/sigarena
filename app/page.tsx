@@ -1,6 +1,6 @@
 import { getLeaderboard, computeDeltaFromAverage } from "@/lib/api";
 import { RankCard } from "@/components/rank-card";
-import { Trophy, TrendingUp } from "lucide-react";
+import { Trophy, TrendingUp, Crown } from "lucide-react";
 
 export const revalidate = 300; // 5 minutes
 
@@ -26,32 +26,34 @@ export default async function HomePage() {
     <div className="space-y-6">
       {/* Headline */}
       <div className="text-center py-4">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Who&apos;s the best AI user?
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          <span className="gradient-text">Who&apos;s the best</span>
+          <br />
+          <span className="gradient-text">AI user?</span>
         </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
+        <p className="mt-3 text-lg text-muted-foreground">
           See how you rank on SigRank.
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Ranked by Υ Yield — token-cascade efficiency, not raw spend.{" "}
-          <a href="/how-it-works" className="text-primary hover:underline">
+          Ranked by <span className="font-semibold text-foreground">Υ Yield</span> — token-cascade efficiency, not raw spend.{" "}
+          <a href="/how-it-works" className="text-primary font-medium hover:underline">
             What&apos;s Υ?
           </a>
         </p>
       </div>
 
       {/* Stats bar */}
-      <div className="flex items-center justify-center gap-6 text-sm">
-        <div className="flex items-center gap-1.5 text-muted-foreground">
-          <Trophy className="h-4 w-4 text-amber-500" />
-          <span className="font-semibold text-foreground">
+      <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+        <div className="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 border border-amber-200">
+          <Crown className="h-4 w-4 text-amber-600" />
+          <span className="font-semibold text-amber-900">
             {topOperator.display_name ?? topOperator.codename}
           </span>
-          <span>is #{topOperator.rank}</span>
+          <span className="text-amber-700">is #{topOperator.rank}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-muted-foreground">
-          <TrendingUp className="h-4 w-4 text-primary" />
-          <span>{data.total_operators} operators</span>
+        <div className="flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 border border-blue-200">
+          <TrendingUp className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-900">{data.total_operators} operators</span>
         </div>
         <div className="text-muted-foreground">
           Updated {new Date(data.generated_at).toLocaleDateString()}
@@ -70,14 +72,14 @@ export default async function HomePage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 text-center">
-        <p className="text-lg font-semibold">Think you can beat them?</p>
-        <p className="mt-1 text-muted-foreground">
+      <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
+        <p className="text-xl font-bold">Think you can beat them?</p>
+        <p className="mt-2 text-white/80">
           Measure your AI usage and get your rank on SigRank.
         </p>
         <a
           href="https://signalaf.com/score"
-          className="mt-4 inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          className="mt-5 inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-bold text-primary transition-all hover:bg-white/90 hover:shadow-lg"
         >
           Check my rank
         </a>
@@ -85,7 +87,7 @@ export default async function HomePage() {
 
       {/* Weekly drop banner */}
       <div className="text-center text-sm text-muted-foreground border-t border-border pt-4">
-        📅 New rankings drop every Monday. Come back to see who climbed.
+        New rankings drop every Monday. Come back to see who climbed.
       </div>
     </div>
   );

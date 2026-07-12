@@ -1,7 +1,6 @@
 import { getLeaderboard, getOperator } from "@/lib/api";
 import {
   operatorDisplayName,
-  classTierColor,
   platformColor,
   formatYield,
 } from "@/lib/utils";
@@ -72,9 +71,6 @@ export default async function ComparePage({
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className={`rounded border px-1.5 py-0.5 text-xs font-medium ${platformColor(op.platform)}`}>
                     {op.platform}
-                  </span>
-                  <span className={`rounded border px-1.5 py-0.5 text-xs font-medium ${classTierColor(op.class_tier)}`}>
-                    {op.class_tier}
                   </span>
                 </div>
               </div>

@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { ArrowUp, ArrowDown, Minus, Crown } from "lucide-react";
 import type { LeaderboardEntry } from "@/lib/api";
 import {
   cn,
   formatYield,
   operatorDisplayName,
-  classTierColor,
   platformColor,
   formatMovement,
 } from "@/lib/utils";
@@ -18,30 +17,34 @@ interface RankCardProps {
 export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
   const movement = formatMovement(entry.movement_24h);
   const isTop3 = entry.rank <= 3;
-  const rankColors = {
-    1: "text-amber-600",
-    2: "text-gray-400",
-    3: "text-orange-700",
+
+  const rankStyles = {
+    1: "gradient-primary text-white glow-primary",
+    2: "bg-gradient-to-br from-slate-300 to-slate-400 text-white",
+    3: "bg-gradient-to-br from-orange-400 to-orange-600 text-white",
   };
 
   return (
     <Link
       href={`/operator/${entry.codename}`}
       className={cn(
-        "group flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-all hover:border-primary/30 hover:shadow-sm",
-        isTop3 && "border-primary/20"
+        "group flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md",
+        isTop3 && "border-primary/20",
+        entry.rank === 1 && "glow-gold"
       )}
     >
       {/* Rank number */}
       <div
         className={cn(
-          "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-lg font-bold",
-          entry.rank <= 3
-            ? cn("bg-primary/5", rankColors[entry.rank as 1 | 2 | 3])
-            : "text-muted-foreground"
+          "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg font-bold",
+          isTop3 ? rankStyles[entry.rank as 1 | 2 | 3] : "bg-muted text-muted-foreground"
         )}
       >
-        {entry.rank}
+        {entry.rank === 1 ? (
+          <Crown className="h-5 w-5" />
+        ) : (
+          entry.rank
+        )}
       </div>
 
       {/* Operator info */}
@@ -51,7 +54,7 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
             {operatorDisplayName(entry.display_name, entry.codename)}
           </span>
           {entry.claimed && (
-            <span className="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 text-xs font-medium text-primary">
+            <span className="shrink-0 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">
               ✓
             </span>
           )}
@@ -59,21 +62,13 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
         <div className="mt-1 flex items-center gap-2">
           <span
             className={cn(
-              "shrink-0 rounded border px-1.5 py-0.5 text-xs font-medium",
+              "shrink-0 rounded-md border px-2 py-0.5 text-xs font-semibold",
               platformColor(entry.platform)
             )}
           >
             {entry.platform}
           </span>
-          <span
-            className={cn(
-              "shrink-0 rounded border px-1.5 py-0.5 text-xs font-medium",
-              classTierColor(entry.class_tier)
-            )}
-          >
-            {entry.class_tier}
-          </span>
-          <span className="truncate text-xs text-muted-foreground">
+          <span className="truncate text-xs text-muted-foreground font-mono">
             {entry.cascade_str}
           </span>
         </div>
@@ -81,12 +76,15 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
 
       {/* Yield — the headline metric */}
       <div className="shrink-0 text-right">
-        <div className="text-lg font-bold tabular-nums text-foreground">
+        <div className="text-xl font-bold tabular-nums gradient-text">
           {formatYield(entry.yield_)}
         </div>
         <div className="text-xs text-muted-foreground">Υ Yield</div>
         {deltaFromAverage !== undefined && (
-          <div className="text-xs tabular-nums text-muted-foreground">
+          <div className={cn(
+            "text-xs tabular-nums font-medium",
+            deltaFromAverage >= 0 ? "text-green-600" : "text-red-500"
+          )}>
             {deltaFromAverage >= 0 ? "+" : ""}
             {formatYield(deltaFromAverage)} vs avg
           </div>
@@ -97,10 +95,10 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
       <div className="hidden shrink-0 w-20 text-right sm:block">
         <div
           className={cn(
-            "inline-flex items-center gap-0.5 text-sm font-medium tabular-nums",
-            movement.direction === "up" && "text-green-600",
-            movement.direction === "down" && "text-red-500",
-            movement.direction === "none" && "text-muted-foreground"
+            "inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-sm font-medium tabular-nums",
+            movement.direction === "up" && "bg-green-100 text-green-700",
+            movement.direction === "down" && "bg-red-100 text-red-600",
+            movement.direction === "none" && "bg-muted text-muted-foreground"
           )}
         >
           {movement.direction === "up" && <ArrowUp className="h-3 w-3" />}
@@ -108,7 +106,7 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
           {movement.direction === "none" && <Minus className="h-3 w-3" />}
           {movement.text}
         </div>
-        <div className="text-xs text-muted-foreground">24h</div>
+        <div className="text-xs text-muted-foreground mt-0.5">24h</div>
       </div>
 
       {/* Percentile */}

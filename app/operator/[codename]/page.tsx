@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { getOperator } from "@/lib/api";
 import {
   operatorDisplayName,
-  classTierColor,
   platformColor,
   formatYield,
   formatNumber,
@@ -58,11 +57,6 @@ export default async function OperatorPage({
                 className={`rounded border px-2 py-0.5 text-xs font-medium ${platformColor(op.platform)}`}
               >
                 {op.platform}
-              </span>
-              <span
-                className={`rounded border px-2 py-0.5 text-xs font-medium ${classTierColor(op.class_tier)}`}
-              >
-                {op.class_tier}
               </span>
               {op.claimed && (
                 <span className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">

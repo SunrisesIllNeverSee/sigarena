@@ -3,14 +3,14 @@ import { Mail } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-t border-border bg-gradient-to-b from-transparent to-blue-50/50">
       <div className="mx-auto max-w-5xl px-4 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>Powered by</span>
             <Link
               href="https://signalaf.com"
-              className="font-semibold text-foreground transition-colors hover:text-primary"
+              className="font-bold gradient-text"
             >
               SigRank
             </Link>

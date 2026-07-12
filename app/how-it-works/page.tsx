@@ -71,26 +71,6 @@ export default function HowItWorksPage() {
         </p>
       </div>
 
-      <div className="rounded-lg border border-border bg-card p-6">
-        <h2 className="text-xl font-semibold">Operator classes</h2>
-        <div className="mt-4 space-y-2">
-          {[
-            { tier: "APEX", desc: "The top operator. Untouchable efficiency." },
-            { tier: "S_CLASS", desc: "Elite tier. Exceptional cascade mastery." },
-            { tier: "A_CLASS", desc: "Skilled operators with strong cache strategy." },
-            { tier: "B_CLASS", desc: "Solid operators. Room to grow." },
-            { tier: "BASE", desc: "Getting started. Everyone starts here." },
-          ].map((c) => (
-            <div key={c.tier} className="flex items-center gap-3">
-              <span className="shrink-0 rounded border border-border px-2 py-0.5 text-xs font-bold">
-                {c.tier}
-              </span>
-              <span className="text-sm text-muted-foreground">{c.desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 text-center">
         <p className="text-lg font-semibold">Ready to measure yourself?</p>
         <p className="mt-1 text-muted-foreground">
