@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://arena.signalaf.com/sitemap.xml",
+    sitemap: "https://sigarena.signalaf.com/sitemap.xml",
   };
 }
