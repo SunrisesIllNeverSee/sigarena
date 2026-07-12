@@ -85,6 +85,12 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
           {formatYield(entry.yield_)}
         </div>
         <div className="text-xs text-muted-foreground">Υ Yield</div>
+        {deltaFromAverage !== undefined && (
+          <div className="text-xs tabular-nums text-muted-foreground">
+            {deltaFromAverage >= 0 ? "+" : ""}
+            {formatYield(deltaFromAverage)} vs avg
+          </div>
+        )}
       </div>
 
       {/* Rank change 24h */}

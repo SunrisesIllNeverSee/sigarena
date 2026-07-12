@@ -19,7 +19,7 @@ export default async function HomePage() {
     );
   }
 
-  const { average, deltas } = computeDeltaFromAverage(data.entries);
+  const { deltas } = computeDeltaFromAverage(data.entries);
   const topOperator = data.entries[0];
 
   return (

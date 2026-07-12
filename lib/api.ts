@@ -157,16 +157,3 @@ export function computeDeltaFromAverage(entries: LeaderboardEntry[]): {
   }
   return { average, deltas };
 }
-
-/**
- * Compute delta from the top operator (#1 yield).
- */
-export function computeDeltaFromTop(entries: LeaderboardEntry[]): Map<string, number> {
-  if (entries.length === 0) return new Map();
-  const top = entries[0].yield_;
-  const deltas = new Map<string, number>();
-  for (const e of entries) {
-    deltas.set(e.codename, top - e.yield_);
-  }
-  return deltas;
-}

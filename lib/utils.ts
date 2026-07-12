@@ -17,14 +17,10 @@ export function formatYield(n: number): string {
   return n.toFixed(1);
 }
 
-export function formatPercent(n: number): string {
-  return n.toFixed(1) + "%";
-}
-
 export function formatMovement(n: number): { text: string; direction: "up" | "down" | "none" } {
-  if (n === 0 || n === null || n === undefined) return { text: "—", direction: "none" };
-  if (n > 0) return { text: `↑${n}`, direction: "up" };
-  return { text: `↓${Math.abs(n)}`, direction: "down" };
+  if (n === 0 || n === null || n === undefined) return { text: "No change", direction: "none" };
+  if (n > 0) return { text: `${n}`, direction: "up" };
+  return { text: `${Math.abs(n)}`, direction: "down" };
 }
 
 export function operatorDisplayName(name: string | null | undefined, codename: string): string {

@@ -41,10 +41,13 @@ export default async function ComparePage({
     { label: "Leverage", a: opA.current_metrics.leverage, b: opB.current_metrics.leverage, format: (n: number) => n.toFixed(1) },
     { label: "10xDEV", a: opA.current_metrics.dev10x, b: opB.current_metrics.dev10x, format: (n: number) => n.toFixed(2) },
     { label: "SIGNA Rate", a: opA.current_metrics.signa_rate, b: opB.current_metrics.signa_rate, format: (n: number) => n.toFixed(1) },
+    { label: "Percentile", a: opA.current_rank.percentile, b: opB.current_rank.percentile, format: (n: number) => `${n.toFixed(0)}%` },
     { label: "Velocity", a: opA.current_metrics.velocity, b: opB.current_metrics.velocity, format: (n: number) => n.toFixed(3) },
     { label: "SNR", a: opA.current_metrics.snr, b: opB.current_metrics.snr, format: (n: number) => n.toFixed(3) },
     { label: "Compression", a: opA.current_metrics.compression_ratio, b: opB.current_metrics.compression_ratio, format: (n: number) => `${(n * 100).toFixed(1)}%` },
     { label: "Session Depth", a: opA.current_metrics.session_depth, b: opB.current_metrics.session_depth, format: (n: number) => n.toString() },
+    { label: "Movement 24h", a: opA.movement_24h, b: opB.movement_24h, format: (n: number) => n === 0 ? "—" : n > 0 ? `+${n}` : `${n}` },
+    { label: "Movement 7d", a: opA.movement_7d, b: opB.movement_7d, format: (n: number) => n === 0 ? "—" : n > 0 ? `+${n}` : `${n}` },
   ];
 
   return (
@@ -56,7 +59,7 @@ export default async function ComparePage({
 
       {/* Operator selectors */}
       <div className="grid grid-cols-2 gap-4">
-        {[opA, opB].map((op, i) => (
+        {[opA, opB].map((op) => (
           <div key={op.codename} className="rounded-lg border border-border bg-card p-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl font-bold tabular-nums text-muted-foreground">

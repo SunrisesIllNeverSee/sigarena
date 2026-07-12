@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://arena.signalaf.com"),
   title: "AI User Leaderboard — Powered by SigRank",
   description:
     "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
