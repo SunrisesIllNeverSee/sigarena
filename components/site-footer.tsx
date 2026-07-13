@@ -28,6 +28,8 @@ const FOOTER_COLUMNS: {
     links: [
       { href: "/vs/topaiusers", label: "vs TopAIUsers" },
       { href: "/vs/ccusage", label: "vs ccusage" },
+      { href: "/vs/langfuse", label: "vs Langfuse" },
+      { href: "/vs/braintrust", label: "vs Braintrust" },
       { href: "/vs/lmsys-arena", label: "vs LMSYS Arena" },
       { href: "/vs/wakatime", label: "vs WakaTime" },
     ],
