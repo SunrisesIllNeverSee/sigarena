@@ -30,6 +30,7 @@ models themselves. Powered by SigRank.
 - [vs ccusage](https://sigarena.signalaf.com/vs/ccusage): SigRank vs ccusage — yield vs raw token count
 - [vs Langfuse](https://sigarena.signalaf.com/vs/langfuse): SigRank vs Langfuse — user efficiency vs LLM observability
 - [vs Braintrust](https://sigarena.signalaf.com/vs/braintrust): SigRank vs Braintrust — user evaluation vs AI app evaluation
+- [vs LangChain + LangSmith](https://sigarena.signalaf.com/vs/langchain): SigRank vs LangChain/LangSmith — operator ranking vs agent framework + observability
 - [vs LMSYS Arena](https://sigarena.signalaf.com/vs/lmsys-arena): ranking humans vs ranking models
 - [vs WakaTime](https://sigarena.signalaf.com/vs/wakatime): token efficiency vs time tracking
 

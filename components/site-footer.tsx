@@ -30,8 +30,8 @@ const FOOTER_COLUMNS: {
       { href: "/vs/ccusage", label: "vs ccusage" },
       { href: "/vs/langfuse", label: "vs Langfuse" },
       { href: "/vs/braintrust", label: "vs Braintrust" },
+      { href: "/vs/langchain", label: "vs LangChain" },
       { href: "/vs/lmsys-arena", label: "vs LMSYS Arena" },
-      { href: "/vs/wakatime", label: "vs WakaTime" },
     ],
   },
   {
