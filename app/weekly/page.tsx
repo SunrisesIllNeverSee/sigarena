@@ -1,6 +1,6 @@
 import { getLeaderboard } from "@/lib/api";
 import { buildWeeklyDrop } from "@/lib/campaign";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorSlug } from "@/lib/utils";
 import {
   Crown,
   TrendingUp,
@@ -101,7 +101,7 @@ export default async function WeeklyPage() {
           </div>
         </div>
         <Link
-          href={`/operator/${drop.topOperator.codename}`}
+          href={`/operator/${operatorSlug(drop.topOperator.display_name, drop.topOperator.codename)}`}
           className="mt-3 inline-block text-sm font-medium text-amber-700 hover:underline"
         >
           View profile →
@@ -152,7 +152,7 @@ export default async function WeeklyPage() {
           {drop.biggestMovers.map((op) => (
             <Link
               key={op.codename}
-              href={`/operator/${op.codename}`}
+              href={`/operator/${operatorSlug(op.display_name, op.codename)}`}
               className="flex items-center justify-between rounded-lg bg-muted/30 p-3 transition-colors hover:bg-muted/50"
             >
               <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ export default async function WeeklyPage() {
           {drop.newChallengers.map((op) => (
             <Link
               key={op.codename}
-              href={`/operator/${op.codename}`}
+              href={`/operator/${operatorSlug(op.display_name, op.codename)}`}
               className="flex items-center justify-between rounded-lg bg-muted/30 p-3 transition-colors hover:bg-muted/50"
             >
               <div>

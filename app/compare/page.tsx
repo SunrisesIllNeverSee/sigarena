@@ -1,4 +1,4 @@
-import { getLeaderboard, getOperator } from "@/lib/api";
+import { getLeaderboard, getOperator, resolveCodename } from "@/lib/api";
 import {
   operatorDisplayName,
   platformColor,
@@ -16,8 +16,16 @@ export default async function ComparePage({
   const params = await searchParams;
   const board = await getLeaderboard("all_time", 100, "yield");
 
-  const codenameA = params.a ?? board?.entries[0]?.codename;
-  const codenameB = params.b ?? board?.entries[1]?.codename;
+  // Resolve slugs (or legacy codenames) to codenames for API calls
+  const defaultA = board?.entries[0]?.codename;
+  const defaultB = board?.entries[1]?.codename;
+  const slugA = params.a ?? defaultA;
+  const slugB = params.b ?? defaultB;
+
+  const [codenameA, codenameB] = await Promise.all([
+    slugA ? resolveCodename(slugA) : null,
+    slugB ? resolveCodename(slugB) : null,
+  ]);
 
   const [opA, opB] = await Promise.all([
     codenameA ? getOperator(codenameA) : null,

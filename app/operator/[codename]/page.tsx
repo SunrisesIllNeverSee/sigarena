@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { getOperator } from "@/lib/api";
+import { getOperator, resolveCodename } from "@/lib/api";
 import {
   operatorDisplayName,
+  operatorSlug,
   platformColor,
   formatYield,
   formatNumber,
@@ -17,7 +18,10 @@ export default async function OperatorPage({
 }: {
   params: Promise<{ codename: string }>;
 }) {
-  const { codename } = await params;
+  const { codename: slugParam } = await params;
+  // Resolve slug (or legacy codename) to actual codename for API call
+  const codename = await resolveCodename(slugParam);
+  if (!codename) notFound();
   const op = await getOperator(codename);
 
   if (!op) notFound();
@@ -35,7 +39,8 @@ export default async function OperatorPage({
   const maxPillar = Math.max(...pillars.map((p) => p.value));
 
   const shareText = `I'm #${op.current_rank.global} on the AI User Leaderboard with Υ ${formatYield(op.current_metrics.yield_)}. Where do you rank?`;
-  const shareUrl = `https://sigarena.signalaf.com/operator/${op.codename}`;
+  const slug = operatorSlug(op.display_name, op.codename);
+  const shareUrl = `https://sigarena.signalaf.com/operator/${slug}`;
 
   return (
     <div className="space-y-6">
@@ -203,7 +208,7 @@ export default async function OperatorPage({
           Post my rank on X
         </a>
         <Link
-          href={`/compare?a=${op.codename}`}
+          href={`/compare?a=${slug}`}
           className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 py-3 text-sm font-semibold transition-colors hover:bg-muted/50"
         >
           <Swords className="h-4 w-4" />

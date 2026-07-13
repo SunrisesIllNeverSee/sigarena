@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getLeaderboard } from "@/lib/api";
+import { operatorSlug } from "@/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://sigarena.signalaf.com";
@@ -14,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!data) return staticRoutes;
 
   const operatorRoutes: MetadataRoute.Sitemap = data.entries.map((e) => ({
-    url: `${base}/operator/${e.codename}`,
+    url: `${base}/operator/${operatorSlug(e.display_name, e.codename)}`,
     lastModified: new Date(data.generated_at),
     changeFrequency: "daily" as const,
     priority: 0.4,

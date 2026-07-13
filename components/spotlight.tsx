@@ -1,7 +1,7 @@
 import { Crown, TrendingUp, Swords, Zap } from "lucide-react";
 import Link from "next/link";
 import type { Spotlight, DethroneAlert } from "@/lib/campaign";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorSlug } from "@/lib/utils";
 
 export function SpotlightSection({
   spotlight,
@@ -20,14 +20,14 @@ export function SpotlightSection({
     color: string;
   }[] = [];
 
-  if (spotlight.topOperator) {
+    if (spotlight.topOperator) {
     cards.push({
       icon: Crown,
       label: "The King",
       name: spotlight.topOperator.display_name ?? spotlight.topOperator.codename,
       value: `#${spotlight.topOperator.rank}`,
       sub: `Υ ${formatYield(spotlight.topOperator.yield_)}`,
-      href: `/operator/${spotlight.topOperator.codename}`,
+      href: `/operator/${operatorSlug(spotlight.topOperator.display_name, spotlight.topOperator.codename)}`,
       color: "text-amber-600",
     });
   }
@@ -41,7 +41,7 @@ export function SpotlightSection({
         spotlight.closestChallenger.codename,
       value: `#${spotlight.closestChallenger.rank}`,
       sub: `Υ ${formatYield(spotlight.closestChallenger.yield_)}`,
-      href: `/operator/${spotlight.closestChallenger.codename}`,
+      href: `/operator/${operatorSlug(spotlight.closestChallenger.display_name, spotlight.closestChallenger.codename)}`,
       color: "text-red-500",
     });
   }
@@ -54,7 +54,7 @@ export function SpotlightSection({
         spotlight.biggestMover.display_name ?? spotlight.biggestMover.codename,
       value: `+${spotlight.biggestMover.movement_24h}`,
       sub: `#${spotlight.biggestMover.rank} · Υ ${formatYield(spotlight.biggestMover.yield_)}`,
-      href: `/operator/${spotlight.biggestMover.codename}`,
+      href: `/operator/${operatorSlug(spotlight.biggestMover.display_name, spotlight.biggestMover.codename)}`,
       color: "text-green-600",
     });
   }

@@ -5,6 +5,7 @@ import {
   cn,
   formatYield,
   operatorDisplayName,
+  operatorSlug,
   platformColor,
   formatMovement,
 } from "@/lib/utils";
@@ -26,7 +27,7 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
 
   return (
     <Link
-      href={`/operator/${entry.codename}`}
+      href={`/operator/${operatorSlug(entry.display_name, entry.codename)}`}
       className={cn(
         "group flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md",
         isTop3 && "border-primary/20",

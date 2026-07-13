@@ -28,6 +28,22 @@ export function operatorDisplayName(name: string | null | undefined, codename: s
   return codename;
 }
 
+/**
+ * Slugify a display name for use in URLs.
+ * "Ólafur Nils Sigurðsson" → "olafur-nils-sigurdsson"
+ * Falls back to codename if no display name.
+ */
+export function operatorSlug(name: string | null | undefined, codename: string): string {
+  if (!name || !name.trim()) return codename;
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // strip diacritics
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
+}
+
 export function classTierColor(tier: string): string {
   const colors: Record<string, string> = {
     APEX: "text-amber-600 bg-amber-50 border-amber-200",

@@ -5,6 +5,8 @@
 
 const API_BASE = "https://signalaf.com/api/v1";
 
+import { operatorSlug } from "./utils";
+
 export interface LeaderboardEntry {
   rank: number;
   operator_id: string;
@@ -156,4 +158,30 @@ export function computeDeltaFromAverage(entries: LeaderboardEntry[]): {
     deltas.set(e.codename, e.yield_ - average);
   }
   return { average, deltas };
+}
+
+/**
+ * Build a slug → codename lookup map from leaderboard entries.
+ * Used to resolve SEO-friendly URL slugs back to API codenames.
+ */
+export function buildSlugMap(entries: LeaderboardEntry[]): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const e of entries) {
+    const slug = operatorSlug(e.display_name, e.codename);
+    map.set(slug, e.codename);
+    // Also map codename → codename so old links still work
+    map.set(e.codename, e.codename);
+  }
+  return map;
+}
+
+/**
+ * Resolve a slug (or legacy codename) to a codename via the leaderboard.
+ * Returns null if not found.
+ */
+export async function resolveCodename(slug: string): Promise<string | null> {
+  const data = await getLeaderboard("all_time", 100, "yield");
+  if (!data) return null;
+  const slugMap = buildSlugMap(data.entries);
+  return slugMap.get(slug) ?? null;
 }
