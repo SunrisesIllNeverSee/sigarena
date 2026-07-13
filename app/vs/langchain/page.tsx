@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
 export default function VsLangChainPage() {
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema("SigRank vs LangChain + LangSmith \u2014 User Ranking vs Agent Framework", "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks the humans who use AI.", "/vs/langchain"),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/vs/langchain" },
+        ]),
+      ]} />
+
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">SigRank vs LangChain + LangSmith</span>

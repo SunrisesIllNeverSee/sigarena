@@ -12,6 +12,7 @@ import {
 } from "@/lib/utils";
 import { ArrowUp, ArrowDown, Minus, Share2, Swords } from "lucide-react";
 import Link from "next/link";
+import { JsonLd, personSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -100,6 +101,13 @@ export default async function OperatorPage({
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        personSchema(op),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: name, path: `/operator/${slug}` },
+        ]),
+      ]} />
       {/* Back link */}
       <Link
         href="/"

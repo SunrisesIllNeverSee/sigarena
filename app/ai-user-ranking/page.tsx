@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -21,6 +22,17 @@ export const metadata: Metadata = {
 export default function AIUserRankingPage() {
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema(
+          "AI User Ranking — How AI Users Are Ranked",
+          "How does the AI User Leaderboard rank operators? The Yield cascade explained.",
+          "/ai-user-ranking",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "AI User Ranking", path: "/ai-user-ranking" },
+        ]),
+      ]} />
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">AI User Ranking</span>

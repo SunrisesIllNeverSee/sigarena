@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -47,6 +48,18 @@ export default async function WeeklyPage() {
 
   return (
     <div className="space-y-6">
+    <JsonLd data={[
+      leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://sigarena.signalaf.com/weekly"),
+      articleSchema(
+        "Weekly Rankings Drop — AI User Leaderboard",
+        "This week's AI user rankings: biggest movers, new challengers, class distribution.",
+        "/weekly",
+      ),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Weekly Drop", path: "/weekly" },
+      ]),
+    ]} />
     {/* Back link */}
     <Link
       href="/"

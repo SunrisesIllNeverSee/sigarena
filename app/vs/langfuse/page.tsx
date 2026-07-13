@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
 export default function VsLangfusePage() {
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema("SigRank vs Langfuse \u2014 User Efficiency vs LLM Observability", "Langfuse traces your LLM calls for debugging and cost tracking. SigRank measures your token-cascade efficiency for ranking.", "/vs/langfuse"),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/vs/langfuse" },
+        ]),
+      ]} />
+
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">SigRank vs Langfuse</span>

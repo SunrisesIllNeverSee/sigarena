@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { JsonLd, websiteSchema, organizationSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sigarena.signalaf.com"),
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="min-h-screen bg-muted/20 font-sans antialiased">
+        <JsonLd data={[websiteSchema(), organizationSchema()]} />
         <SiteHeader />
         <main className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</main>
         <SiteFooter />

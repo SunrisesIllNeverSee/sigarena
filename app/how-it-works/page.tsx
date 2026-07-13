@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Zap } from "lucide-react";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
@@ -18,6 +19,43 @@ export const metadata: Metadata = {
 export default function HowItWorksPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-8">
+      <JsonLd data={[
+        articleSchema(
+          "How It Works — Yield, Leverage & AI User Scoring",
+          "How does SigRank score AI users? The 60-second explainer on Yield, Leverage, 10xDEV, and the token-cascade efficiency formula.",
+          "/how-it-works",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "How It Works", path: "/how-it-works" },
+        ]),
+        faqSchema([
+          {
+            question: "What is Yield (Υ)?",
+            answer: "Yield measures how efficiently you use AI tokens. It's calculated as (cache_read × output) / input². Higher Yield means you're reusing cached context and producing output efficiently relative to what you send to the model.",
+          },
+          {
+            question: "Why does SigRank use Yield instead of raw token volume?",
+            answer: "Volume is noise. Anyone can spend tokens. Yield rewards skill — a power user with 10K tokens and high cache reuse can beat someone with 10M tokens and no cache strategy. Yield measures efficiency, not spend.",
+          },
+          {
+            question: "What are the four pillars of the token cascade?",
+            answer: "The four pillars are Cache Read (tokens served from cache — free, instant, smart), Output (tokens the model produced for you), Input (tokens you sent to the model — your cost), and Cache Write (tokens written to cache for future reuse). The cascade string shows the ratio between these pillars.",
+          },
+          {
+            question: "What is Leverage?",
+            answer: "Leverage measures how much output you generate relative to your input. A high Leverage score means you're getting more results per token spent — a sign of effective prompting.",
+          },
+          {
+            question: "What is 10xDEV?",
+            answer: "10xDEV is the base-10 logarithm of your Leverage score. It's a normalized scale that makes it easier to compare operators across different volume tiers.",
+          },
+          {
+            question: "How do I get my rank?",
+            answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, Leverage, 10xDEV, and place you on the AI User Leaderboard with a class tier designation.",
+          },
+        ]),
+      ]} />
       <div className="text-center">
         <Zap className="mx-auto h-10 w-10 text-primary" />
         <h1 className="mt-4 text-3xl font-bold tracking-tight">How it works</h1>

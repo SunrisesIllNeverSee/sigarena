@@ -4,6 +4,7 @@ import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
 import { SpotlightSection } from "@/components/spotlight";
 import { Trophy, TrendingUp, Crown } from "lucide-react";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
 export const revalidate = 300; // 5 minutes
 
@@ -42,6 +43,14 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigarena.signalaf.com"),
+        articleSchema(
+          "AI User Leaderboard — Ranked by Yield",
+          "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",
+          "/",
+        ),
+      ]} />
       {/* Headline */}
       <div className="text-center py-4">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">

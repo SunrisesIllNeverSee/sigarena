@@ -3,6 +3,7 @@ import { RankCard } from "@/components/rank-card";
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -36,6 +37,18 @@ export default async function AIUserLeaderboardPage() {
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigarena.signalaf.com/ai-user-leaderboard"),
+        articleSchema(
+          "AI User Leaderboard — The Competitive Ranking",
+          "The AI User Leaderboard ranks the best AI operators by Yield.",
+          "/ai-user-leaderboard",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "AI User Leaderboard", path: "/ai-user-leaderboard" },
+        ]),
+      ]} />
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">AI User Leaderboard</span>

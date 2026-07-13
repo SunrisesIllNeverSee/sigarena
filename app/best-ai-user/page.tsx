@@ -7,6 +7,7 @@ import { formatYield, operatorSlug } from "@/lib/utils";
 import Link from "next/link";
 import { Trophy, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -43,6 +44,18 @@ export default async function BestAIUserPage() {
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        leaderboardSchema(data.entries, "Best AI User — Top 10", "https://sigarena.signalaf.com/best-ai-user"),
+        articleSchema(
+          "Best AI User — Who Is the Best AI User Alive?",
+          "The definitive ranking of the best AI users by Yield.",
+          "/best-ai-user",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Best AI User", path: "/best-ai-user" },
+        ]),
+      ]} />
       {/* Hero */}
       <div className="text-center py-6">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">

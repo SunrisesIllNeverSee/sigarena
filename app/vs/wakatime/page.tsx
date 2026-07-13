@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
 export default function VsWakaTimePage() {
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema("SigRank vs WakaTime \u2014 AI User Ranking vs Coding Time Tracking", "WakaTime tracks coding time. SigRank ranks AI usage efficiency. Different metrics for different questions.", "/vs/wakatime"),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/vs/wakatime" },
+        ]),
+      ]} />
+
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">SigRank vs WakaTime</span>

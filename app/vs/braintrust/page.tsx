@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 3600;
 
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
 export default function VsBraintrustPage() {
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema("SigRank vs Braintrust \u2014 User Evaluation vs AI App Evaluation", "Braintrust evaluates your AI application's outputs. SigRank evaluates the human operator. Same goal, different target.", "/vs/braintrust"),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/vs/braintrust" },
+        ]),
+      ]} />
+
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">SigRank vs Braintrust</span>

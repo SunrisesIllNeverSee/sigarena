@@ -6,6 +6,7 @@ import {
   formatYield,
 } from "@/lib/utils";
 import { Crown } from "lucide-react";
+import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -73,6 +74,17 @@ export default async function ComparePage({
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        articleSchema(
+          "Compare AI Users — Head-to-Head Yield Matchup",
+          "Compare two AI operators side by side. See who has higher Yield, better Leverage, more efficient token usage.",
+          "/compare",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/compare" },
+        ]),
+      ]} />
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight">Head-to-head</h1>
         <p className="mt-2 text-muted-foreground">Who&apos;s the better AI user?</p>

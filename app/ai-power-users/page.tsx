@@ -5,6 +5,7 @@ import { operatorSlug } from "@/lib/utils";
 import Link from "next/link";
 import { Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
 
@@ -41,6 +42,18 @@ export default async function AIPowerUsersPage() {
 
   return (
     <div className="space-y-6">
+      <JsonLd data={[
+        leaderboardSchema(data.entries, "AI Power Users — Top 25", "https://sigarena.signalaf.com/ai-power-users"),
+        articleSchema(
+          "AI Power Users — The Top AI Users Ranked",
+          "The top AI power users, ranked by Yield.",
+          "/ai-power-users",
+        ),
+        breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "AI Power Users", path: "/ai-power-users" },
+        ]),
+      ]} />
       <div className="text-center py-4">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           <span className="gradient-text">AI Power Users</span>
