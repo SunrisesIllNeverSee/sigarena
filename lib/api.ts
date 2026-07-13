@@ -35,7 +35,7 @@ export interface LeaderboardEntry {
   scale_v: number;
   efficiency: number;
   cost_per_million: number;
-  op_ratio: number;
+  op_ratio: string;
   cascade_str: string;
   non_compounding: boolean;
   percentile: number;
@@ -104,7 +104,7 @@ export interface OperatorResponse {
   scale_v: number;
   efficiency: number;
   cost_per_million: number;
-  op_ratio: number;
+  op_ratio: string;
   cascade_str: string;
   non_compounding: boolean;
 }

@@ -312,7 +312,7 @@ export default async function OperatorPage({
             { label: "Signal Force", value: m.signal_force.toFixed(1) },
             { label: "Prompt Complexity", value: m.prompt_complexity.toFixed(2) },
             { label: "Token Throughput", value: formatNumber(m.token_throughput) },
-            { label: "Op Ratio", value: op.op_ratio.toFixed(3) },
+            { label: "Op Ratio", value: op.op_ratio },
           ].map((metric) => (
             <div key={metric.label} className="rounded-lg bg-muted/30 p-3">
               <div className="text-sm font-semibold tabular-nums">{metric.value}</div>
