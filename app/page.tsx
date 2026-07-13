@@ -91,6 +91,7 @@ export default async function HomePage() {
       <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
 
       {/* Leaderboard list */}
+      <h2 className="text-lg font-semibold pt-2">Top operators by Yield (Υ)</h2>
       <div className="space-y-2">
         {data.entries.map((entry) => (
           <RankCard
