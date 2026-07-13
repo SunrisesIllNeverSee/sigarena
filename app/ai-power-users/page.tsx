@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "AI Power Users — The Top AI Users Ranked",
   description:
     "The top AI power users, ranked by Yield (Υ). See who's dominating the leaderboard, who's climbing, and what makes a power user.",
+  alternates: { canonical: "/ai-power-users" },
   openGraph: {
     title: "AI Power Users — The Top AI Users Ranked",
     description: "The top AI power users, ranked by Yield (Υ).",

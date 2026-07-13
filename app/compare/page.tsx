@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getLeaderboard, getOperator, resolveCodename } from "@/lib/api";
 import {
   operatorDisplayName,
@@ -7,6 +8,19 @@ import {
 import { Crown } from "lucide-react";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
+  description:
+    "Compare two AI operators side by side. See who has higher Yield, better Leverage, more efficient token usage. Head-to-head AI user comparison on SigRank.",
+  alternates: { canonical: "/compare" },
+  openGraph: {
+    title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
+    description: "Compare two AI operators side by side on SigRank.",
+    url: "https://sigarena.signalaf.com/compare",
+    type: "website",
+  },
+};
 
 export default async function ComparePage({
   searchParams,

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs LMSYS Arena — Ranking Humans vs Ranking Models",
   description:
     "LMSYS Arena ranks AI models. SigRank ranks the humans who use AI. Different questions, different metrics, different leaderboards.",
+  alternates: { canonical: "/vs/lmsys-arena" },
   openGraph: {
     title: "SigRank vs LMSYS Arena — Humans vs Models",
     description: "Ranking AI users vs ranking AI models.",

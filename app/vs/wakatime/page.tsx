@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs WakaTime — Token Efficiency vs Time Tracking",
   description:
     "WakaTime tracks how long you code. SigRank measures how efficiently you use AI tokens. Time spent doesn't equal value produced. Yield does.",
+  alternates: { canonical: "/vs/wakatime" },
   openGraph: {
     title: "SigRank vs WakaTime — Token Efficiency vs Time Tracking",
     description: "Time tracking vs token efficiency.",

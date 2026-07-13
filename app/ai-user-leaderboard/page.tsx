@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "AI User Leaderboard — The Competitive Ranking",
   description:
     "The AI User Leaderboard ranks the best AI operators by Yield (Υ) — token-cascade efficiency. See the full ranking, compare operators, and get your own rank.",
+  alternates: { canonical: "/ai-user-leaderboard" },
   openGraph: {
     title: "AI User Leaderboard — The Competitive Ranking",
     description:

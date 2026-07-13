@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs TopAIUsers — Measured vs Curated AI User Rankings",
   description:
     "SigRank ranks AI users by measured token-cascade efficiency (Yield). TopAIUsers is a curated list of 100 seats. Measured vs curated — which approach wins?",
+  alternates: { canonical: "/vs/topaiusers" },
   openGraph: {
     title: "SigRank vs TopAIUsers — Measured vs Curated",
     description: "Measured Yield (Υ) vs a hand-picked list of 100 seats.",

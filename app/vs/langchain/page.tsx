@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",
   description:
     "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks the humans operating AI. Framework + observability vs operator efficiency — which do you need?",
+  alternates: { canonical: "/vs/langchain" },
   openGraph: {
     title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",
     description: "Building and observing AI apps vs ranking the humans who use AI.",

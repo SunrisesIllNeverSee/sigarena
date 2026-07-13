@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "AI User Ranking — How AI Users Are Ranked",
   description:
     "How does the AI User Leaderboard rank operators? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, and class tiers.",
+  alternates: { canonical: "/ai-user-ranking" },
   openGraph: {
     title: "AI User Ranking — How AI Users Are Ranked",
     description:

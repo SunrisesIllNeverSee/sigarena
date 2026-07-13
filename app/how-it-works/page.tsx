@@ -1,5 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Zap } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
+  description:
+    "How does SigRank score AI users? The 60-second explainer on Yield (Υ), Leverage, 10xDEV, and the token-cascade efficiency formula. See how AI operators are ranked.",
+  alternates: { canonical: "/how-it-works" },
+  openGraph: {
+    title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
+    description: "How does SigRank score AI users? The 60-second explainer.",
+    url: "https://sigarena.signalaf.com/how-it-works",
+    type: "website",
+  },
+};
 
 export default function HowItWorksPage() {
   return (

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",
   description:
     "The definitive ranking of the best AI users. Ranked by Yield (Υ) — token-cascade efficiency, not raw spend. See who's #1, who's climbing, and who got dethroned.",
+  alternates: { canonical: "/best-ai-user" },
   openGraph: {
     title: "Best AI User — Who Is the Best AI User Alive?",
     description:

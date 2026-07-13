@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getOperator, resolveCodename } from "@/lib/api";
 import {
   operatorDisplayName,
   operatorSlug,
   platformColor,
+  classTierColor,
   formatYield,
   formatNumber,
   formatMovement,
@@ -12,6 +14,47 @@ import { ArrowUp, ArrowDown, Minus, Share2, Swords } from "lucide-react";
 import Link from "next/link";
 
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ codename: string }>;
+}): Promise<Metadata> {
+  const { codename: slugParam } = await params;
+  const codename = await resolveCodename(slugParam);
+  if (!codename) return { title: "Operator not found" };
+  const op = await getOperator(codename);
+  if (!op) return { title: "Operator not found" };
+
+  const name = operatorDisplayName(op.display_name, op.codename);
+  const slug = operatorSlug(op.display_name, op.codename);
+  const yieldStr = formatYield(op.current_metrics.yield_);
+  const rank = op.current_rank.global;
+  const tier = op.class_tier;
+  const platform = op.platform;
+
+  const title = `${name} — AI User Profile | SigRank`;
+  const description = `${name} ranks #${rank} on the AI User Leaderboard with Υ ${yieldStr} (${tier} class, ${platform}). See token cascade, Yield, Leverage, and full metrics.`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/operator/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://sigarena.signalaf.com/operator/${slug}`,
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default async function OperatorPage({
   params,
@@ -42,6 +85,19 @@ export default async function OperatorPage({
   const slug = operatorSlug(op.display_name, op.codename);
   const shareUrl = `https://sigarena.signalaf.com/operator/${slug}`;
 
+  // Build a bio from the operator's data
+  const tierLabel = op.class_tier?.replace(/_/g, " ") || "Unranked";
+  const totalTokens = op.total_tokens;
+  const accountAge = op.account_age_days;
+  const accountAgeStr =
+    accountAge >= 365
+      ? `${(accountAge / 365).toFixed(1)} years`
+      : accountAge >= 30
+        ? `${(accountAge / 30).toFixed(0)} months`
+        : `${accountAge} days`;
+  const efficiencyStr = op.efficiency ? `${(op.efficiency * 100).toFixed(1)}%` : null;
+  const costStr = op.cost_per_million ? `$${op.cost_per_million.toFixed(2)}` : null;
+
   return (
     <div className="space-y-6">
       {/* Back link */}
@@ -62,6 +118,11 @@ export default async function OperatorPage({
                 className={`rounded border px-2 py-0.5 text-xs font-medium ${platformColor(op.platform)}`}
               >
                 {op.platform}
+              </span>
+              <span
+                className={`rounded border px-2 py-0.5 text-xs font-medium ${classTierColor(op.class_tier)}`}
+              >
+                {tierLabel}
               </span>
               {op.claimed && (
                 <span className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
@@ -145,6 +206,43 @@ export default async function OperatorPage({
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Bio */}
+      <div className="rounded-lg border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold">About {name}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {name} is an AI operator on the {op.platform} platform, ranked{" "}
+          <strong className="text-foreground">#{op.current_rank.global}</strong>{" "}
+          globally on the SigRank AI User Leaderboard with a{" "}
+          <strong className="text-foreground">{tierLabel}</strong> class
+          designation. They hold a Yield (Υ) of{" "}
+          <strong className="text-foreground">{formatYield(m.yield_)}</strong>,
+          reflecting their token-cascade efficiency — how effectively they
+          convert input tokens into meaningful output with context reuse.
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {name} has processed {formatNumber(totalTokens)} total tokens across{" "}
+          {op.total_messages} AI interactions over {accountAgeStr} of activity.
+          Their Leverage score of {m.leverage.toFixed(1)} and 10xDEV of{" "}
+          {m.dev10x.toFixed(2)} indicate how much output they generate relative
+          to their input — a measure of how well they prompt, not just how much
+          they spend.
+          {efficiencyStr && ` Their efficiency rating is ${efficiencyStr}.`}
+          {costStr && ` Estimated cost: ${costStr} per million tokens.`}
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {op.claimed
+            ? "This profile is claimed by the operator."
+            : "This profile is unclaimed — the operator has not yet verified ownership."}
+          {" Last seen "}
+          {new Date(op.last_seen).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+          .
+        </p>
       </div>
 
       {/* Token pillars */}

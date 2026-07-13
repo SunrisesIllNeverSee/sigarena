@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs Braintrust — User Evaluation vs AI App Evaluation",
   description:
     "Braintrust evaluates your AI application's outputs. SigRank evaluates the human operating the AI. Different sides of the same coin — which evaluation do you need?",
+  alternates: { canonical: "/vs/braintrust" },
   openGraph: {
     title: "SigRank vs Braintrust — User Evaluation vs AI App Evaluation",
     description: "Evaluating the AI app vs evaluating the AI user.",

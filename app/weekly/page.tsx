@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "Weekly Rankings Drop — AI User Leaderboard",
   description:
     "This week's AI user rankings: biggest movers, new challengers, class distribution. Powered by SigRank.",
+  alternates: { canonical: "/weekly" },
   openGraph: {
     title: "Weekly Rankings Drop — AI User Leaderboard",
     description:

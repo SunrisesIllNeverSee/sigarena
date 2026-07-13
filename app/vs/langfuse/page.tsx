@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "SigRank vs Langfuse — User Efficiency vs LLM Observability",
   description:
     "Langfuse traces your LLM calls for debugging and cost tracking. SigRank measures your token-cascade efficiency for ranking. Same telemetry, different purpose — which do you need?",
+  alternates: { canonical: "/vs/langfuse" },
   openGraph: {
     title: "SigRank vs Langfuse — User Efficiency vs LLM Observability",
     description: "Token telemetry for ranking vs token tracing for debugging.",
