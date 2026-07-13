@@ -47,7 +47,9 @@ export function operatorSlug(name: string | null | undefined, codename: string):
     .replace(/œ/g, "oe")
     .replace(/ß/g, "ss")
     .replace(/þ/g, "th")
-    // strip anything that's not a-z0-9 (symbols, emoji, trademark, section signs, etc.)
+    // remove symbols that are part of a word (§, ™, ®, ©, etc.) — not separators
+    .replace(/[§™®©℠№]/g, "")
+    // everything else that's not a-z0-9 becomes a hyphen
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .replace(/-{2,}/g, "-");
