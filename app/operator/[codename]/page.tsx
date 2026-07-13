@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getOperator, resolveCodename } from "@/lib/api";
+import { getOperator, resolveCodename, getLeaderboard } from "@/lib/api";
 import {
   operatorDisplayName,
   operatorSlug,
@@ -15,6 +15,16 @@ import Link from "next/link";
 import { JsonLd, personSchema, breadcrumbSchema } from "@/lib/jsonld";
 
 export const revalidate = 300;
+
+// Pre-render all operator pages at build time so they serve full HTML
+// without RSC streaming. New operators will be generated on-demand.
+export async function generateStaticParams() {
+  const data = await getLeaderboard("all_time", 100, "yield");
+  if (!data) return [];
+  return data.entries.map((entry) => ({
+    codename: operatorSlug(entry.display_name, entry.codename),
+  }));
+}
 
 export async function generateMetadata({
   params,
