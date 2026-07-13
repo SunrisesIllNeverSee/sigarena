@@ -31,17 +31,27 @@ export function operatorDisplayName(name: string | null | undefined, codename: s
 /**
  * Slugify a display name for use in URLs.
  * "Ólafur Nils Sigurðsson" → "olafur-nils-sigurdsson"
+ * "MO§ES™" → "moses"
  * Falls back to codename if no display name.
  */
 export function operatorSlug(name: string | null | undefined, codename: string): string {
   if (!name || !name.trim()) return codename;
-  return name
+  const slug = name
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // strip diacritics
+    .replace(/[\u0300-\u036f]/g, "") // strip standard diacritics
+    // handle chars that NFD doesn't decompose
+    .replace(/ð/g, "d")
+    .replace(/ø/g, "o")
+    .replace(/æ/g, "ae")
+    .replace(/œ/g, "oe")
+    .replace(/ß/g, "ss")
+    .replace(/þ/g, "th")
+    // strip anything that's not a-z0-9 (symbols, emoji, trademark, section signs, etc.)
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .replace(/-{2,}/g, "-");
+  return slug || codename;
 }
 
 export function classTierColor(tier: string): string {
