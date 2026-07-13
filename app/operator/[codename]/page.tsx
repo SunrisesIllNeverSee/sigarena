@@ -37,6 +37,12 @@ export async function generateMetadata({
   const title = `${name} — AI User Profile | SigRank`;
   const description = `${name} ranks #${rank} on the AI User Leaderboard with Υ ${yieldStr} (${tier} class, ${platform}). See token cascade, Yield, Leverage, and full metrics.`;
 
+  const personLd = personSchema(op);
+  const breadcrumbLd = breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name, path: `/operator/${slug}` },
+  ]);
+
   return {
     title,
     description,
@@ -53,6 +59,10 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
+    },
+    other: {
+      "ld+json:person": JSON.stringify(personLd),
+      "ld+json:breadcrumb": JSON.stringify(breadcrumbLd),
     },
   };
 }
