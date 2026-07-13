@@ -15,6 +15,12 @@ export function SiteHeader() {
         </Link>
         <div className="flex items-center gap-3 shrink-0">
           <Link
+            href="/weekly"
+            className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
+          >
+            Weekly
+          </Link>
+          <Link
             href="/how-it-works"
             className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
           >

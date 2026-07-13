@@ -1,5 +1,7 @@
 import { getLeaderboard, computeDeltaFromAverage } from "@/lib/api";
+import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
+import { SpotlightSection } from "@/components/spotlight";
 import { Trophy, TrendingUp, Crown } from "lucide-react";
 
 export const revalidate = 300; // 5 minutes
@@ -20,6 +22,8 @@ export default async function HomePage() {
   }
 
   const { deltas } = computeDeltaFromAverage(data.entries);
+  const spotlight = deriveSpotlight(data);
+  const dethrone = checkDethrone(data);
   const topOperator = data.entries[0];
 
   return (
@@ -60,6 +64,9 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Spotlight + dethrone watch */}
+      <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
+
       {/* Leaderboard list */}
       <div className="space-y-2">
         {data.entries.map((entry) => (
@@ -87,7 +94,10 @@ export default async function HomePage() {
 
       {/* Weekly drop banner */}
       <div className="text-center text-sm text-muted-foreground border-t border-border pt-4">
-        New rankings drop every Monday. Come back to see who climbed.
+        New rankings drop every Monday.{" "}
+        <a href="/weekly" className="text-primary font-medium hover:underline">
+          See this week&apos;s drop →
+        </a>
       </div>
     </div>
   );
