@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vs/wakatime`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
 
-  const data = await getLeaderboard("all_time", 100, "yield");
+  const data = await getLeaderboard("all_time", 500, "yield");
   if (!data) return staticRoutes;
 
   const operatorRoutes: MetadataRoute.Sitemap = data.entries.map((e) => ({

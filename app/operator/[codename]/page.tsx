@@ -19,7 +19,7 @@ export const revalidate = 300;
 // Pre-render all operator pages at build time so they serve full HTML
 // without RSC streaming. New operators will be generated on-demand.
 export async function generateStaticParams() {
-  const data = await getLeaderboard("all_time", 100, "yield");
+  const data = await getLeaderboard("all_time", 500, "yield");
   if (!data) return [];
   return data.entries.map((entry) => ({
     codename: operatorSlug(entry.display_name, entry.codename),

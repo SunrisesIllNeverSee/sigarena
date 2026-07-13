@@ -180,7 +180,7 @@ export function buildSlugMap(entries: LeaderboardEntry[]): Map<string, string> {
  * Returns null if not found.
  */
 export async function resolveCodename(slug: string): Promise<string | null> {
-  const data = await getLeaderboard("all_time", 100, "yield");
+  const data = await getLeaderboard("all_time", 500, "yield");
   if (!data) return null;
   const slugMap = buildSlugMap(data.entries);
   return slugMap.get(slug) ?? null;

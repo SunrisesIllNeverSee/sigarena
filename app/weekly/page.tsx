@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WeeklyPage() {
-  const data = await getLeaderboard("all_time", 100, "yield");
+  const data = await getLeaderboard("all_time", 500, "yield");
 
   if (!data || data.entries.length === 0) {
     return (
