@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getLeaderboard, computeDeltaFromAverage } from "@/lib/api";
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
@@ -5,6 +6,19 @@ import { SpotlightSection } from "@/components/spotlight";
 import { Trophy, TrendingUp, Crown } from "lucide-react";
 
 export const revalidate = 300; // 5 minutes
+
+export const metadata: Metadata = {
+  title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
+  description:
+    "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend. Compare your AI usage against the top operators.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
+    description: "Who's the best AI user? See how you rank on SigRank.",
+    url: "https://sigarena.signalaf.com",
+    type: "website",
+  },
+};
 
 export default async function HomePage() {
   const data = await getLeaderboard("all_time", 100, "yield");
