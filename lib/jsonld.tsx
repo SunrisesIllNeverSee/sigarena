@@ -160,11 +160,11 @@ export function faqSchema(
   };
 }
 
-/** React component that renders JSON-LD as a <script> tag */
+/** React component that renders JSON-LD as a <script> tag in <head> */
 export function JsonLd({ data }: { data: object | object[] }) {
   const json = Array.isArray(data) ? data : [data];
   return (
-    <>
+    <head>
       {json.map((item, i) => (
         <script
           key={i}
@@ -172,6 +172,6 @@ export function JsonLd({ data }: { data: object | object[] }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
         />
       ))}
-    </>
+    </head>
   );
 }
