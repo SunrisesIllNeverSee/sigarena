@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "Best AI User — Who Is the Best AI User Alive?",
     description:
       "The definitive ranking. Powered by SigRank's Yield (Υ) metric.",
-    url: "https://sigarena.signalaf.com/best-ai-user",
+    url: "https://signaaf.com/best-ai-user",
     type: "website",
   },
 };
@@ -45,7 +45,7 @@ export default async function BestAIUserPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "Best AI User — Top 10", "https://sigarena.signalaf.com/best-ai-user"),
+        leaderboardSchema(data.entries, "Best AI User — Top 10", "https://signaaf.com/best-ai-user"),
         articleSchema(
           "Best AI User — Who Is the Best AI User Alive?",
           "The definitive ranking of the best AI users by Yield.",

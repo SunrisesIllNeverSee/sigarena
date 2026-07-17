@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs ccusage — Yield vs Raw Token Count",
     description: "Token counting vs token efficiency. Which matters?",
-    url: "https://sigarena.signalaf.com/vs/ccusage",
+    url: "https://signaaf.com/vs/ccusage",
     type: "website",
   },
 };

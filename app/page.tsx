@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
     description: "Who's the best AI user? See how you rank on SigRank.",
-    url: "https://sigarena.signalaf.com",
+    url: "https://signaaf.com",
     type: "website",
   },
 };
@@ -44,7 +44,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigarena.signalaf.com"),
+        leaderboardSchema(data.entries, "AI User Leaderboard", "https://signaaf.com"),
         articleSchema(
           "AI User Leaderboard — Ranked by Yield",
           "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",

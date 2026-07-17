@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "AI User Ranking — How AI Users Are Ranked",
     description:
       "The Yield (Υ) cascade explained. How AI operators are ranked.",
-    url: "https://sigarena.signalaf.com/ai-user-ranking",
+    url: "https://signaaf.com/ai-user-ranking",
     type: "website",
   },
 };

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs LMSYS Arena — Humans vs Models",
     description: "Ranking AI users vs ranking AI models.",
-    url: "https://sigarena.signalaf.com/vs/lmsys-arena",
+    url: "https://signaaf.com/vs/lmsys-arena",
     type: "website",
   },
 };

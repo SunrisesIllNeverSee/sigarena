@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sigarena.signalaf.com"),
+  metadataBase: new URL("https://signaaf.com"),
   title: "AI User Leaderboard — Powered by SigRank",
   description:
     "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description:
       "Who's the best AI user? See how you rank on SigRank.",
     type: "website",
-    url: "https://sigarena.signalaf.com",
+    url: "https://signaaf.com",
   },
   twitter: {
     card: "summary_large_image",

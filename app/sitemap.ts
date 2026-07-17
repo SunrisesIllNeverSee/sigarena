@@ -3,7 +3,7 @@ import { getLeaderboard } from "@/lib/api";
 import { operatorSlug } from "@/lib/utils";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://sigarena.signalaf.com";
+  const base = "https://signaaf.com";
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
     { url: `${base}/best-ai-user`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },

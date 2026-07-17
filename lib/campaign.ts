@@ -131,7 +131,7 @@ export function buildWeeklyDrop(data: LeaderboardResponse): WeeklyDrop {
   const topYield = topOp?.yield_?.toFixed(1) ?? "0";
 
   const shareText = `This week's #1 AI user: ${topName} with Υ ${topYield}. ${data.total_operators} operators ranked. Where do you stand?`;
-  const shareUrl = "https://sigarena.signalaf.com/weekly";
+  const shareUrl = "https://signaaf.com/weekly";
 
   return {
     weekLabel,

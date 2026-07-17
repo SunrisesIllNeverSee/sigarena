@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Power Users — The Top AI Users Ranked",
     description: "The top AI power users, ranked by Yield (Υ).",
-    url: "https://sigarena.signalaf.com/ai-power-users",
+    url: "https://signaaf.com/ai-power-users",
     type: "website",
   },
 };
@@ -43,7 +43,7 @@ export default async function AIPowerUsersPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "AI Power Users — Top 25", "https://sigarena.signalaf.com/ai-power-users"),
+        leaderboardSchema(data.entries, "AI Power Users — Top 25", "https://signaaf.com/ai-power-users"),
         articleSchema(
           "AI Power Users — The Top AI Users Ranked",
           "The top AI power users, ranked by Yield.",

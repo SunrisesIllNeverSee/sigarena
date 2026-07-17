@@ -62,7 +62,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://sigarena.signalaf.com/operator/${slug}`,
+      url: `https://signaaf.com/operator/${slug}`,
       type: "profile",
     },
     twitter: {
@@ -104,7 +104,7 @@ export default async function OperatorPage({
 
   const shareText = `I'm #${op.current_rank.global} on the AI User Leaderboard with Υ ${formatYield(op.current_metrics.yield_)}. Where do you rank?`;
   const slug = operatorSlug(op.display_name, op.codename);
-  const shareUrl = `https://sigarena.signalaf.com/operator/${slug}`;
+  const shareUrl = `https://signaaf.com/operator/${slug}`;
 
   // Build a bio from the operator's data
   const tierLabel = op.class_tier?.replace(/_/g, " ") || "Unranked";

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
     description: "How does SigRank score AI users? The 60-second explainer.",
-    url: "https://sigarena.signalaf.com/how-it-works",
+    url: "https://signaaf.com/how-it-works",
     type: "website",
   },
 };

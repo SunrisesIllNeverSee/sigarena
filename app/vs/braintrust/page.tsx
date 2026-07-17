@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs Braintrust — User Evaluation vs AI App Evaluation",
     description: "Evaluating the AI app vs evaluating the AI user.",
-    url: "https://sigarena.signalaf.com/vs/braintrust",
+    url: "https://signaaf.com/vs/braintrust",
     type: "website",
   },
 };

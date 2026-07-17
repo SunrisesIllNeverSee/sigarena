@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs TopAIUsers — Measured vs Curated",
     description: "Measured Yield (Υ) vs a hand-picked list of 100 seats.",
-    url: "https://sigarena.signalaf.com/vs/topaiusers",
+    url: "https://signaaf.com/vs/topaiusers",
     type: "website",
   },
 };
