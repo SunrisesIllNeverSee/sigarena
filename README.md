@@ -10,8 +10,9 @@ and submission. No accounts, no database, no auth.
 
 - Next.js 15 (App Router) + React 19
 - Tailwind CSS + shadcn/ui-style components
-- Geist font (Vercel)
+- Geist font
 - Data: signalaf.com public API (fetch + ISR, revalidate 300s)
+- Hosting: Cloudflare Workers (via @opennextjs/cloudflare adapter)
 
 ## Routes
 
@@ -29,7 +30,14 @@ npm run dev    # localhost:3001
 
 ## Deploy
 
-Push to `main` → Vercel auto-builds. Domain: `arena.signalaf.com` (subdomain of signalaf.com).
+Cloudflare Workers via OpenNext adapter. Domain: **signaaf.com**.
+
+```bash
+npm run cf:deploy    # build + deploy to Cloudflare Workers
+```
+
+Worker routes: `signaaf.com/*` and `www.signaaf.com/*` → `signaaf` worker.
+Staging URL: `https://signaaf.sigrank.workers.dev`.
 
 ## Design
 
