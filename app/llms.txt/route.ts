@@ -35,7 +35,7 @@ metrics have a different #1 — metric rotation is a real variety axis.
 - [Most Normalized](https://signaaf.com/most-normalized): Who's the most normalized? — 10xDEV = log₁₀(leverage). #1: Richard Fu (claude) 4.48
 - [Most Efficient Overall](https://signaaf.com/most-efficient-overall): Who's the most efficient overall? — Efficiency = ((cache_read + cache_create + output) / input) / 4. #1: Richard Fu (claude) 7835
 - [Largest Scale](https://signaaf.com/largest-scale): Who operates at the largest scale? — Scale V = log₁₀(total_tokens). #1: grenadeoftacoss (other) 15.96
-- [Cheapest Tokens](https://signaaf.com/cheapest-tokens): Who gets the cheapest tokens? — $/1M = blended cost per million tokens. #1: MO§ES™ (claude) ≈$0/M
+- [Cheapest Tokens](https://signaaf.com/cheapest-tokens): Who gets the cheapest tokens? — $/1M = blended cost per million tokens. #1: takuma.saito (claude) $0.35/M
 - [Best Op Ratio](https://signaaf.com/best-op-ratio): Who has the best operating ratio? — Op Ratio = cache:input:output. #1: Richard Fu (claude)
 
 ## Comparisons

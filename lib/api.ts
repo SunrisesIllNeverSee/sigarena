@@ -186,11 +186,12 @@ export function metricSortValue(entry: LeaderboardEntry, metric: CanonicalMetric
       return c.efficiency;
     case "cost_per_million":
       // Lower $/1M is better → negate so the cheapest sorts to the TOP (desc order).
-      // $0/M is a real, valid value (cache-heavy operators like MO§ES — cache_read is
-      // nearly free). Only null/undefined (no cost data) sorts last.
-      return typeof c.cost_per_million === "number"
-        ? -c.cost_per_million
-        : -Infinity;
+      // Non-compounding operators (null yield, e.g. MO§ES™) are excluded — their $0/M
+      // is an artifact of having no compounding session data, not a real cost-efficiency
+      // achievement. They sort last, same as yield/leverage/dev10x.
+      return c.non_compounding || typeof c.cost_per_million !== "number"
+        ? -Infinity
+        : -c.cost_per_million;
     case "op_ratio":
       // Op Ratio = leverage:1:velocity → sort on leverage (the lead term).
       return c.non_compounding ? -1 : c.leverage;
@@ -238,11 +239,12 @@ export function sortLeaderboard(
   let viewEntries = sorted;
   if (view === "center") {
     if (metric === "cost_per_million") {
-      // cost_per_million is inverted (lower = better). The "peak" is the ~$0/M
-      // cache-heavy operators (MO§ES). The "center" is operators with a real
-      // positive cost — the dense middle of what people actually pay.
+      // cost_per_million is inverted (lower = better). Non-compounding operators
+      // are already sorted last by metricSortValue. The Center view trims the
+      // cheapest compounding outliers (the cache-heavy operators near $0.35/M)
+      // to show the dense middle of what people actually pay.
       viewEntries = sorted.filter(
-        (e) => typeof e.cost_per_million === "number" && e.cost_per_million > 0
+        (e) => !e.non_compounding && typeof e.cost_per_million === "number" && e.cost_per_million > 0
       );
     } else {
       // Collect the metric's own values across the full (pre-filter) board,

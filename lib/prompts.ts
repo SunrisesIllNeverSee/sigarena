@@ -7,7 +7,7 @@
  *   - yield, leverage, dev10x, efficiency → Richard Fu (claude)
  *   - velocity, snr → limp (chatgpt)
  *   - scale_v → grenadeoftacoss (other/IGNITER)
- *   - cost_per_million → MO§ES™ (claude, cache-heavy ≈$0/M)
+ *   - cost_per_million → takuma.saito (claude, $0.35/M — cheapest compounding operator)
  *
  * This is the shared registry between sigarena (site) and bestuser-router-mcp (MCP).
  * The JSON form is served at /prompts.json for the MCP to fetch.
@@ -190,8 +190,8 @@ export const PROMPTS: Prompt[] = [
     metric_label: "$/1M",
     metric_formula: "blended cost per million tokens (lower = better)",
     metric_unit: "$/1M",
-    current_leader: { name: "MO§ES™", platform: "claude", class: "IGNITER", value: 0 },
-    story: "Cost efficiency — blended $ per million tokens. Cache-heavy operators win (cache_read is cheap)",
+    current_leader: { name: "takuma.saito", platform: "claude", class: "TRANSMITTER", value: 0.3519 },
+    story: "Cost efficiency — blended $ per million tokens. Cheapest compounding operators win (cache_read is cheap)",
     slug: "cheapest-tokens",
     is_existing_route: false,
     seo_keywords: ["cheapest ai tokens", "token cost", "ai cost efficiency"],
