@@ -1,0 +1,55 @@
+# Deploy to Cloudflare Workers on push to main.
+#
+# Builds the Next.js app via @opennextjs/cloudflare and deploys the Worker
+# to signaaf.com. Replaces the manual `npm run cf:deploy` workflow.
+#
+# Required GitHub secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN  — Workers edit token (Cloudflare dashboard →
+#                           My Profile → API Tokens → "Edit Cloudflare Workers")
+#   CLOUDFLARE_ACCOUNT_ID — Your Cloudflare account ID (Workers & Pages →
+#                           any Worker → Settings → Account ID)
+#
+# See README.md "Deployment" section for setup walkthrough.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # manual trigger from the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build + deploy to Cloudflare Workers
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build (OpenNext for Cloudflare)
+        run: npx opennextjs-cloudflare build
+        env:
+          # Next.js build fetches from signalaf.com for ISR pre-rendering.
+          # Timeouts are handled gracefully (pages fall back to client render).
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Deploy to Cloudflare Workers
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

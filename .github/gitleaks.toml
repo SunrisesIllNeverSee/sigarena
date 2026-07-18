@@ -1,0 +1,9 @@
+# Gitleaks config — extends default rules with allow-lists for known safe paths.
+# https://github.com/gitleaks/gitleaks#configuration
+
+[extend]
+# Inherit all default rules, then add allow-lists below.
+useDefault = true
+
+# sigarena is a read-only frontend with no secrets, test fixtures, or seed data.
+# No allow-lists needed — any secret detected is a real leak.
