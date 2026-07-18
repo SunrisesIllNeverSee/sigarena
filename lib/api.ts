@@ -186,8 +186,9 @@ export function metricSortValue(entry: LeaderboardEntry, metric: CanonicalMetric
       return c.efficiency;
     case "cost_per_million":
       // Lower $/1M is better → negate so the cheapest sorts to the TOP (desc order).
-      // Null/undefined cost sorts last.
-      return typeof c.cost_per_million === "number" && c.cost_per_million > 0
+      // $0/M is a real, valid value (cache-heavy operators like MO§ES — cache_read is
+      // nearly free). Only null/undefined (no cost data) sorts last.
+      return typeof c.cost_per_million === "number"
         ? -c.cost_per_million
         : -Infinity;
     case "op_ratio":

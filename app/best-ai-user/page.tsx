@@ -1,5 +1,7 @@
-import { getSortedLeaderboard, computeDeltaFromAverage } from "@/lib/api";
+import { getSortedLeaderboard, getFullLeaderboard, computeDeltaFromAverage } from "@/lib/api";
+import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
+import { SpotlightSection } from "@/components/spotlight";
 import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { Metadata } from "next";
@@ -65,6 +67,16 @@ export default async function BestAIUserPage({
   const top = data.entries[0];
   const topName = top.display_name ?? top.codename;
   const allPrompts = getActivePrompts();
+
+  // Spotlight + dethrone watch — only on the canonical unfiltered view.
+  // The spotlight is a global-board feature (biggest mover, closest challenger);
+  // it doesn't make sense on a platform-filtered or Center-trimmed view. Fetching
+  // the full board only on the default view avoids an extra 1640-row fetch on
+  // filtered variants.
+  const isCanonicalView = platform === "all" && view === "peak";
+  const fullBoard = isCanonicalView ? await getFullLeaderboard("all_time") : null;
+  const spotlight = fullBoard ? deriveSpotlight(fullBoard) : null;
+  const dethrone = fullBoard ? checkDethrone(fullBoard) : null;
 
   return (
     <div className="space-y-6">
@@ -174,6 +186,11 @@ export default async function BestAIUserPage({
           {top.cache_creation_tokens.toLocaleString()} cache_create
         </p>
       </div>
+
+      {/* Spotlight + dethrone watch — canonical view only */}
+      {spotlight && dethrone && (
+        <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
+      )}
 
       {/* Top 10 */}
       <div>
