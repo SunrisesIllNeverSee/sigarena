@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFullLeaderboard, computeDeltaFromAverage, getSortedLeaderboard } from "@/lib/api";
+import { getFullLeaderboard, computeDeltaFromAverage, sortLeaderboard } from "@/lib/api";
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
 import { SpotlightSection } from "@/components/spotlight";
@@ -47,13 +47,11 @@ export default async function HomePage() {
   const platformOfDay = getPlatformOfTheDay();
   const allPrompts = getActivePrompts();
 
-  // Fetch the prompt-of-the-day's top 3 for the featured section
-  const promptData = await getSortedLeaderboard(promptOfDay.metric, "all", "peak", 3, "all_time");
-  const promptTop = promptData?.entries ?? [];
-
-  // Fetch the platform-of-the-day's top 3 by yield for the spotlight
-  const platformData = await getSortedLeaderboard("yield", platformOfDay, "peak", 3, "all_time");
-  const platformTop = platformData?.entries ?? [];
+  // Sort the already-fetched full board locally for the prompt-of-the-day and
+  // platform-spotlight sections. Avoids 2 extra 1640-row network fetches per
+  // homepage load (Cloudflare OpenNext uses dummy ISR — no cache between calls).
+  const promptTop = sortLeaderboard(data, promptOfDay.metric, "all", "peak", 3).entries;
+  const platformTop = sortLeaderboard(data, "yield", platformOfDay, "peak", 3).entries;
 
   return (
     <div className="space-y-6">

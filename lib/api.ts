@@ -200,26 +200,25 @@ export function metricSortValue(entry: LeaderboardEntry, metric: CanonicalMetric
 }
 
 /**
- * Get the leaderboard sorted by a canonical metric, with optional platform
- * filter and view (Peak vs Center). Fetches all 1640 once, sorts client-side,
- * slices to the requested limit.
+ * Sort, filter, and slice an already-fetched leaderboard by a canonical metric.
+ * Pure function — no API calls. Use this when the caller has already fetched
+ * the full board (e.g. the homepage fetches once and reuses the data for
+ * multiple sections) to avoid redundant 1640-row network fetches.
  *
+ * - data: the full leaderboard response (from getFullLeaderboard)
  * - metric: canonical metric to sort by (yield, velocity, leverage, snr, dev10x,
  *   scale_v, efficiency, cost_per_million, op_ratio)
  * - platform: filter to a single platform (all = no filter)
  * - view: "peak" (top N, outliers included) or "center" (outliers >100x median trimmed)
  * - limit: how many entries to return (default 100)
  */
-export async function getSortedLeaderboard(
+export function sortLeaderboard(
+  data: LeaderboardResponse,
   metric: CanonicalMetric,
   platform: Platform = "all",
   view: View = "peak",
   limit: number = 100,
-  window: string = "all_time"
-): Promise<LeaderboardResponse | null> {
-  const data = await getFullLeaderboard(window);
-  if (!data) return null;
-
+): LeaderboardResponse {
   // Platform filter
   let entries = data.entries;
   if (platform !== "all") {
@@ -274,6 +273,30 @@ export async function getSortedLeaderboard(
     total_operators: entries.length,
     entries: sliced,
   };
+}
+
+/**
+ * Get the leaderboard sorted by a canonical metric, with optional platform
+ * filter and view (Peak vs Center). Fetches all 1640 once, sorts client-side,
+ * slices to the requested limit. Callers that already have the full board
+ * should call `sortLeaderboard` directly to avoid a redundant fetch.
+ *
+ * - metric: canonical metric to sort by (yield, velocity, leverage, snr, dev10x,
+ *   scale_v, efficiency, cost_per_million, op_ratio)
+ * - platform: filter to a single platform (all = no filter)
+ * - view: "peak" (top N, outliers included) or "center" (outliers >100x median trimmed)
+ * - limit: how many entries to return (default 100)
+ */
+export async function getSortedLeaderboard(
+  metric: CanonicalMetric,
+  platform: Platform = "all",
+  view: View = "peak",
+  limit: number = 100,
+  window: string = "all_time"
+): Promise<LeaderboardResponse | null> {
+  const data = await getFullLeaderboard(window);
+  if (!data) return null;
+  return sortLeaderboard(data, metric, platform, view, limit);
 }
 
 /**
