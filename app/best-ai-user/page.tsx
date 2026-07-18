@@ -9,7 +9,19 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/li
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View } from "@/lib/prompts";
 
-export const revalidate = 300;
+// Static Generation (Option C hybrid):
+// - Canonical page (/best-ai-user with no searchParams) is pre-built at
+//   deploy time. Served as a static asset from Cloudflare's ASSETS binding.
+// - Filtered pages (?platform=, ?view=) are dynamic via the Worker.
+// - dynamicParams = true allows filtered variants to render dynamically.
+export const dynamicParams = true;
+
+// Pre-render the canonical best-ai-user page (no searchParams).
+// The page itself still reads searchParams for filtered views, which makes
+// those requests dynamic. The canonical pre-render is static.
+export async function generateStaticParams() {
+  return [{}]; // single canonical route — no dynamic segments
+}
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",

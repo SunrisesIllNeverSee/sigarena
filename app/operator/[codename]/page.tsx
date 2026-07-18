@@ -14,7 +14,10 @@ import { ArrowUp, ArrowDown, Minus, Share2, Swords } from "lucide-react";
 import Link from "next/link";
 import { JsonLd, personSchema, breadcrumbSchema } from "@/lib/jsonld";
 
-export const revalidate = 300;
+// Static Generation — all operator pages are pre-built at deploy time.
+// Up to 500 operator pages are pre-rendered (see generateStaticParams below).
+// New operators not in the top 500 are generated on-demand via dynamicParams.
+export const dynamicParams = true;
 
 // Pre-render all operator pages at build time so they serve full HTML
 // without RSC streaming. New operators will be generated on-demand.

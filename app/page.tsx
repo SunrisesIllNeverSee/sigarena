@@ -9,7 +9,11 @@ import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { operatorSlug, formatYield } from "@/lib/utils";
 
-export const revalidate = 300; // 5 minutes
+// Static Generation — page is pre-built at deploy time and served as a
+// static asset from Cloudflare's ASSETS binding. Zero Worker invocations
+// between rebuilds. The cron workflow (Thu+Sun 00:00 UTC) rebuilds + redeploys
+// to refresh the data snapshot.
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",

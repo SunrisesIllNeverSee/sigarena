@@ -131,7 +131,7 @@ export async function getLeaderboard(
   try {
     const res = await fetch(
       `${API_BASE}/leaderboard?window=${window}&limit=${limit}&metric=${metric}`,
-      { next: { revalidate: 300 } }
+      { next: { revalidate: false } }
     );
     if (!res.ok) return null;
     return (await res.json()) as LeaderboardResponse;
@@ -151,7 +151,7 @@ export async function getFullLeaderboard(
   try {
     const res = await fetch(
       `${API_BASE}/leaderboard?window=${window}&limit=2000&metric=yield`,
-      { next: { revalidate: 300 } }
+      { next: { revalidate: false } }
     );
     if (!res.ok) return null;
     return (await res.json()) as LeaderboardResponse;
@@ -317,7 +317,7 @@ export async function getSortedLeaderboard(
 export async function getOperator(codename: string): Promise<OperatorResponse | null> {
   try {
     const res = await fetch(`${API_BASE}/operators/${codename}`, {
-      next: { revalidate: 300 },
+      next: { revalidate: false },
     });
     if (!res.ok) return null;
     return (await res.json()) as OperatorResponse;

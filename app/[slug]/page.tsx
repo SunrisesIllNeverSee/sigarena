@@ -4,7 +4,16 @@ import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-export const revalidate = 300;
+// Static Generation (Option C hybrid):
+// - Canonical pages (no searchParams → platform=all, view=peak) are pre-built
+//   at deploy time via generateStaticParams. Served as static assets from
+//   Cloudflare's ASSETS binding. Zero Worker invocations.
+// - Filtered pages (with ?platform= or ?view=) are dynamic — generated
+//   on-demand via the Worker. These are low-traffic (most visitors hit the
+//   canonical page).
+// - dynamicParams = true allows filtered variants to still render dynamically
+//   even though only the canonical slugs are pre-built.
+export const dynamicParams = true;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
@@ -19,6 +28,14 @@ function parsePlatform(s: string | undefined): Platform {
 function parseView(s: string | undefined): View {
   if (s === "center" || s === "peak") return s;
   return "peak";
+}
+
+// Pre-render all 8 active prompt slugs (canonical view only).
+// Filtered variants (?platform=, ?view=) are dynamic via dynamicParams.
+export async function generateStaticParams() {
+  return getActivePrompts()
+    .filter((p) => !p.is_existing_route)
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: RouteProps): Promise<Metadata> {
