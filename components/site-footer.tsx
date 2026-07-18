@@ -15,6 +15,15 @@ const FOOTER_COLUMNS: {
     ],
   },
   {
+    heading: "Metric rankings",
+    links: [
+      { href: "/most-output-per-token", label: "Most output/token" },
+      { href: "/cleanest-signal", label: "Cleanest signal" },
+      { href: "/largest-scale", label: "Largest scale" },
+      { href: "/cheapest-tokens", label: "Cheapest tokens" },
+    ],
+  },
+  {
     heading: "How it works",
     links: [
       { href: "/how-it-works", label: "Υ Yield in 60 sec" },

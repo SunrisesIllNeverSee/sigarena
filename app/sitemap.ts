@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getLeaderboard } from "@/lib/api";
 import { operatorSlug } from "@/lib/utils";
+import { getActivePrompts } from "@/lib/prompts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://signaaf.com";
@@ -22,8 +23,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vs/wakatime`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
 
+  // New metric-specific prompt routes (8 routes, excluding best-ai-user which is already listed)
+  const promptRoutes: MetadataRoute.Sitemap = getActivePrompts()
+    .filter((p) => !p.is_existing_route)
+    .map((p) => ({
+      url: `${base}/${p.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.7,
+    }));
+
   const data = await getLeaderboard("all_time", 500, "yield");
-  if (!data) return staticRoutes;
+  if (!data) return [...staticRoutes, ...promptRoutes];
 
   const operatorRoutes: MetadataRoute.Sitemap = data.entries.map((e) => ({
     url: `${base}/operator/${operatorSlug(e.display_name, e.codename)}`,
@@ -32,5 +43,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.4,
   }));
 
-  return [...staticRoutes, ...operatorRoutes];
+  return [...staticRoutes, ...promptRoutes, ...operatorRoutes];
 }

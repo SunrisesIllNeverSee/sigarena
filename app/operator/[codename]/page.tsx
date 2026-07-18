@@ -35,12 +35,12 @@ export async function generateMetadata({
   const codename = await resolveCodename(slugParam);
   if (!codename) return { title: "Operator not found" };
   const op = await getOperator(codename);
-  if (!op) return { title: "Operator not found" };
+  if (!op || !op.current_metrics) return { title: "Operator not found" };
 
   const name = operatorDisplayName(op.display_name, op.codename);
   const slug = operatorSlug(op.display_name, op.codename);
   const yieldStr = formatYield(op.current_metrics.yield_);
-  const rank = op.current_rank.global;
+  const rank = op.current_rank?.global ?? "—";
   const tier = op.class_tier;
   const platform = op.platform;
 
@@ -88,12 +88,12 @@ export default async function OperatorPage({
   if (!codename) notFound();
   const op = await getOperator(codename);
 
-  if (!op) notFound();
+  if (!op || !op.current_metrics) notFound();
 
+  const m = op.current_metrics;
   const name = operatorDisplayName(op.display_name, op.codename);
   const movement = formatMovement(op.movement_24h);
   const m7d = formatMovement(op.movement_7d);
-  const m = op.current_metrics;
   const pillars = [
     { label: "Cache Read", value: op.cache_read_tokens, color: "bg-blue-500" },
     { label: "Output", value: op.output_tokens, color: "bg-green-500" },
@@ -102,9 +102,13 @@ export default async function OperatorPage({
   ];
   const maxPillar = Math.max(...pillars.map((p) => p.value));
 
-  const shareText = `I'm #${op.current_rank.global} on the AI User Leaderboard with Υ ${formatYield(op.current_metrics.yield_)}. Where do you rank?`;
+  const shareText = `I'm #${op.current_rank?.global ?? "—"} on the AI User Leaderboard with Υ ${formatYield(m.yield_)}. Where do you rank?`;
   const slug = operatorSlug(op.display_name, op.codename);
   const shareUrl = `https://signaaf.com/operator/${slug}`;
+
+  // Null-safe number formatter (some metrics are null for non-compounding operators)
+  const fmt = (v: number | null | undefined, digits = 1): string =>
+    typeof v === "number" && v !== null ? v.toFixed(digits) : "—";
 
   // Build a bio from the operator's data
   const tierLabel = op.class_tier?.replace(/_/g, " ") || "Unranked";
@@ -161,10 +165,10 @@ export default async function OperatorPage({
           </div>
           <div className="shrink-0 text-right">
             <div className="text-3xl font-bold tabular-nums">
-              #{op.current_rank.global}
+              #{op.current_rank?.global ?? "—"}
             </div>
             <div className="text-sm text-muted-foreground">
-              {op.current_rank.percentile.toFixed(0)}th percentile
+              {op.current_rank?.percentile != null ? `${op.current_rank.percentile.toFixed(0)}th percentile` : "—"}
             </div>
           </div>
         </div>
@@ -179,19 +183,19 @@ export default async function OperatorPage({
           </div>
           <div className="rounded-lg bg-muted/30 p-3">
             <div className="text-2xl font-bold tabular-nums">
-              {m.leverage.toFixed(1)}
+              {fmt(m.leverage, 1)}
             </div>
             <div className="text-xs text-muted-foreground">Leverage</div>
           </div>
           <div className="rounded-lg bg-muted/30 p-3">
             <div className="text-2xl font-bold tabular-nums">
-              {m.dev10x.toFixed(2)}
+              {fmt(m.dev10x, 2)}
             </div>
             <div className="text-xs text-muted-foreground">10xDEV</div>
           </div>
           <div className="rounded-lg bg-muted/30 p-3">
             <div className="text-2xl font-bold tabular-nums">
-              {m.signa_rate.toFixed(1)}
+              {fmt(m.signa_rate, 1)}
             </div>
             <div className="text-xs text-muted-foreground">SIGNA Rate</div>
           </div>
@@ -252,8 +256,8 @@ export default async function OperatorPage({
         <p className="mt-2 text-sm text-muted-foreground">
           {name} has processed {formatNumber(totalTokens)} total tokens across{" "}
           {op.total_messages} AI interactions over {accountAgeStr} of activity.
-          Their Leverage score of {m.leverage.toFixed(1)} and 10xDEV of{" "}
-          {m.dev10x.toFixed(2)} indicate how much output they generate relative
+          Their Leverage score of {fmt(m.leverage, 1)} and 10xDEV of{" "}
+          {fmt(m.dev10x, 2)} indicate how much output they generate relative
           to their input — a measure of how well they prompt, not just how much
           they spend.
           {efficiencyStr && ` Their efficiency rating is ${efficiencyStr}.`}
@@ -304,13 +308,13 @@ export default async function OperatorPage({
         <h2 className="text-lg font-semibold">Full metrics</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[
-            { label: "Velocity", value: m.velocity.toFixed(3) },
-            { label: "SNR", value: m.snr.toFixed(3) },
-            { label: "Compression", value: `${(m.compression_ratio * 100).toFixed(1)}%` },
-            { label: "Session Depth", value: m.session_depth.toString() },
-            { label: "Cross Thread", value: m.cross_thread.toString() },
-            { label: "Signal Force", value: m.signal_force.toFixed(1) },
-            { label: "Prompt Complexity", value: m.prompt_complexity.toFixed(2) },
+            { label: "Velocity", value: fmt(m.velocity, 3) },
+            { label: "SNR", value: fmt(m.snr, 3) },
+            { label: "Compression", value: m.compression_ratio != null ? `${(m.compression_ratio * 100).toFixed(1)}%` : "—" },
+            { label: "Session Depth", value: m.session_depth?.toString() ?? "—" },
+            { label: "Cross Thread", value: m.cross_thread?.toString() ?? "—" },
+            { label: "Signal Force", value: fmt(m.signal_force, 1) },
+            { label: "Prompt Complexity", value: fmt(m.prompt_complexity, 2) },
             { label: "Token Throughput", value: formatNumber(m.token_throughput) },
             { label: "Op Ratio", value: op.op_ratio },
           ].map((metric) => (

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { getLeaderboard, computeDeltaFromAverage } from "@/lib/api";
+import Link from "next/link";
+import { getFullLeaderboard, computeDeltaFromAverage, getSortedLeaderboard } from "@/lib/api";
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
 import { SpotlightSection } from "@/components/spotlight";
-import { Trophy, TrendingUp, Crown } from "lucide-react";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { Trophy, TrendingUp, Crown, Sparkles } from "lucide-react";
+import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
+import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
+import { operatorSlug, formatYield } from "@/lib/utils";
 
 export const revalidate = 300; // 5 minutes
 
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const data = await getLeaderboard("all_time", 500, "yield");
+  const data = await getFullLeaderboard("all_time");
 
   if (!data || data.entries.length === 0) {
     return (
@@ -40,11 +43,22 @@ export default async function HomePage() {
   const spotlight = deriveSpotlight(data);
   const dethrone = checkDethrone(data);
   const topOperator = data.entries[0];
+  const promptOfDay = getPromptOfTheDay();
+  const platformOfDay = getPlatformOfTheDay();
+  const allPrompts = getActivePrompts();
+
+  // Fetch the prompt-of-the-day's top 3 for the featured section
+  const promptData = await getSortedLeaderboard(promptOfDay.metric, "all", "peak", 3, "all_time");
+  const promptTop = promptData?.entries ?? [];
+
+  // Fetch the platform-of-the-day's top 3 by yield for the spotlight
+  const platformData = await getSortedLeaderboard("yield", platformOfDay, "peak", 3, "all_time");
+  const platformTop = platformData?.entries ?? [];
 
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "AI User Leaderboard", "https://signaaf.com"),
+        leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://signaaf.com"),
         articleSchema(
           "AI User Leaderboard — Ranked by Yield",
           "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",
@@ -87,19 +101,138 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Prompt of the day — featured question + answer */}
+      <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Sparkles className="h-5 w-5 text-primary" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Prompt of the day
+          </span>
+        </div>
+        <Link href={`/${promptOfDay.slug}`} className="block">
+          <h2 className="text-2xl font-bold tracking-tight hover:text-primary transition-colors">
+            {promptOfDay.question}
+          </h2>
+        </Link>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Ranked by{" "}
+          <span className="font-semibold text-foreground">{promptOfDay.metric_label}</span> —{" "}
+          <span className="font-mono text-xs">{promptOfDay.metric_formula}</span>
+        </p>
+        {promptTop.length > 0 && (
+          <div className="mt-4 space-y-2">
+            {promptTop.map((entry, i) => (
+              <Link
+                key={entry.codename}
+                href={`/operator/${operatorSlug(entry.display_name, entry.codename)}`}
+                className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 transition-all hover:border-primary/40 hover:shadow-sm"
+              >
+                <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold ${i === 0 ? "gradient-primary text-white" : "bg-muted text-muted-foreground"}`}>
+                  {i + 1}
+                </span>
+                <span className="flex-1 truncate font-semibold">
+                  {entry.display_name ?? entry.codename}
+                </span>
+                <span className="rounded-md border border-border px-2 py-0.5 text-xs font-medium">
+                  {entry.platform}
+                </span>
+                <span className="text-sm font-bold tabular-nums gradient-text">
+                  {formatMetricDisplay(entry, promptOfDay.metric)}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+        <Link
+          href={`/${promptOfDay.slug}`}
+          className="mt-3 inline-block text-sm font-medium text-primary hover:underline"
+        >
+          See full ranking →
+        </Link>
+      </div>
+
+      {/* Platform spotlight — rotating platform of the day */}
+      <div className="rounded-xl border border-border bg-card p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            Platform spotlight: {platformOfDay}
+          </h3>
+          <Link
+            href={`/best-ai-user?platform=${platformOfDay}`}
+            className="text-xs font-medium text-primary hover:underline"
+          >
+            Full board →
+          </Link>
+        </div>
+        {platformTop.length > 0 ? (
+          <div className="space-y-2">
+            {platformTop.map((entry, i) => (
+              <Link
+                key={entry.codename}
+                href={`/operator/${operatorSlug(entry.display_name, entry.codename)}`}
+                className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-accent"
+              >
+                <span className="text-sm font-bold tabular-nums text-muted-foreground w-6">
+                  #{i + 1}
+                </span>
+                <span className="flex-1 truncate font-medium">
+                  {entry.display_name ?? entry.codename}
+                </span>
+                <span className="rounded-md border border-border px-2 py-0.5 text-xs">
+                  {entry.class_tier}
+                </span>
+                <span className="text-sm font-bold tabular-nums gradient-text">
+                  Υ {formatYield(entry.yield_)}
+                </span>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">No operators on this platform yet.</p>
+        )}
+      </div>
+
       {/* Spotlight + dethrone watch */}
       <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
 
-      {/* Leaderboard list */}
+      {/* Leaderboard list — top 50 by Yield */}
       <h2 className="text-lg font-semibold pt-2">Top operators by Yield (Υ)</h2>
       <div className="space-y-2">
-        {data.entries.map((entry) => (
+        {data.entries.slice(0, 50).map((entry) => (
           <RankCard
             key={entry.codename}
             entry={entry}
             deltaFromAverage={deltas.get(entry.codename)}
           />
         ))}
+      </div>
+
+      {/* Prompt grid — all 9 metric rankings */}
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold text-foreground">9 ways to rank AI users</h2>
+        <p className="text-xs text-muted-foreground">
+          Yield is the flagship, but there are other canonical token metrics. Each question
+          below has a different #1 — 4 of 8 metrics have a different king.
+        </p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {allPrompts.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/${p.slug}`}
+              className="group rounded-lg border border-border p-4 transition-all hover:border-primary/40 hover:shadow-md"
+            >
+              <div className="font-semibold text-foreground group-hover:text-primary">
+                {p.question}
+              </div>
+              <div className="mt-1 text-xs text-muted-foreground">
+                {p.metric_label} — {p.current_leader.name} leads
+              </div>
+              <div className="mt-2 text-xs font-mono text-muted-foreground/70">
+                {p.metric_formula}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Bottom CTA */}
@@ -125,4 +258,33 @@ export default async function HomePage() {
       </div>
     </div>
   );
+}
+
+/** Format a metric value for display in the prompt-of-the-day section. */
+function formatMetricDisplay(
+  entry: { yield_: number; velocity: number; leverage: number; snr: number; dev10x: number | null; scale_v: number; efficiency: number; cost_per_million: number | null },
+  metric: string,
+): string {
+  switch (metric) {
+    case "yield":
+      return formatYield(entry.yield_);
+    case "velocity":
+      return entry.velocity.toFixed(2);
+    case "leverage":
+      return entry.leverage.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    case "snr":
+      return entry.snr.toFixed(4);
+    case "dev10x":
+      return (entry.dev10x ?? 0).toFixed(2);
+    case "scale_v":
+      return entry.scale_v.toFixed(2);
+    case "efficiency":
+      return entry.efficiency.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    case "cost_per_million":
+      return `$${entry.cost_per_million?.toFixed(4) ?? "—"}/M`;
+    case "op_ratio":
+      return entry.leverage.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    default:
+      return formatYield(entry.yield_);
+  }
 }

@@ -5,14 +5,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatNumber(n: number): string {
+export function formatNumber(n: number | null | undefined): string {
+  if (n == null || typeof n !== "number") return "—";
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + "M";
   if (n >= 1_000) return (n / 1_000).toFixed(1) + "K";
   return n.toFixed(0);
 }
 
-export function formatYield(n: number): string {
+export function formatYield(n: number | null | undefined): string {
+  if (n == null || typeof n !== "number") return "—";
   if (n >= 1000) return n.toLocaleString(undefined, { maximumFractionDigits: 0 });
   return n.toFixed(1);
 }
