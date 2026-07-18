@@ -230,7 +230,11 @@ export function sortLeaderboard(
     (a, b) => metricSortValue(b, metric) - metricSortValue(a, metric)
   );
 
-  // View: Center trims outliers >100x the median of the FULL board (pre-filter)
+  // View: Center trims outliers >100x the median of the FULL board (pre-filter),
+  // computed on the SAME metric being sorted. The previous implementation used the
+  // yield median for every metric, which made the Center toggle a no-op for
+  // bounded metrics (snr 0–1, dev10x ~0–5, scale_v ~0–16) and applied an
+  // arbitrary yield-derived cutoff to velocity/leverage/efficiency/op_ratio.
   let viewEntries = sorted;
   if (view === "center") {
     if (metric === "cost_per_million") {
@@ -241,19 +245,25 @@ export function sortLeaderboard(
         (e) => typeof e.cost_per_million === "number" && e.cost_per_million > 0
       );
     } else {
-      const allYields = data.entries
-        .map((e) => e.yield_)
-        .filter((y) => typeof y === "number" && y > 0)
+      // Collect the metric's own values across the full (pre-filter) board,
+      // excluding sentinel values that metricSortValue emits for non-compounding
+      // or missing-data operators (-1 for non-compounding yield/leverage/op_ratio,
+      // -999 for non-compounding dev10x). These are not real measurements and
+      // would corrupt the median.
+      const allValues = data.entries
+        .map((e) => metricSortValue(e, metric))
+        .filter((v) => typeof v === "number" && v > 0 && isFinite(v))
         .sort((a, b) => a - b);
-      const n = allYields.length;
+      const n = allValues.length;
       if (n > 0) {
-        const median = n % 2 ? allYields[(n - 1) / 2] : (allYields[n / 2 - 1] + allYields[n / 2]) / 2;
+        const median = n % 2 ? allValues[(n - 1) / 2] : (allValues[n / 2 - 1] + allValues[n / 2]) / 2;
         const threshold = median * 100;
-        // Trim operators whose metric value exceeds 100x the yield median.
+        // Trim operators whose metric value exceeds 100x the metric's own median.
         // For yield-family metrics this removes the extreme cache-reuse outliers
-        // (Richard Fu, younhomaeng-svg, etc.). For log-scaled metrics (scale_v,
-        // dev10x) the 100x threshold rarely trims anything — log scale already
-        // compresses the distribution.
+        // (Richard Fu, younhomaeng-svg, etc.). For bounded metrics (snr, dev10x,
+        // scale_v) the 100x threshold is mathematically unreachable, so the
+        // Center view shows the full sorted board — which is correct: there are
+        // no outliers to trim when the metric is already log-scaled or bounded.
         viewEntries = sorted.filter((e) => metricSortValue(e, metric) < threshold);
       }
     }
