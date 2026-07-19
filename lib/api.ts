@@ -27,25 +27,35 @@ const CACHE_TTL = 300; // 5 minutes — matches the API's Cache-Control
  * Edge-cached fetch using the Cloudflare Cache API (caches.default).
  * Falls back to a plain fetch when the Cache API is unavailable (build-time,
  * local dev, non-Cloudflare runtimes). The cache key is the full URL.
+ *
+ * Uses a Request object as the cache key (required by the Cache API for
+ * cross-origin responses — a bare URL string doesn't carry the method/body
+ * context the cache needs).
  */
 async function cachedFetch(url: string): Promise<Response> {
   // Cloudflare Workers expose `caches` as a global. During Next.js build
   // (static generation) or local dev, it's undefined — fall back to plain fetch.
   if (typeof caches !== "undefined" && caches.default) {
     const cache = caches.default;
-    const cached = await cache.match(url);
-    if (cached) return cached;
+    const cacheKey = new Request(url, { method: "GET" });
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      return cached;
+    }
     const res = await fetch(url);
     if (res.ok) {
-      // Clone and store in the edge cache. The Response is immutable so we
-      // can safely put it in the cache and return the clone.
-      const cachedRes = new Response(res.clone().body, {
+      // Clone the response — one copy goes to the caller, one to the cache.
+      // The cached copy needs explicit cache headers since the upstream
+      // response may have private/no-cache directives.
+      const bodyClone = res.clone();
+      const cachedRes = new Response(bodyClone.body, {
         status: res.status,
         statusText: res.statusText,
-        headers: res.headers,
+        headers: new Headers(res.headers),
       });
       cachedRes.headers.set("Cache-Control", `public, max-age=${CACHE_TTL}`);
-      await cache.put(url, cachedRes);
+      // Use the same Request as the key for put() — must match what match() used.
+      await cache.put(cacheKey, cachedRes);
     }
     return res;
   }
