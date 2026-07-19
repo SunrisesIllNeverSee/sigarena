@@ -1,7 +1,6 @@
 import { getLeaderboard } from "@/lib/api";
 import { RankCard } from "@/components/rank-card";
 import { computeDeltaFromAverage } from "@/lib/api";
-import { operatorSlug } from "@/lib/utils";
 import Link from "next/link";
 import { Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
@@ -76,7 +75,7 @@ export default async function AIPowerUsersPage() {
             {climbers.map((op) => (
               <Link
                 key={op.codename}
-                href={`/operator/${operatorSlug(op.display_name, op.codename)}`}
+                href={`https://signalaf.com/user/${op.codename}`}
                 className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-1.5 text-sm font-medium text-green-900 border border-green-200 hover:bg-green-100"
               >
                 <span className="text-green-600">+{op.movement_7d}</span>

@@ -1,6 +1,4 @@
 import type { MetadataRoute } from "next";
-import { getLeaderboard } from "@/lib/api";
-import { operatorSlug } from "@/lib/utils";
 import { getActivePrompts } from "@/lib/prompts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -33,15 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-  const data = await getLeaderboard("all_time", 500, "yield");
-  if (!data) return [...staticRoutes, ...promptRoutes];
-
-  const operatorRoutes: MetadataRoute.Sitemap = data.entries.map((e) => ({
-    url: `${base}/operator/${operatorSlug(e.display_name, e.codename)}`,
-    lastModified: new Date(data.generated_at),
-    changeFrequency: "daily" as const,
-    priority: 0.4,
-  }));
-
-  return [...staticRoutes, ...promptRoutes, ...operatorRoutes];
+  // Operator profile pages live on signalaf.com (sigrank-app), not signaaf.com.
+  // No operator routes in this sitemap.
+  return [...staticRoutes, ...promptRoutes];
 }

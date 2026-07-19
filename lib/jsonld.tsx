@@ -1,5 +1,5 @@
 import type { LeaderboardEntry, OperatorResponse } from "@/lib/api";
-import { operatorDisplayName, operatorSlug, formatYield } from "@/lib/utils";
+import { operatorDisplayName, formatYield } from "@/lib/utils";
 
 const SITE_URL = "https://signaaf.com";
 const ORG_URL = "https://signalaf.com";
@@ -38,7 +38,7 @@ export function websiteSchema() {
     },
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_URL}/operator/{search_term_string}`,
+      target: `${ORG_URL}/user/{search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -63,7 +63,7 @@ export function leaderboardSchema(
       item: {
         "@type": "Person",
         name: operatorDisplayName(entry.display_name, entry.codename),
-        url: `${SITE_URL}/operator/${operatorSlug(entry.display_name, entry.codename)}`,
+        url: `${ORG_URL}/user/${entry.codename}`,
         identifier: entry.codename,
         knowsAbout: "AI-assisted coding",
         award: `Υ ${formatYield(entry.yield_)} — ${entry.class_tier?.replace(/_/g, " ") || "Ranked"}`,
@@ -75,12 +75,11 @@ export function leaderboardSchema(
 /** Person schema for operator profile pages */
 export function personSchema(op: OperatorResponse) {
   const name = operatorDisplayName(op.display_name, op.codename);
-  const slug = operatorSlug(op.display_name, op.codename);
   return {
     "@context": "https://schema.org",
     "@type": "Person",
     name,
-    url: `${SITE_URL}/operator/${slug}`,
+    url: `${ORG_URL}/user/${op.codename}`,
     identifier: op.codename,
     knowsAbout: "AI-assisted coding",
     jobTitle: "AI Operator",

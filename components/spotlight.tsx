@@ -1,7 +1,6 @@
 import { Crown, TrendingUp, Swords, Zap } from "lucide-react";
-import Link from "next/link";
 import type { Spotlight, DethroneAlert } from "@/lib/campaign";
-import { formatYield, operatorSlug } from "@/lib/utils";
+import { formatYield } from "@/lib/utils";
 
 export function SpotlightSection({
   spotlight,
@@ -27,7 +26,7 @@ export function SpotlightSection({
       name: spotlight.topOperator.display_name ?? spotlight.topOperator.codename,
       value: `#${spotlight.topOperator.rank}`,
       sub: `Υ ${formatYield(spotlight.topOperator.yield_)}`,
-      href: `/operator/${operatorSlug(spotlight.topOperator.display_name, spotlight.topOperator.codename)}`,
+      href: `https://signalaf.com/user/${spotlight.topOperator.codename}`,
       color: "text-amber-600",
     });
   }
@@ -41,7 +40,7 @@ export function SpotlightSection({
         spotlight.closestChallenger.codename,
       value: `#${spotlight.closestChallenger.rank}`,
       sub: `Υ ${formatYield(spotlight.closestChallenger.yield_)}`,
-      href: `/operator/${operatorSlug(spotlight.closestChallenger.display_name, spotlight.closestChallenger.codename)}`,
+      href: `https://signalaf.com/user/${spotlight.closestChallenger.codename}`,
       color: "text-red-500",
     });
   }
@@ -54,7 +53,7 @@ export function SpotlightSection({
         spotlight.biggestMover.display_name ?? spotlight.biggestMover.codename,
       value: `+${spotlight.biggestMover.movement_24h}`,
       sub: `#${spotlight.biggestMover.rank} · Υ ${formatYield(spotlight.biggestMover.yield_)}`,
-      href: `/operator/${operatorSlug(spotlight.biggestMover.display_name, spotlight.biggestMover.codename)}`,
+      href: `https://signalaf.com/user/${spotlight.biggestMover.codename}`,
       color: "text-green-600",
     });
   }
@@ -83,7 +82,7 @@ export function SpotlightSection({
       {/* Spotlight cards */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {cards.map((card) => (
-          <Link
+          <a
             key={card.label}
             href={card.href}
             className="group rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md"
@@ -101,7 +100,7 @@ export function SpotlightSection({
               </span>
               <span className="text-xs text-muted-foreground">{card.sub}</span>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>

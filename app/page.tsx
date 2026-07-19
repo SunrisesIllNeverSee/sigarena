@@ -7,7 +7,7 @@ import { SpotlightSection } from "@/components/spotlight";
 import { Trophy, TrendingUp, Crown, Sparkles } from "lucide-react";
 import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
-import { operatorSlug, formatYield } from "@/lib/utils";
+import { formatYield } from "@/lib/utils";
 
 // Static Generation — page is pre-built at deploy time and served as a
 // static asset from Cloudflare's ASSETS binding. Zero Worker invocations
@@ -126,7 +126,7 @@ export default async function HomePage() {
             {promptTop.map((entry, i) => (
               <Link
                 key={entry.codename}
-                href={`/operator/${operatorSlug(entry.display_name, entry.codename)}`}
+                href={`https://signalaf.com/user/${entry.codename}`}
                 className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 transition-all hover:border-primary/40 hover:shadow-sm"
               >
                 <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold ${i === 0 ? "gradient-primary text-white" : "bg-muted text-muted-foreground"}`}>
@@ -171,7 +171,7 @@ export default async function HomePage() {
             {platformTop.map((entry, i) => (
               <Link
                 key={entry.codename}
-                href={`/operator/${operatorSlug(entry.display_name, entry.codename)}`}
+                href={`https://signalaf.com/user/${entry.codename}`}
                 className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-accent"
               >
                 <span className="text-sm font-bold tabular-nums text-muted-foreground w-6">
