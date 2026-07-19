@@ -10,16 +10,18 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/li
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// Static Generation (Option C hybrid):
+// ISR (Incremental Static Regeneration):
 // - Canonical page (/best-ai-user with no searchParams) is pre-built at
 //   deploy time. Served as a static asset from Cloudflare's ASSETS binding.
-// - Filtered pages (?platform=, ?view=) are dynamic via the Worker.
+// - Filtered pages (?platform=, ?view=, ?category=, ?window=) are rendered
+//   on-demand but cached for 5 minutes (ISR). This prevents every request
+//   from hitting the signalaf.com API — a 3.5k req/5min spike only triggers
+//   ~2 API calls per 5 minutes per unique param combo instead of 2 per request.
 // - dynamicParams = true allows filtered variants to render dynamically.
 export const dynamicParams = true;
+export const revalidate = 300; // 5-minute ISR — matches the API's Cache-Control
 
 // Pre-render the canonical best-ai-user page (no searchParams).
-// The page itself still reads searchParams for filtered views, which makes
-// those requests dynamic. The canonical pre-render is static.
 export async function generateStaticParams() {
   return [{}]; // single canonical route — no dynamic segments
 }

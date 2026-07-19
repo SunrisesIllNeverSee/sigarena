@@ -8,6 +8,12 @@
  * correct per-metric ranking, we fetch all 1640 operators once (limit=2000) and
  * sort client-side. The API's `platform=` filter IS used server-side when
  * available; for op_ratio (a string) we sort by leverage (the lead term).
+ *
+ * Caching: OpenNext's incrementalCache is "dummy" on Cloudflare free tier, so
+ * Next.js fetch-level revalidate is a no-op. We use the Cloudflare Cache API
+ * (caches.default) directly to cache API responses at the edge for 5 minutes.
+ * This prevents request spikes from amplifying into API spikes — a 3.5k
+ * req/5min burst on /best-ai-user results in ~2 API calls, not 7k.
  */
 
 import type { CanonicalMetric, Platform, View, Category } from "./prompts";
@@ -15,6 +21,36 @@ import { operatorSlug } from "./utils";
 import { isOutlierEntry } from "./outlier-classify";
 
 const API_BASE = "https://signalaf.com/api/v1";
+const CACHE_TTL = 300; // 5 minutes — matches the API's Cache-Control
+
+/**
+ * Edge-cached fetch using the Cloudflare Cache API (caches.default).
+ * Falls back to a plain fetch when the Cache API is unavailable (build-time,
+ * local dev, non-Cloudflare runtimes). The cache key is the full URL.
+ */
+async function cachedFetch(url: string): Promise<Response> {
+  // Cloudflare Workers expose `caches` as a global. During Next.js build
+  // (static generation) or local dev, it's undefined — fall back to plain fetch.
+  if (typeof caches !== "undefined" && caches.default) {
+    const cache = caches.default;
+    const cached = await cache.match(url);
+    if (cached) return cached;
+    const res = await fetch(url);
+    if (res.ok) {
+      // Clone and store in the edge cache. The Response is immutable so we
+      // can safely put it in the cache and return the clone.
+      const cachedRes = new Response(res.clone().body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers,
+      });
+      cachedRes.headers.set("Cache-Control", `public, max-age=${CACHE_TTL}`);
+      await cache.put(url, cachedRes);
+    }
+    return res;
+  }
+  return fetch(url);
+}
 
 export interface LeaderboardEntry {
   rank: number;
@@ -119,10 +155,10 @@ export interface OperatorResponse {
 }
 
 /**
- * Fetch the full leaderboard. ISR caches for 5 minutes.
- * NOTE: on Cloudflare Workers with OpenNext `incrementalCache: "dummy"`,
- * ISR does not actually cache — every request live-fetches. Phase 2 switches
- * to Static Generation for true daily snapshots.
+ * Fetch the full leaderboard. Cached for 5 minutes via Next.js fetch-level
+ * revalidate (matches the API's Cache-Control: max-age=300). This prevents
+ * every page request from triggering an API call — the first request fetches,
+ * subsequent requests within 300s use the cached response.
  */
 export async function getLeaderboard(
   window: string = "all_time",
@@ -131,9 +167,8 @@ export async function getLeaderboard(
   category: Category = "human"
 ): Promise<LeaderboardResponse | null> {
   try {
-    const res = await fetch(
+    const res = await cachedFetch(
       `${API_BASE}/leaderboard?window=${window}&limit=${limit}&metric=${metric}`,
-      { next: { revalidate: false } }
     );
     if (!res.ok) return null;
     const data = (await res.json()) as LeaderboardResponse;
@@ -151,15 +186,14 @@ export async function getLeaderboard(
 /**
  * Fetch ALL operators (up to 2000, the public cap) for client-side sorting.
  * Used when the API can't sort by the requested canonical metric (everything
- * except yield). One fetch, then sort/slice locally.
+ * except yield). One fetch, then sort/slice locally. Cached for 5 minutes.
  */
 export async function getFullLeaderboard(
   window: string = "all_time"
 ): Promise<LeaderboardResponse | null> {
   try {
-    const res = await fetch(
+    const res = await cachedFetch(
       `${API_BASE}/leaderboard?window=${window}&limit=2000&metric=yield`,
-      { next: { revalidate: false } }
     );
     if (!res.ok) return null;
     return (await res.json()) as LeaderboardResponse;
@@ -330,13 +364,11 @@ export async function getSortedLeaderboard(
 }
 
 /**
- * Fetch a single operator's profile. ISR caches for 5 minutes.
+ * Fetch a single operator's profile. Cached for 5 minutes.
  */
 export async function getOperator(codename: string): Promise<OperatorResponse | null> {
   try {
-    const res = await fetch(`${API_BASE}/operators/${codename}`, {
-      next: { revalidate: false },
-    });
+    const res = await cachedFetch(`${API_BASE}/operators/${codename}`);
     if (!res.ok) return null;
     return (await res.json()) as OperatorResponse;
   } catch {
