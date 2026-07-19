@@ -7,7 +7,7 @@ import { Trophy, Crown } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 import { formatYield } from "@/lib/utils";
-import { PLATFORMS, getActivePrompts, type Platform, type View } from "@/lib/prompts";
+import { PLATFORMS, getActivePrompts, type Platform, type View, type Category } from "@/lib/prompts";
 
 // Static Generation (Option C hybrid):
 // - Canonical page (/best-ai-user with no searchParams) is pre-built at
@@ -47,10 +47,16 @@ function parseView(s: string | undefined): View {
   return "peak";
 }
 
-function promptUrl(slug: string, platform: Platform, view: View): string {
+function parseCategory(s: string | undefined): Category {
+  if (s === "all") return "all";
+  return "human";
+}
+
+function promptUrl(slug: string, platform: Platform, view: View, category: Category): string {
   const params = new URLSearchParams();
   if (platform !== "all") params.set("platform", platform);
   if (view !== "peak") params.set("view", view);
+  if (category !== "human") params.set("category", category);
   const qs = params.toString();
   return qs ? `/${slug}?${qs}` : `/${slug}`;
 }
@@ -58,13 +64,14 @@ function promptUrl(slug: string, platform: Platform, view: View): string {
 export default async function BestAIUserPage({
   searchParams,
 }: {
-  searchParams: Promise<{ platform?: string; view?: string }>;
+  searchParams: Promise<{ platform?: string; view?: string; category?: string }>;
 }) {
   const sp = await searchParams;
   const platform = parsePlatform(sp.platform);
   const view = parseView(sp.view);
+  const category = parseCategory(sp.category);
 
-  const data = await getSortedLeaderboard("yield", platform, view, 50, "all_time");
+  const data = await getSortedLeaderboard("yield", platform, view, 50, "all_time", category);
 
   if (!data || data.entries.length === 0) {
     return (
@@ -132,7 +139,7 @@ export default async function BestAIUserPage({
         {PLATFORMS.map((p) => (
           <Link
             key={p}
-            href={promptUrl("best-ai-user", p, view)}
+            href={promptUrl("best-ai-user", p, view, category)}
             className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
               platform === p
                 ? "border-primary bg-primary text-primary-foreground"
@@ -147,7 +154,7 @@ export default async function BestAIUserPage({
       {/* Peak / Center view toggle */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl("best-ai-user", platform, "peak")}
+          href={promptUrl("best-ai-user", platform, "peak", category)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "peak"
               ? "border-primary bg-primary text-primary-foreground"
@@ -157,7 +164,7 @@ export default async function BestAIUserPage({
           The Peak
         </Link>
         <Link
-          href={promptUrl("best-ai-user", platform, "center")}
+          href={promptUrl("best-ai-user", platform, "center", category)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "center"
               ? "border-primary bg-primary text-primary-foreground"
@@ -170,6 +177,35 @@ export default async function BestAIUserPage({
           {view === "peak"
             ? "Full board, outliers included"
             : "Outliers trimmed, dense middle visible"}
+        </span>
+      </div>
+
+      {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
+      <div className="flex items-center justify-center gap-2">
+        <Link
+          href={promptUrl("best-ai-user", platform, view, "human")}
+          className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
+            category === "human"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+          }`}
+        >
+          Human
+        </Link>
+        <Link
+          href={promptUrl("best-ai-user", platform, view, "all")}
+          className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
+            category === "all"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+          }`}
+        >
+          + Outliers
+        </Link>
+        <span className="ml-2 text-xs text-muted-foreground">
+          {category === "human"
+            ? "Human Center of Mass — outliers & bots excluded"
+            : "Including outliers & bots"}
         </span>
       </div>
 
@@ -207,7 +243,7 @@ export default async function BestAIUserPage({
       {/* Top 10 */}
       <div>
         <h2 className="mb-3 text-lg font-semibold">
-          Top {data.entries.length} AI users{platform !== "all" && ` on ${platform}`}{view === "center" && " (Center)"}
+          Top {data.entries.length} AI users{platform !== "all" && ` on ${platform}`}{view === "center" && " (Center)"}{category === "all" && " (+ Outliers)"}
         </h2>
         <div className="space-y-2">
           {data.entries.map((entry) => (

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { LeaderboardEntry, LeaderboardResponse } from "@/lib/api";
-import type { Prompt, Platform, View } from "@/lib/prompts";
+import type { Prompt, Platform, View, Category } from "@/lib/prompts";
 import { PLATFORMS } from "@/lib/prompts";
 import { RankCard } from "@/components/rank-card";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
@@ -12,14 +12,16 @@ interface PromptPageProps {
   data: LeaderboardResponse;
   platform: Platform;
   view: View;
+  category: Category;
   allPrompts: Prompt[];
 }
 
-/** Build the URL for this prompt with given platform/view params. */
-function promptUrl(slug: string, platform: Platform, view: View): string {
+/** Build the URL for this prompt with given platform/view/category params. */
+function promptUrl(slug: string, platform: Platform, view: View, category: Category): string {
   const params = new URLSearchParams();
   if (platform !== "all") params.set("platform", platform);
   if (view !== "peak") params.set("view", view);
+  if (category !== "human") params.set("category", category);
   const qs = params.toString();
   return qs ? `/${slug}?${qs}` : `/${slug}`;
 }
@@ -34,7 +36,7 @@ function formatMetricValue(metric: string, value: number): string {
   return value.toFixed(4);
 }
 
-export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptPageProps) {
+export function PromptPage({ prompt, data, platform, view, category, allPrompts }: PromptPageProps) {
   const top = data.entries[0];
   const topName = top ? operatorDisplayName(top.display_name, top.codename) : "Unknown";
   const topValue = top ? formatMetricValue(prompt.metric, metricValue(top, prompt.metric)) : "—";
@@ -99,7 +101,7 @@ export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptP
         {PLATFORMS.map((p) => (
           <Link
             key={p}
-            href={promptUrl(canonicalSlug, p, view)}
+            href={promptUrl(canonicalSlug, p, view, category)}
             className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
               platform === p
                 ? "border-primary bg-primary text-primary-foreground"
@@ -114,7 +116,7 @@ export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptP
       {/* Peak / Center view toggle */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl(canonicalSlug, platform, "peak")}
+          href={promptUrl(canonicalSlug, platform, "peak", category)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "peak"
               ? "border-primary bg-primary text-primary-foreground"
@@ -124,7 +126,7 @@ export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptP
           The Peak
         </Link>
         <Link
-          href={promptUrl(canonicalSlug, platform, "center")}
+          href={promptUrl(canonicalSlug, platform, "center", category)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "center"
               ? "border-primary bg-primary text-primary-foreground"
@@ -137,6 +139,35 @@ export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptP
           {view === "peak"
             ? "Full board, outliers included"
             : "Outliers trimmed, dense middle visible"}
+        </span>
+      </div>
+
+      {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
+      <div className="flex items-center justify-center gap-2">
+        <Link
+          href={promptUrl(canonicalSlug, platform, view, "human")}
+          className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
+            category === "human"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+          }`}
+        >
+          Human
+        </Link>
+        <Link
+          href={promptUrl(canonicalSlug, platform, view, "all")}
+          className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
+            category === "all"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+          }`}
+        >
+          + Outliers
+        </Link>
+        <span className="ml-2 text-xs text-muted-foreground">
+          {category === "human"
+            ? "Human Center of Mass — outliers & bots excluded"
+            : "Including outliers & bots"}
         </span>
       </div>
 
@@ -173,6 +204,7 @@ export function PromptPage({ prompt, data, platform, view, allPrompts }: PromptP
         Top {data.entries.length} by {prompt.metric_label}
         {platform !== "all" && ` on ${platform}`}
         {view === "center" && " (Center)"}
+        {category === "all" && " (+ Outliers)"}
       </h2>
       {data.entries.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">

@@ -10,8 +10,9 @@
  * available; for op_ratio (a string) we sort by leverage (the lead term).
  */
 
-import type { CanonicalMetric, Platform, View } from "./prompts";
+import type { CanonicalMetric, Platform, View, Category } from "./prompts";
 import { operatorSlug } from "./utils";
+import { isOutlierEntry } from "./outlier-classify";
 
 const API_BASE = "https://signalaf.com/api/v1";
 
@@ -126,7 +127,8 @@ export interface OperatorResponse {
 export async function getLeaderboard(
   window: string = "all_time",
   limit: number = 100,
-  metric: string = "yield"
+  metric: string = "yield",
+  category: Category = "human"
 ): Promise<LeaderboardResponse | null> {
   try {
     const res = await fetch(
@@ -134,7 +136,13 @@ export async function getLeaderboard(
       { next: { revalidate: false } }
     );
     if (!res.ok) return null;
-    return (await res.json()) as LeaderboardResponse;
+    const data = (await res.json()) as LeaderboardResponse;
+    // Category filter: "human" excludes outliers (Human Center of Mass only).
+    if (category === "human") {
+      const filtered = data.entries.filter((e) => !isOutlierEntry(e));
+      return { ...data, entries: filtered, total_operators: filtered.length };
+    }
+    return data;
   } catch {
     return null;
   }
@@ -211,6 +219,8 @@ export function metricSortValue(entry: LeaderboardEntry, metric: CanonicalMetric
  *   scale_v, efficiency, cost_per_million, op_ratio)
  * - platform: filter to a single platform (all = no filter)
  * - view: "peak" (top N, outliers included) or "center" (outliers >100x median trimmed)
+ * - category: "human" (Human Center of Mass only, outliers excluded — default)
+ *   or "all" (include outliers & bots). Mirrors signalaf.com's board filter.
  * - limit: how many entries to return (default 100)
  */
 export function sortLeaderboard(
@@ -219,11 +229,18 @@ export function sortLeaderboard(
   platform: Platform = "all",
   view: View = "peak",
   limit: number = 100,
+  category: Category = "human",
 ): LeaderboardResponse {
   // Platform filter
   let entries = data.entries;
   if (platform !== "all") {
     entries = entries.filter((e) => e.platform === platform);
+  }
+
+  // Category filter: "human" excludes outliers (Human Center of Mass only).
+  // Applied BEFORE sort so the median + Center trim use the human-only board.
+  if (category === "human") {
+    entries = entries.filter((e) => !isOutlierEntry(e));
   }
 
   // Sort by the canonical metric (client-side)
@@ -304,11 +321,12 @@ export async function getSortedLeaderboard(
   platform: Platform = "all",
   view: View = "peak",
   limit: number = 100,
-  window: string = "all_time"
+  window: string = "all_time",
+  category: Category = "human",
 ): Promise<LeaderboardResponse | null> {
   const data = await getFullLeaderboard(window);
   if (!data) return null;
-  return sortLeaderboard(data, metric, platform, view, limit);
+  return sortLeaderboard(data, metric, platform, view, limit, category);
 }
 
 /**

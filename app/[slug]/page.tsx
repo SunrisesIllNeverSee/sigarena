@@ -1,6 +1,6 @@
 import { getSortedLeaderboard } from "@/lib/api";
 import { PromptPage } from "@/components/prompt-page";
-import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View } from "@/lib/prompts";
+import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View, type Category } from "@/lib/prompts";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -17,7 +17,7 @@ export const dynamicParams = true;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ platform?: string; view?: string }>;
+  searchParams: Promise<{ platform?: string; view?: string; category?: string }>;
 }
 
 function parsePlatform(s: string | undefined): Platform {
@@ -28,6 +28,11 @@ function parsePlatform(s: string | undefined): Platform {
 function parseView(s: string | undefined): View {
   if (s === "center" || s === "peak") return s;
   return "peak";
+}
+
+function parseCategory(s: string | undefined): Category {
+  if (s === "all") return "all";
+  return "human";
 }
 
 // Pre-render all 8 active prompt slugs (canonical view only).
@@ -60,11 +65,12 @@ export default async function PromptRoutePage({ params, searchParams }: RoutePro
   const sp = await searchParams;
   const platform = parsePlatform(sp.platform);
   const view = parseView(sp.view);
+  const category = parseCategory(sp.category);
 
   const prompt = getPromptBySlug(slug);
   if (!prompt || prompt.is_existing_route) notFound();
 
-  const data = await getSortedLeaderboard(prompt.metric, platform, view, 100, "all_time");
+  const data = await getSortedLeaderboard(prompt.metric, platform, view, 100, "all_time", category);
   if (!data) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -80,6 +86,7 @@ export default async function PromptRoutePage({ params, searchParams }: RoutePro
       data={data}
       platform={platform}
       view={view}
+      category={category}
       allPrompts={allPrompts}
     />
   );

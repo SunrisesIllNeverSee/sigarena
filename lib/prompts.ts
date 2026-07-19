@@ -28,6 +28,11 @@ export type Platform = "all" | "claude" | "chatgpt" | "other" | "anthropic" | "g
 
 export type View = "peak" | "center";
 
+/** Category filter — mirrors signalaf.com's board category filter.
+ * "human" = Human Center of Mass only (outliers excluded, the default).
+ * "all" = include outliers & bots. */
+export type Category = "human" | "all";
+
 export interface PromptLeader {
   name: string;
   platform: string;
