@@ -13,3 +13,7 @@ service = "signaaf"
 
 [images]
 binding = "IMAGES"
+
+[vars]
+NEXT_PUBLIC_POSTHOG_KEY = "phc_DosVqZCDFVNghfXCfLQBHG5ZpntSRmzrJZRzhKLMqTkh"
+NEXT_PUBLIC_POSTHOG_HOST = "https://us.i.posthog.com"

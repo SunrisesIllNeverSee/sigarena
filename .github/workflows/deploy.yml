@@ -47,6 +47,10 @@ jobs:
           # Next.js build fetches from signalaf.com for ISR pre-rendering.
           # Timeouts are handled gracefully (pages fall back to client render).
           NEXT_TELEMETRY_DISABLED: "1"
+          # PostHog analytics — NEXT_PUBLIC_* vars are inlined into the JS
+          # bundle at build time, so they must be present during the build.
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
 
       - name: Deploy to Cloudflare Workers
         run: npx wrangler deploy
