@@ -33,6 +33,19 @@ export type View = "peak" | "center";
  * "all" = include outliers & bots. */
 export type Category = "human" | "all";
 
+/** Window filter — mirrors signalaf.com's board windows.
+ * "all_time" = all-time board (default), "7d"/"30d"/"90d" = rolling windows. */
+export type Window = "all_time" | "7d" | "30d" | "90d";
+
+export const WINDOWS: Window[] = ["all_time", "30d", "7d", "90d"];
+
+export const WINDOW_LABELS: Record<Window, string> = {
+  all_time: "All time",
+  "30d": "30 days",
+  "7d": "7 days",
+  "90d": "90 days",
+};
+
 export interface PromptLeader {
   name: string;
   platform: string;

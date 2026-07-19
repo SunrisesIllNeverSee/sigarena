@@ -1,13 +1,14 @@
 import { getSortedLeaderboard, getFullLeaderboard, computeDeltaFromAverage } from "@/lib/api";
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
+import { ShareBar } from "@/components/share-bar";
 import { SpotlightSection } from "@/components/spotlight";
 import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 import { formatYield } from "@/lib/utils";
-import { PLATFORMS, getActivePrompts, type Platform, type View, type Category } from "@/lib/prompts";
+import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
 // Static Generation (Option C hybrid):
 // - Canonical page (/best-ai-user with no searchParams) is pre-built at
@@ -52,11 +53,17 @@ function parseCategory(s: string | undefined): Category {
   return "human";
 }
 
-function promptUrl(slug: string, platform: Platform, view: View, category: Category): string {
+function parseWindow(s: string | undefined): Window {
+  if (s === "7d" || s === "30d" || s === "90d" || s === "all_time") return s;
+  return "all_time";
+}
+
+function promptUrl(slug: string, platform: Platform, view: View, category: Category, window: Window): string {
   const params = new URLSearchParams();
   if (platform !== "all") params.set("platform", platform);
   if (view !== "peak") params.set("view", view);
   if (category !== "human") params.set("category", category);
+  if (window !== "all_time") params.set("window", window);
   const qs = params.toString();
   return qs ? `/${slug}?${qs}` : `/${slug}`;
 }
@@ -64,14 +71,15 @@ function promptUrl(slug: string, platform: Platform, view: View, category: Categ
 export default async function BestAIUserPage({
   searchParams,
 }: {
-  searchParams: Promise<{ platform?: string; view?: string; category?: string }>;
+  searchParams: Promise<{ platform?: string; view?: string; category?: string; window?: string }>;
 }) {
   const sp = await searchParams;
   const platform = parsePlatform(sp.platform);
   const view = parseView(sp.view);
   const category = parseCategory(sp.category);
+  const win = parseWindow(sp.window);
 
-  const data = await getSortedLeaderboard("yield", platform, view, 50, "all_time", category);
+  const data = await getSortedLeaderboard("yield", platform, view, 50, win, category);
 
   if (!data || data.entries.length === 0) {
     return (
@@ -139,7 +147,7 @@ export default async function BestAIUserPage({
         {PLATFORMS.map((p) => (
           <Link
             key={p}
-            href={promptUrl("best-ai-user", p, view, category)}
+            href={promptUrl("best-ai-user", p, view, category, win)}
             className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
               platform === p
                 ? "border-primary bg-primary text-primary-foreground"
@@ -154,7 +162,7 @@ export default async function BestAIUserPage({
       {/* Peak / Center view toggle */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl("best-ai-user", platform, "peak", category)}
+          href={promptUrl("best-ai-user", platform, "peak", category, win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "peak"
               ? "border-primary bg-primary text-primary-foreground"
@@ -164,7 +172,7 @@ export default async function BestAIUserPage({
           The Peak
         </Link>
         <Link
-          href={promptUrl("best-ai-user", platform, "center", category)}
+          href={promptUrl("best-ai-user", platform, "center", category, win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "center"
               ? "border-primary bg-primary text-primary-foreground"
@@ -183,7 +191,7 @@ export default async function BestAIUserPage({
       {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl("best-ai-user", platform, view, "human")}
+          href={promptUrl("best-ai-user", platform, view, "human", win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             category === "human"
               ? "border-primary bg-primary text-primary-foreground"
@@ -193,7 +201,7 @@ export default async function BestAIUserPage({
           Human
         </Link>
         <Link
-          href={promptUrl("best-ai-user", platform, view, "all")}
+          href={promptUrl("best-ai-user", platform, view, "all", win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             category === "all"
               ? "border-primary bg-primary text-primary-foreground"
@@ -207,6 +215,26 @@ export default async function BestAIUserPage({
             ? "Human Center of Mass — outliers & bots excluded"
             : "Including outliers & bots"}
         </span>
+      </div>
+
+      {/* Window selector — 7d / 30d / 90d / All time */}
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Window:
+        </span>
+        {WINDOWS.map((w) => (
+          <Link
+            key={w}
+            href={promptUrl("best-ai-user", platform, view, category, w)}
+            className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
+              win === w
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+            }`}
+          >
+            {WINDOW_LABELS[w]}
+          </Link>
+        ))}
       </div>
 
       {/* The #1 citable answer block (AEO/GEO) */}
@@ -240,10 +268,20 @@ export default async function BestAIUserPage({
         <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
       )}
 
+      {/* Share on X */}
+      <ShareBar
+        tweetTemplate="Who is the best AI user?\n\nTop 100 ranked by Yield (Υ) — (cache_read × output) / input².\n\nWhere do you rank? {url}"
+        url="https://signaaf.com/best-ai-user"
+        promptSlug="best-ai-user"
+        platform={platform}
+        view={view}
+        category={category}
+      />
+
       {/* Top 10 */}
       <div>
         <h2 className="mb-3 text-lg font-semibold">
-          Top {data.entries.length} AI users{platform !== "all" && ` on ${platform}`}{view === "center" && " (Center)"}{category === "all" && " (+ Outliers)"}
+          Top {data.entries.length} AI users{platform !== "all" && ` on ${platform}`}{view === "center" && " (Center)"}{category === "all" && " (+ Outliers)"}{win !== "all_time" && ` (${WINDOW_LABELS[win]})`}
         </h2>
         <div className="space-y-2">
           {data.entries.map((entry) => (

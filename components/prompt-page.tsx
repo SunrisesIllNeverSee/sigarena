@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { LeaderboardEntry, LeaderboardResponse } from "@/lib/api";
-import type { Prompt, Platform, View, Category } from "@/lib/prompts";
-import { PLATFORMS } from "@/lib/prompts";
+import type { Prompt, Platform, View, Category, Window } from "@/lib/prompts";
+import { PLATFORMS, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 import { RankCard } from "@/components/rank-card";
+import { ShareBar } from "@/components/share-bar";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 import { operatorDisplayName } from "@/lib/utils";
 
@@ -13,15 +14,17 @@ interface PromptPageProps {
   platform: Platform;
   view: View;
   category: Category;
+  window: Window;
   allPrompts: Prompt[];
 }
 
-/** Build the URL for this prompt with given platform/view/category params. */
-function promptUrl(slug: string, platform: Platform, view: View, category: Category): string {
+/** Build the URL for this prompt with given platform/view/category/window params. */
+function promptUrl(slug: string, platform: Platform, view: View, category: Category, window: Window): string {
   const params = new URLSearchParams();
   if (platform !== "all") params.set("platform", platform);
   if (view !== "peak") params.set("view", view);
   if (category !== "human") params.set("category", category);
+  if (window !== "all_time") params.set("window", window);
   const qs = params.toString();
   return qs ? `/${slug}?${qs}` : `/${slug}`;
 }
@@ -36,7 +39,7 @@ function formatMetricValue(metric: string, value: number): string {
   return value.toFixed(4);
 }
 
-export function PromptPage({ prompt, data, platform, view, category, allPrompts }: PromptPageProps) {
+export function PromptPage({ prompt, data, platform, view, category, window: win, allPrompts }: PromptPageProps) {
   const top = data.entries[0];
   const topName = top ? operatorDisplayName(top.display_name, top.codename) : "Unknown";
   const topValue = top ? formatMetricValue(prompt.metric, metricValue(top, prompt.metric)) : "—";
@@ -101,7 +104,7 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
         {PLATFORMS.map((p) => (
           <Link
             key={p}
-            href={promptUrl(canonicalSlug, p, view, category)}
+            href={promptUrl(canonicalSlug, p, view, category, win)}
             className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
               platform === p
                 ? "border-primary bg-primary text-primary-foreground"
@@ -116,7 +119,7 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
       {/* Peak / Center view toggle */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl(canonicalSlug, platform, "peak", category)}
+          href={promptUrl(canonicalSlug, platform, "peak", category, win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "peak"
               ? "border-primary bg-primary text-primary-foreground"
@@ -126,7 +129,7 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
           The Peak
         </Link>
         <Link
-          href={promptUrl(canonicalSlug, platform, "center", category)}
+          href={promptUrl(canonicalSlug, platform, "center", category, win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             view === "center"
               ? "border-primary bg-primary text-primary-foreground"
@@ -145,7 +148,7 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
       {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
       <div className="flex items-center justify-center gap-2">
         <Link
-          href={promptUrl(canonicalSlug, platform, view, "human")}
+          href={promptUrl(canonicalSlug, platform, view, "human", win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             category === "human"
               ? "border-primary bg-primary text-primary-foreground"
@@ -155,7 +158,7 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
           Human
         </Link>
         <Link
-          href={promptUrl(canonicalSlug, platform, view, "all")}
+          href={promptUrl(canonicalSlug, platform, view, "all", win)}
           className={`rounded-md border px-3 py-1 text-xs font-semibold transition-colors ${
             category === "all"
               ? "border-primary bg-primary text-primary-foreground"
@@ -169,6 +172,26 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
             ? "Human Center of Mass — outliers & bots excluded"
             : "Including outliers & bots"}
         </span>
+      </div>
+
+      {/* Window selector — 7d / 30d / 90d / All time */}
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Window:
+        </span>
+        {WINDOWS.map((w) => (
+          <Link
+            key={w}
+            href={promptUrl(canonicalSlug, platform, view, category, w)}
+            className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
+              win === w
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+            }`}
+          >
+            {WINDOW_LABELS[w]}
+          </Link>
+        ))}
       </div>
 
       {/* The #1 citable answer block (AEO/GEO) */}
@@ -199,12 +222,23 @@ export function PromptPage({ prompt, data, platform, view, category, allPrompts 
         </div>
       )}
 
+      {/* Share on X — uses the prompt's tweet_template */}
+      <ShareBar
+        tweetTemplate={prompt.tweet_template}
+        url={`https://signaaf.com/${canonicalSlug}`}
+        promptSlug={canonicalSlug}
+        platform={platform}
+        view={view}
+        category={category}
+      />
+
       {/* Leaderboard list */}
       <h2 className="text-lg font-semibold pt-2">
         Top {data.entries.length} by {prompt.metric_label}
         {platform !== "all" && ` on ${platform}`}
         {view === "center" && " (Center)"}
         {category === "all" && " (+ Outliers)"}
+        {win !== "all_time" && ` (${WINDOW_LABELS[win]})`}
       </h2>
       {data.entries.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">
