@@ -1,0 +1,39 @@
+# Custom robots.txt — allows AI crawlers for AEO (Answer Engine Optimization)
+# Cloudflare's "AI Scrapers and Crawlers" toggle generates a managed robots.txt
+# that blocks all AI bots. This custom file overrides it so AI answer engines
+# (ChatGPT, Perplexity, Claude, Google AI Overviews) can read and cite our content.
+# AI training is still blocked via the Content-Signal header (ai-train=no).
+
+User-agent: *
+Allow: /
+
+# Explicitly allow AI answer-engine crawlers (AEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Block only training-focused scrapers (not answer engines)
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+Sitemap: https://signaaf.com/sitemap.xml

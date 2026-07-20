@@ -4,20 +4,21 @@ import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View,
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-// Static Generation (Option C hybrid):
-// - Canonical pages (no searchParams → platform=all, view=peak) are pre-built
-//   at deploy time via generateStaticParams. Served as static assets from
-//   Cloudflare's ASSETS binding. Zero Worker invocations.
-// - Filtered pages (with ?platform= or ?view=) are dynamic — generated
-//   on-demand via the Worker. These are low-traffic (most visitors hit the
-//   canonical page).
-// - dynamicParams = true allows filtered variants to still render dynamically
-//   even though only the canonical slugs are pre-built.
-export const dynamicParams = true;
+// Force static rendering — all prompt pages are pre-built at deploy time and
+// served as static assets from Cloudflare's ASSETS binding. This is critical
+// for SEO/GEO: Google indexes static pages faster and higher than dynamic
+// (no-cache) pages. The previous ISR approach (searchParams + dynamicParams)
+// made all pages fully dynamic because:
+//   1. searchParams access forces Next.js to opt out of static rendering
+//   2. OpenNext's incrementalCache: "dummy" ignores revalidate entirely
+// dynamicParams = false means only the slugs from generateStaticParams are
+// served (as static assets). Unknown slugs 404 instead of rendering dynamically.
+// Filter buttons remain as visual navigation but the server-rendered content
+// always shows the canonical default view (all platforms, peak, human, all_time).
+export const dynamicParams = false;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ platform?: string; view?: string; category?: string; window?: string }>;
 }
 
 function parsePlatform(s: string | undefined): Platform {
@@ -65,13 +66,15 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
   };
 }
 
-export default async function PromptRoutePage({ params, searchParams }: RouteProps) {
+export default async function PromptRoutePage({ params }: RouteProps) {
   const { slug } = await params;
-  const sp = await searchParams;
-  const platform = parsePlatform(sp.platform);
-  const view = parseView(sp.view);
-  const category = parseCategory(sp.category);
-  const win = parseWindow(sp.window);
+  // Default filter values — the page is force-static, so these are baked in
+  // at build time. Filter buttons remain as navigation but the server-rendered
+  // content always shows the canonical default view.
+  const platform = "all" as Platform;
+  const view = "peak" as View;
+  const category = "human" as Category;
+  const win = "all_time" as Window;
 
   const prompt = getPromptBySlug(slug);
   if (!prompt || prompt.is_existing_route) notFound();

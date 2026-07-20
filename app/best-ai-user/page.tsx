@@ -10,21 +10,17 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/li
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// ISR (Incremental Static Regeneration):
-// - Canonical page (/best-ai-user with no searchParams) is pre-built at
-//   deploy time. Served as a static asset from Cloudflare's ASSETS binding.
-// - Filtered pages (?platform=, ?view=, ?category=, ?window=) are rendered
-//   on-demand but cached for 5 minutes (ISR). This prevents every request
-//   from hitting the signalaf.com API — a 3.5k req/5min spike only triggers
-//   ~2 API calls per 5 minutes per unique param combo instead of 2 per request.
-// - dynamicParams = true allows filtered variants to render dynamically.
-export const dynamicParams = true;
-export const revalidate = 300; // 5-minute ISR — matches the API's Cache-Control
-
-// Pre-render the canonical best-ai-user page (no searchParams).
-export async function generateStaticParams() {
-  return [{}]; // single canonical route — no dynamic segments
-}
+// Force static rendering — the canonical /best-ai-user page is pre-built at
+// deploy time and served as a static asset from Cloudflare's ASSETS binding.
+// This is critical for SEO/GEO: Google indexes static pages faster and higher
+// than dynamic (no-cache) pages. The previous ISR approach (revalidate=300 +
+// searchParams) made the page fully dynamic because:
+//   1. searchParams access forces Next.js to opt out of static rendering
+//   2. OpenNext's incrementalCache: "dummy" ignores revalidate entirely
+// The page now renders with default filter values (all platforms, peak view,
+// human category, all_time window). Filter buttons remain as visual navigation
+// but the server-rendered content is always the canonical default.
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",
@@ -70,16 +66,14 @@ function promptUrl(slug: string, platform: Platform, view: View, category: Categ
   return qs ? `/${slug}?${qs}` : `/${slug}`;
 }
 
-export default async function BestAIUserPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ platform?: string; view?: string; category?: string; window?: string }>;
-}) {
-  const sp = await searchParams;
-  const platform = parsePlatform(sp.platform);
-  const view = parseView(sp.view);
-  const category = parseCategory(sp.category);
-  const win = parseWindow(sp.window);
+export default async function BestAIUserPage() {
+  // Default filter values — the page is force-static, so these are baked in
+  // at build time. Filter buttons remain as navigation but the server-rendered
+  // content always shows the canonical default view.
+  const platform = "all" as Platform;
+  const view = "peak" as View;
+  const category = "human" as Category;
+  const win = "all_time" as Window;
 
   const data = await getSortedLeaderboard("yield", platform, view, 50, win, category);
 
