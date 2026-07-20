@@ -24,6 +24,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/operator/:codename*",
+        destination: "https://signalaf.com/user/:codename*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
