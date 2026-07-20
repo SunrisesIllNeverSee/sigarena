@@ -16,6 +16,7 @@ import { notFound } from "next/navigation";
 // Filter buttons remain as visual navigation but the server-rendered content
 // always shows the canonical default view (all platforms, peak, human, all_time).
 export const dynamicParams = false;
+export const dynamic = "force-static";
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
