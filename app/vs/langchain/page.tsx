@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
-export const revalidate = 3600;
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",

@@ -1,14 +1,16 @@
 /**
- * Post-build patch: adds SSG App Router pages to OpenNext's HtmlPages list.
+ * Post-build patch: adds pre-rendered App Router pages to OpenNext's HtmlPages list.
  *
  * OpenNext's fixCacheHeaderForHtmlPages() only sets s-maxage=31536000 for
  * pages in the HtmlPages list. For App Router dynamic routes (/[slug]),
- * the list only contains "/404" — so all pre-rendered SSG prompt pages
- * get "no-cache, no-store" headers even though they're static HTML.
+ * the list only contains "/404" — so all pre-rendered pages (both SSG and
+ * ISR) get "no-cache, no-store" headers even though they're static HTML at
+ * build time.
  *
- * This script reads the prerender-manifest.json, finds all SSG routes
- * (initialRevalidateSeconds === false), and patches the generated worker
- * to include them in HtmlPages.
+ * This script reads the prerender-manifest.json, finds all pre-rendered routes
+ * (both SSG with initialRevalidateSeconds === false and ISR with a numeric
+ * revalidate value), and patches the generated worker to include them in
+ * HtmlPages and override cache-control headers.
  *
  * Run after `opennextjs-cloudflare build` and before `deploy`.
  */
@@ -19,13 +21,17 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 
-// Read prerender manifest to find SSG routes
+// Read prerender manifest to find all pre-rendered routes (SSG + ISR)
 const manifest = JSON.parse(
   readFileSync(join(root, ".next", "prerender-manifest.json"), "utf8")
 );
 
 const ssgRoutes = Object.entries(manifest.routes || {})
-  .filter(([path, config]) => config.initialRevalidateSeconds === false && path !== "/_not-found")
+  .filter(([path, config]) => {
+    // Include both SSG (false) and ISR (numeric) pre-rendered routes
+    const reval = config.initialRevalidateSeconds;
+    return (reval === false || typeof reval === "number") && path !== "/_not-found";
+  })
   .map(([path]) => path);
 
 // Patch worker.js, index.mjs and handler.mjs

@@ -9,11 +9,10 @@ import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield } from "@/lib/utils";
 
-// Static Generation — page is pre-built at deploy time and served as a
-// static asset from Cloudflare's ASSETS binding. Zero Worker invocations
-// between rebuilds. The cron workflow (Thu+Sun 00:00 UTC) rebuilds + redeploys
-// to refresh the data snapshot.
-export const dynamic = "force-static";
+// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
+// Data doesn't need to be real-time; 12h stale is fine for SEO/AEO.
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",

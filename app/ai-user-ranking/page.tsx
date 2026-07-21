@@ -3,7 +3,7 @@ import { Trophy } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
-export const revalidate = 3600;
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "AI User Ranking — How AI Users Are Ranked",

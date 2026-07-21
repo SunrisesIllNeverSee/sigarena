@@ -10,17 +10,12 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/li
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// Force static rendering — the canonical /best-ai-user page is pre-built at
-// deploy time and served as a static asset from Cloudflare's ASSETS binding.
-// This is critical for SEO/GEO: Google indexes static pages faster and higher
-// than dynamic (no-cache) pages. The previous ISR approach (revalidate=300 +
-// searchParams) made the page fully dynamic because:
-//   1. searchParams access forces Next.js to opt out of static rendering
-//   2. OpenNext's incrementalCache: "dummy" ignores revalidate entirely
-// The page now renders with default filter values (all platforms, peak view,
+// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
+// The page renders with default filter values (all platforms, peak view,
 // human category, all_time window). Filter buttons remain as visual navigation
 // but the server-rendered content is always the canonical default.
-export const dynamic = "force-static";
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",
@@ -67,9 +62,9 @@ function promptUrl(slug: string, platform: Platform, view: View, category: Categ
 }
 
 export default async function BestAIUserPage() {
-  // Default filter values — the page is force-static, so these are baked in
-  // at build time. Filter buttons remain as navigation but the server-rendered
-  // content always shows the canonical default view.
+  // Default filter values — ISR with 12h revalidate. Filter buttons remain
+  // as visual navigation but the server-rendered content is always the
+  // canonical default view.
   const platform = "all" as Platform;
   const view = "peak" as View;
   const category = "human" as Category;

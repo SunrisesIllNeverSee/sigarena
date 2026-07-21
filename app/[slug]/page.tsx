@@ -4,19 +4,13 @@ import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View,
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-// Force static rendering — all prompt pages are pre-built at deploy time and
-// served as static assets from Cloudflare's ASSETS binding. This is critical
-// for SEO/GEO: Google indexes static pages faster and higher than dynamic
-// (no-cache) pages. The previous ISR approach (searchParams + dynamicParams)
-// made all pages fully dynamic because:
-//   1. searchParams access forces Next.js to opt out of static rendering
-//   2. OpenNext's incrementalCache: "dummy" ignores revalidate entirely
-// dynamicParams = false means only the slugs from generateStaticParams are
-// served (as static assets). Unknown slugs 404 instead of rendering dynamically.
+// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
+// generateStaticParams pre-renders known prompt slugs at build time; unknown
+// slugs render on-demand and 404 via notFound() if not in the prompts list.
 // Filter buttons remain as visual navigation but the server-rendered content
-// always shows the canonical default view (all platforms, peak, human, all_time).
-export const dynamicParams = false;
-export const dynamic = "force-static";
+// always shows the canonical default view.
+export const revalidate = 43200;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
@@ -69,9 +63,9 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
 
 export default async function PromptRoutePage({ params }: RouteProps) {
   const { slug } = await params;
-  // Default filter values — the page is force-static, so these are baked in
-  // at build time. Filter buttons remain as navigation but the server-rendered
-  // content always shows the canonical default view.
+  // Default filter values — ISR with 12h revalidate. Filter buttons remain
+  // as navigation but the server-rendered content always shows the canonical
+  // default view.
   const platform = "all" as Platform;
   const view = "peak" as View;
   const category = "human" as Category;
