@@ -1,3 +1,13 @@
+// PostHog reverse proxy — same-origin /ingest → PostHog cloud.
+// Mirrors signalaf.com's setup: survives ad-blockers, no third-party domain
+// in the browser. The browser POSTs to signaaf.com/ingest (same origin) and
+// Next forwards to PostHog cloud.
+const POSTHOG_HOST =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+const POSTHOG_ASSETS = POSTHOG_HOST.includes("eu.")
+  ? "https://eu-assets.i.posthog.com"
+  : "https://us-assets.i.posthog.com";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
@@ -7,6 +17,17 @@ const nextConfig = {
       { protocol: "https", hostname: "signalaf.com" },
       { protocol: "https", hostname: "pbs.twimg.com" },
     ],
+  },
+  // Don't 308-redirect /ingest → /ingest/ ; PostHog ingestion paths are exact.
+  skipTrailingSlashRedirect: true,
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: `${POSTHOG_ASSETS}/static/:path*`,
+      },
+      { source: "/ingest/:path*", destination: `${POSTHOG_HOST}/:path*` },
+    ];
   },
   async headers() {
     return [
@@ -31,6 +52,8 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://signalaf.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com https://cloudflareinsights.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://signalaf.com;",
           },
+          // PostHog /ingest reverse proxy — same-origin, no CSP changes needed
+          // since connect-src 'self' already covers /ingest.
         ],
       },
     ];
