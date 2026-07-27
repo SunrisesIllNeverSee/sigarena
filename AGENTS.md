@@ -91,7 +91,7 @@ public/       — Static assets
 ## Coordination
 
 This repo is worked on by Drep1 (lead) and Drep2 (one-off tasks) via
-`~/Desktop/SigRank-repos/D-REP-SCRATCH.md`. All task assignment and reporting
+`~/Developer/active/SigRank-repos/D-REP-SCRATCH.md`. All task assignment and reporting
 goes through that scratchpad. Do not bypass it.
 
 ## Data dependency
