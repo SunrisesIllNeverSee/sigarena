@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 // slugs render on-demand and 404 via notFound() if not in the prompts list.
 // Filter buttons remain as visual navigation but the server-rendered content
 // always shows the canonical default view.
-export const revalidate = 43200;
+export const revalidate = 31536000; // 1 year — effectively static, no ISR revalidation at request time
 
 interface RouteProps {
   params: Promise<{ slug: string }>;

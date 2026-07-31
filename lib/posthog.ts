@@ -16,7 +16,7 @@ export function initPostHog() {
   if (!key || typeof window === "undefined" || initialized) return;
   initialized = true;
   posthog.init(key, {
-    api_host: "/ingest", // same-origin reverse proxy → PostHog cloud (ad-blocker resistant)
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
     ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
     capture_pageview: false, // SPA pageviews sent manually in PostHogProvider
     capture_pageleave: true,

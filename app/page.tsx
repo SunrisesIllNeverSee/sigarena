@@ -12,7 +12,8 @@ import { formatYield } from "@/lib/utils";
 // ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
 // signalaf.com: quick stats, easy clicks, fresh enough to be credible.
 // Data doesn't need to be real-time; 12h stale is fine for SEO/AEO.
-export const revalidate = 43200;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",

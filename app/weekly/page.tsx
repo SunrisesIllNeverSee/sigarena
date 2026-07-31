@@ -13,7 +13,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
-export const revalidate = 43200;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "Weekly Rankings Drop — AI User Leaderboard",

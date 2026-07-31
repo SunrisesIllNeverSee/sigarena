@@ -15,7 +15,8 @@ import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, t
 // The page renders with default filter values (all platforms, peak view,
 // human category, all_time window). Filter buttons remain as visual navigation
 // but the server-rendered content is always the canonical default.
-export const revalidate = 43200;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",

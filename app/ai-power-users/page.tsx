@@ -6,7 +6,8 @@ import { Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
 
-export const revalidate = 43200;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "AI Power Users — The Top AI Users Ranked",

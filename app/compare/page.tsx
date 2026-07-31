@@ -8,7 +8,8 @@ import {
 import { Crown } from "lucide-react";
 import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
 
-export const revalidate = 43200;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export const metadata: Metadata = {
   title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
