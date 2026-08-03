@@ -36,4 +36,4 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /
 
-Sitemap: https://signaaf.com/sitemap.xml
+Sitemap: https://sigeconomy.com/sitemap.xml

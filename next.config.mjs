@@ -1,6 +1,6 @@
 // PostHog reverse proxy — same-origin /ingest → PostHog cloud.
 // Mirrors signalaf.com's setup: survives ad-blockers, no third-party domain
-// in the browser. The browser POSTs to signaaf.com/ingest (same origin) and
+// in the browser. The browser POSTs to sigeconomy.com/ingest (same origin) and
 // Next forwards to PostHog cloud.
 const POSTHOG_HOST =
   process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";

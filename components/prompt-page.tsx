@@ -52,7 +52,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
           leaderboardSchema(
             data.entries,
             `${prompt.question} — Top 100`,
-            `https://signaaf.com/${canonicalSlug}`,
+            `https://sigeconomy.com/${canonicalSlug}`,
           ),
           articleSchema(
             prompt.og_title,
@@ -225,7 +225,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
       {/* Share on X — uses the prompt's tweet_template */}
       <ShareBar
         tweetTemplate={prompt.tweet_template}
-        url={`https://signaaf.com/${canonicalSlug}`}
+        url={`https://sigeconomy.com/${canonicalSlug}`}
         promptSlug={canonicalSlug}
         platform={platform}
         view={view}

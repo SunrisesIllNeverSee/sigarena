@@ -40,7 +40,7 @@ npm run dev    # localhost:3001
 
 ## Deployment
 
-Cloudflare Workers via OpenNext adapter. Domain: **signaaf.com**.
+Cloudflare Workers via OpenNext adapter. Domain: **sigeconomy.com**.
 
 ### Auto-deploy (GitHub Actions)
 
@@ -55,7 +55,7 @@ Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds via
 | `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens → Create Token → "Edit Cloudflare Workers" template |
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → Workers & Pages → any Worker → Settings → Account ID (or the dashboard URL) |
 
-Once both secrets are set, every push to `main` auto-deploys to signaaf.com.
+Once both secrets are set, every push to `main` auto-deploys to sigeconomy.com.
 
 ### Manual deploy (fallback)
 
@@ -63,7 +63,7 @@ Once both secrets are set, every push to `main` auto-deploys to signaaf.com.
 npm run cf:deploy    # opennextjs-cloudflare build && opennextjs-cloudflare deploy
 ```
 
-Worker routes: `signaaf.com/*` and `www.signaaf.com/*` → `signaaf` worker.
+Worker routes: `sigeconomy.com/*` and `www.sigeconomy.com/*` → `signaaf` worker.
 Staging URL: `https://signaaf.sigrank.workers.dev`.
 
 ## CI

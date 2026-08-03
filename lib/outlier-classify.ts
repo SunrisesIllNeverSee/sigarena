@@ -1,7 +1,7 @@
 /**
  * lib/outlier-classify.ts — shared outlier classification.
  *
- * Ported from sigrank-app/lib/data/outlier-classify.ts so signaaf.com applies
+ * Ported from sigrank-app/lib/data/outlier-classify.ts so sigeconomy.com applies
  * the same Human Center of Mass / Outlier classification as signalaf.com.
  *
  * Human Center of Mass:

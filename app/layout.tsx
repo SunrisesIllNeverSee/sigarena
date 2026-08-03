@@ -8,7 +8,7 @@ import { PostHogProvider } from "@/components/posthog-provider";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://signaaf.com"),
+  metadataBase: new URL("https://sigeconomy.com"),
   title: "AI User Leaderboard — Powered by SigRank",
   description:
     "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description:
       "Who's the best AI user? See how you rank on SigRank.",
     type: "website",
-    url: "https://signaaf.com",
+    url: "https://sigeconomy.com",
   },
   twitter: {
     card: "summary_large_image",

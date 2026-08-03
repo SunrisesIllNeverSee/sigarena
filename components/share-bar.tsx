@@ -14,7 +14,7 @@ import { trackShare } from "@/lib/posthog";
 interface ShareBarProps {
   /** Tweet template with {url} placeholder, from the Prompt registry. */
   tweetTemplate: string;
-  /** Canonical URL for this page (e.g. https://signaaf.com/best-ai-user). */
+  /** Canonical URL for this page (e.g. https://sigeconomy.com/best-ai-user). */
   url: string;
   /** Prompt slug for analytics (e.g. "best-ai-user"). */
   promptSlug: string;

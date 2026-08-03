@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
     description: "Compare two AI operators side by side on SigRank.",
-    url: "https://signaaf.com/compare",
+    url: "https://sigeconomy.com/compare",
     type: "website",
   },
 };

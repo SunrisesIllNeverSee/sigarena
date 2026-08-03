@@ -9,7 +9,7 @@ import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield } from "@/lib/utils";
 
-// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
 // signalaf.com: quick stats, easy clicks, fresh enough to be credible.
 // Data doesn't need to be real-time; 12h stale is fine for SEO/AEO.
 export const dynamic = "force-static";
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
     description: "Who's the best AI user? See how you rank on SigRank.",
-    url: "https://signaaf.com",
+    url: "https://sigeconomy.com",
     type: "website",
   },
 };
@@ -60,7 +60,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://signaaf.com"),
+        leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://sigeconomy.com"),
         articleSchema(
           "AI User Leaderboard — Ranked by Yield",
           "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",

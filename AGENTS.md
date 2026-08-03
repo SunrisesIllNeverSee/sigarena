@@ -1,7 +1,7 @@
 # AGENTS.md — sigarena
 
 > Satellite leaderboard site. Deploy target: Cloudflare Workers (via @opennextjs/cloudflare).
-> Live at **signaaf.com**. Read-only — no accounts, no database, no auth.
+> Live at **sigeconomy.com**. Read-only — no accounts, no database, no auth.
 
 ## Quick reference
 
@@ -17,7 +17,7 @@
 
 **Local dev caveat:** Machine runs Node 25, repo may pin a different version.
 If `next dev` or `next build` fails locally, verify via `tsc --noEmit` + live
-checks against deployed signaaf.com.
+checks against deployed sigeconomy.com.
 
 ## Verification protocol (before every commit)
 

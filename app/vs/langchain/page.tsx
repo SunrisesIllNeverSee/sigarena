@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",
     description: "Building and observing AI apps vs ranking the humans who use AI.",
-    url: "https://signaaf.com/vs/langchain",
+    url: "https://sigeconomy.com/vs/langchain",
     type: "website",
   },
 };

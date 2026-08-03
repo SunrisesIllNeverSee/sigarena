@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs Langfuse — User Efficiency vs LLM Observability",
     description: "Token telemetry for ranking vs token tracing for debugging.",
-    url: "https://signaaf.com/vs/langfuse",
+    url: "https://sigeconomy.com/vs/langfuse",
     type: "website",
   },
 };

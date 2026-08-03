@@ -1,5 +1,5 @@
 /**
- * Prompt registry — the 9 canonical token-metric prompts for signaaf.com.
+ * Prompt registry — the 9 canonical token-metric prompts for sigeconomy.com.
  *
  * Each prompt is a canonical token metric (per CANON_QUICKREF §1) phrased as an
  * SEO/AEO/GEO question. 4 of 8 metrics have a different #1 (verified against the

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SigRank vs WakaTime — Token Efficiency vs Time Tracking",
     description: "Time tracking vs token efficiency.",
-    url: "https://signaaf.com/vs/wakatime",
+    url: "https://sigeconomy.com/vs/wakatime",
     type: "website",
   },
 };

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getActivePrompts } from "@/lib/prompts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = "https://signaaf.com";
+  const base = "https://sigeconomy.com";
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
     { url: `${base}/best-ai-user`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
-  // Operator profile pages live on signalaf.com (sigrank-app), not signaaf.com.
+  // Operator profile pages live on signalaf.com (sigrank-app), not sigeconomy.com.
   // No operator routes in this sitemap.
   return [...staticRoutes, ...promptRoutes];
 }

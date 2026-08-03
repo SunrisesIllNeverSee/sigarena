@@ -4,7 +4,7 @@ import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View,
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
 // signalaf.com: quick stats, easy clicks, fresh enough to be credible.
 // generateStaticParams pre-renders known prompt slugs at build time; unknown
 // slugs render on-demand and 404 via notFound() if not in the prompts list.
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     openGraph: {
       title: prompt.og_title,
       description: `${prompt.question} ${prompt.current_leader.name} leads with ${prompt.metric_label}.`,
-      url: `https://signaaf.com/${prompt.slug}`,
+      url: `https://sigeconomy.com/${prompt.slug}`,
       type: "website",
     },
   };

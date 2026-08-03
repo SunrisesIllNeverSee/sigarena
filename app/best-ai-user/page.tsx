@@ -10,7 +10,7 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/li
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// ISR — revalidate every 12 hours. signaaf.com is a marketing surface for
+// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
 // signalaf.com: quick stats, easy clicks, fresh enough to be credible.
 // The page renders with default filter values (all platforms, peak view,
 // human category, all_time window). Filter buttons remain as visual navigation
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Best AI User — Who Is the Best AI User Alive?",
     description:
       "The definitive ranking. Powered by SigRank's Yield (Υ) metric.",
-    url: "https://signaaf.com/best-ai-user",
+    url: "https://sigeconomy.com/best-ai-user",
     type: "website",
   },
 };
@@ -100,7 +100,7 @@ export default async function BestAIUserPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "Best AI User — Top 10", "https://signaaf.com/best-ai-user"),
+        leaderboardSchema(data.entries, "Best AI User — Top 10", "https://sigeconomy.com/best-ai-user"),
         articleSchema(
           "Best AI User — Who Is the Best AI User Alive?",
           "The definitive ranking of the best AI users by Yield.",
@@ -263,7 +263,7 @@ export default async function BestAIUserPage() {
       {/* Share on X */}
       <ShareBar
         tweetTemplate="Who is the best AI user?\n\nTop 100 ranked by Yield (Υ) — (cache_read × output) / input².\n\nWhere do you rank? {url}"
-        url="https://signaaf.com/best-ai-user"
+        url="https://sigeconomy.com/best-ai-user"
         promptSlug="best-ai-user"
         platform={platform}
         view={view}

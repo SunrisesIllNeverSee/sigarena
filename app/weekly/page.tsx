@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "Weekly Rankings Drop — AI User Leaderboard",
     description:
       "This week's AI user rankings: biggest movers, new challengers, class distribution.",
-    url: "https://signaaf.com/weekly",
+    url: "https://sigeconomy.com/weekly",
     type: "website",
   },
 };
@@ -50,7 +50,7 @@ export default async function WeeklyPage() {
   return (
     <div className="space-y-6">
     <JsonLd data={[
-      leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://signaaf.com/weekly"),
+      leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://sigeconomy.com/weekly"),
       articleSchema(
         "Weekly Rankings Drop — AI User Leaderboard",
         "This week's AI user rankings: biggest movers, new challengers, class distribution.",

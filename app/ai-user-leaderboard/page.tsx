@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: "AI User Leaderboard — The Competitive Ranking",
     description:
       "The competitive leaderboard for AI operators. Powered by SigRank.",
-    url: "https://signaaf.com/ai-user-leaderboard",
+    url: "https://sigeconomy.com/ai-user-leaderboard",
     type: "website",
   },
 };
@@ -39,7 +39,7 @@ export default async function AIUserLeaderboardPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        leaderboardSchema(data.entries, "AI User Leaderboard", "https://signaaf.com/ai-user-leaderboard"),
+        leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigeconomy.com/ai-user-leaderboard"),
         articleSchema(
           "AI User Leaderboard — The Competitive Ranking",
           "The AI User Leaderboard ranks the best AI operators by Yield.",

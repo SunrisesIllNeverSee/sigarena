@@ -1,7 +1,7 @@
 import type { LeaderboardEntry, OperatorResponse } from "@/lib/api";
 import { operatorDisplayName, formatYield } from "@/lib/utils";
 
-const SITE_URL = "https://signaaf.com";
+const SITE_URL = "https://sigeconomy.com";
 const ORG_URL = "https://signalaf.com";
 
 /** Organization schema for SigRank — used site-wide */
