@@ -18,11 +18,13 @@ export const metadata: Metadata = {
       "Who's the best AI user? See how you rank on SigRank.",
     type: "website",
     url: "https://sigeconomy.com",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "AI User Leaderboard — SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI User Leaderboard — Powered by SigRank",
     description: "Who's the best AI user? See how you rank on SigRank.",
+    images: ["/og.png"],
   },
 };
 
