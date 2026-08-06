@@ -13,11 +13,26 @@ leaderboard site. Agent registration is not required — all content is public.
 No agent registration is needed. This service has no authentication, no
 authorization servers, and no protected resources. All endpoints are public.
 
+### Registration Methods
+
+- **Method:** none (no registration required)
+- **register_uri:** not applicable (no registration endpoint)
+- **agent_auth:** not required (no auth)
+- **Provisioning:** automatic (all endpoints are public, no provisioning needed)
+
+### Agent Audience
+
+- **Audience:** all AI agents and crawlers
 - **Resource server:** https://sigeconomy.com (read-only)
 - **Data API:** https://signalaf.com/api/v1 (read-only, no auth)
 - **Authorization servers:** none (no auth required)
 - **Scopes supported:** none (all public)
 - **Bearer methods supported:** none (no auth)
+
+### Credential Use
+
+No credentials are needed. Agents do not need API keys, OAuth tokens, bearer
+tokens, or any other credentials. Simply fetch any URL directly with HTTP GET.
 
 ## Agent Authentication
 

@@ -11,11 +11,13 @@ export async function GET() {
       "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API.",
     url: "https://sigeconomy.com",
     protocolVersion: "0.3.0",
-    supportedInterfaces: {
-      sse: {
+    supportedInterfaces: [
+      {
         url: "https://signalaf.com/api/v1",
+        protocolBinding: "HTTP+JSON",
+        protocolVersion: "0.3.0",
       },
-    },
+    ],
     capabilities: {
       streaming: false,
       pushNotifications: false,
