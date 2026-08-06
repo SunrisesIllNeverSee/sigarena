@@ -5,12 +5,26 @@ export const revalidate = 3600;
 export async function GET() {
   const body = `# auth.md — SigArena Agent Authentication
 
-## Authentication
+This service supports agentic access. SigArena (sigeconomy.com) is a read-only
+leaderboard site. Agent registration is not required — all content is public.
 
-SigArena (sigeconomy.com) is a **read-only** site. No authentication is required
-to access any page or data endpoint.
+## Agent Registration
 
-## API access
+No agent registration is needed. This service has no authentication, no
+authorization servers, and no protected resources. All endpoints are public.
+
+- **Resource server:** https://sigeconomy.com (read-only)
+- **Data API:** https://signalaf.com/api/v1 (read-only, no auth)
+- **Authorization servers:** none (no auth required)
+- **Scopes supported:** none (all public)
+- **Bearer methods supported:** none (no auth)
+
+## Agent Authentication
+
+Agents do not need credentials to access this service. No API key, OAuth token,
+or bearer token is required. Simply fetch any URL directly.
+
+## API Access
 
 The underlying data API is hosted at signalaf.com:
 
@@ -18,14 +32,12 @@ The underlying data API is hosted at signalaf.com:
 - **Methodology:** https://signalaf.com/methodology
 - **Score calculator:** https://signalaf.com/score
 
-No API key, OAuth token, or bearer token is needed for read-only access.
-
-## Rate limiting
+## Rate Limiting
 
 Requests are served via Cloudflare Workers with ISR caching (300s revalidate).
 High-frequency scraping is not necessary — data refreshes every 5 minutes.
 
-## Content signals
+## Content Signals
 
 - search: yes (search engines may index and return results)
 - ai-input: yes (AI agents may use content for real-time answers)
