@@ -6,6 +6,7 @@
 
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 
 # Explicitly allow AI answer-engine crawlers (AEO)
 User-agent: GPTBot

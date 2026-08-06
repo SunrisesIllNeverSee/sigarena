@@ -32,6 +32,16 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // Agent discovery — Link headers on all pages for AI agent crawlability
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Link",
+            value: '</llms.txt>; rel="llms-txt", </llms-full.txt>; rel="llms-full", </sitemap.xml>; rel="sitemap", </robots.txt>; rel="robots"',
+          },
+        ],
+      },
+      {
         // SSG prompt pages — OpenNext doesn't set static cache headers for
         // App Router dynamic routes (/[slug]) even with force-static +
         // dynamicParams=false. This explicitly sets s-maxage=31536000 for
