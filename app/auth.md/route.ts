@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
-  const body = `# SigArena — Agent Authentication
+  const body = `# auth.md — SigArena Agent Authentication
 
 ## Authentication
 

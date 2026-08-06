@@ -33,11 +33,12 @@ const nextConfig = {
     return [
       {
         // Agent discovery — Link headers on all pages for AI agent crawlability
+        // Uses registered rel types that isitagentready.com recognizes as agent-useful
         source: "/(.*)",
         headers: [
           {
             key: "Link",
-            value: '</llms.txt>; rel="llms-txt", </llms-full.txt>; rel="llms-full", </sitemap.xml>; rel="sitemap", </robots.txt>; rel="robots"',
+            value: '</llms.txt>; rel="service-desc", </llms-full.txt>; rel="service-doc", </sitemap.xml>; rel="sitemap", </robots.txt>; rel="describedby", </.well-known/mcp/server-card.json>; rel="api-catalog"',
           },
         ],
       },
