@@ -6,7 +6,7 @@ import { SpotlightSection } from "@/components/spotlight";
 import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { Metadata } from "next";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
@@ -109,6 +109,28 @@ export default async function BestAIUserPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Best AI User", path: "/best-ai-user" },
+        ]),
+        faqSchema([
+          {
+            question: "Who is the best AI user?",
+            answer: `${topName} is #1 with \u03a5 Yield ${formatYield(top.yield_)}. ${data.total_operators} AI users ranked on the public operator evals leaderboard. The ranking is based on Yield \u2014 token-cascade efficiency, not raw token count.`,
+          },
+          {
+            question: "How is the best AI user determined?",
+            answer: "The best AI user is determined by Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. Yield measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. It works across any AI platform: Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others.",
+          },
+          {
+            question: "What is Yield and how is it calculated?",
+            answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency. Higher Yield means the AI user reuses cached context efficiently and produces substantial output relative to fresh input. Token counts only \u2014 never prompt content or code.",
+          },
+          {
+            question: "How often does the AI user ranking change?",
+            answer: "The leaderboard updates as new operator telemetry is submitted. Operators can climb or fall as new sessions are measured. The ranking reflects real-time token-cascade efficiency from actual AI coding sessions.",
+          },
+          {
+            question: "How do I get my AI user score and rank?",
+            answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code. The score is public; the work is private. Works with Claude, ChatGPT, Cursor, Copilot, and other AI coding tools.",
+          },
         ]),
       ]} />
       {/* Hero */}
@@ -283,6 +305,43 @@ export default async function BestAIUserPage() {
               deltaFromAverage={deltas.get(entry.codename)}
             />
           ))}
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-xl font-semibold">Frequently asked questions</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">Who is the best AI user?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">{topName}</span> is #1 with {"\u03a5"} Yield {formatYield(top.yield_)}. {data.total_operators} AI users ranked on the public operator evals leaderboard.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">How is the best AI user determined?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              The best AI user is determined by Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. Yield measures token-cascade efficiency {"\u2014"} whether signal is compounding or tokens are being burned. Works across Claude, ChatGPT, Gemini, Cursor, Copilot, and any AI coding tool.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">What is Yield and how is it calculated?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. Higher Yield means the AI user reuses cached context efficiently and produces substantial output relative to fresh input. Token counts only {"\u2014"} never prompt content or code.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">How often does the AI user ranking change?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              The leaderboard updates as new operator telemetry is submitted. Operators can climb or fall as new sessions are measured.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">How do I get my AI user score and rank?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code.
+            </p>
+          </div>
         </div>
       </div>
 

@@ -130,6 +130,36 @@ export default function VsClawdboardPage() {
         </p>
       </div>
 
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-xl font-semibold">Frequently asked questions</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-foreground">What is the difference between SigRank and clawdboard?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              clawdboard ranks by streaks and active days {"\u2014"} how consistently you show up. SigRank ranks by Yield {"\u2014"} how efficiently an AI operator uses tokens. Consistency rewards showing up every day; efficiency rewards skill. A person using AI daily can still have low Yield.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Does SigRank compete with clawdboard?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              No {"\u2014"} they measure different things. clawdboard gamifies daily habits with streaks; SigRank measures token-cascade efficiency and ranks AI users by skill. A coder could use clawdboard to build a habit and SigRank to measure how good those sessions actually were.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">What score does SigRank use?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"} {"\u2014"} token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">How do I get my AI user score and rank?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
         <p className="text-xl font-bold">Stop counting streaks. Start measuring skill.</p>
         <a

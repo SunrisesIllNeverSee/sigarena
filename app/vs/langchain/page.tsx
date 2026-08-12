@@ -131,6 +131,36 @@ export default function VsLangChainPage() {
         </p>
       </div>
 
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-xl font-semibold">Frequently asked questions</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-foreground">What is the difference between SigRank and LangChain + LangSmith?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              LangChain builds AI agents; LangSmith observes and evaluates them {"\u2014"} trace latency, token cost, eval scores. SigRank ranks the human operating the AI by Yield. One builds and monitors the app; the other measures the developer using AI to code.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Does SigRank compete with LangChain + LangSmith?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              No {"\u2014"} they&apos;re complementary. If you build AI agents, use LangChain to build them and LangSmith to observe them. If you use AI to code, use SigRank to measure your own efficiency. Both integrate with MCP, so a coding agent can wire in SigRank as a tool.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">What score does SigRank use?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"} {"\u2014"} token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">How do I get my AI user score and rank?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
         <p className="text-xl font-bold">Rank the operator, not just the agent.</p>
         <a

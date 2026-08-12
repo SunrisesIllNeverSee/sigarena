@@ -121,6 +121,36 @@ export default function VsTopAIUsersPage() {
         </p>
       </div>
 
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-xl font-semibold">Frequently asked questions</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-foreground">What is the difference between SigRank and TopAIUsers?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              TopAIUsers is a curated list of 100 hand-picked seats, 10 per AI tool category {"\u2014"} selection is the owner&apos;s judgment. SigRank is a measurement system: anyone joins, ranked by Yield from token telemetry. One is an exclusive club; the other measures how good an AI user actually is.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Does SigRank compete with TopAIUsers?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              No {"\u2014"} different approaches. TopAIUsers curates a community of 100; SigRank measures any developer who submits token telemetry. If you want to be in an exclusive club, apply to TopAIUsers. If you want to know how good you are at using AI {"\u2014"} measured, not opinionated {"\u2014"} run SigRank.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">What score does SigRank use?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"} {"\u2014"} token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">How do I get my AI user score and rank?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
         <p className="text-xl font-bold">Want to be ranked by measurement?</p>
         <a
