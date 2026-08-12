@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
@@ -7,6 +7,10 @@ import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
 
+export const viewport: Viewport = {
+  themeColor: "#3b82f6",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://sigeconomy.com"),
   title: "Public LLM Operator Evals — Powered by SigRank",
@@ -14,6 +18,13 @@ export const metadata: Metadata = {
     "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency.",
   authors: [{ name: "SigRank", url: "https://signalaf.com" }],
   publisher: "SigRank",
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
   openGraph: {
     title: "Public LLM Operator Evals — Powered by SigRank",
     description:

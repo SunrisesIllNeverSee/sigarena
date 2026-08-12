@@ -1,6 +1,6 @@
 import { getLeaderboard } from "@/lib/api";
 import { buildWeeklyDrop } from "@/lib/campaign";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorDisplayName } from "@/lib/utils";
 import {
   Crown,
   TrendingUp,
@@ -102,7 +102,7 @@ export default async function WeeklyPage() {
         <div className="mt-3 flex items-center justify-between">
           <div>
             <div className="text-2xl font-bold text-amber-900">
-              {drop.topOperator.display_name ?? drop.topOperator.codename}
+              {operatorDisplayName(drop.topOperator.display_name, drop.topOperator.codename)}
             </div>
             <div className="text-sm text-amber-700">
               {drop.topOperator.platform} · {drop.topOperator.class_tier}
@@ -176,7 +176,7 @@ export default async function WeeklyPage() {
                 </span>
                 <div>
                   <div className="font-semibold">
-                    {op.display_name ?? op.codename}
+                    {operatorDisplayName(op.display_name, op.codename)}
                   </div>
                   <div className="text-xs text-muted-foreground">
                     #{op.rank} · {op.platform}
@@ -211,7 +211,7 @@ export default async function WeeklyPage() {
             >
               <div>
                 <div className="font-semibold">
-                  {op.display_name ?? op.codename}
+                  {operatorDisplayName(op.display_name, op.codename)}
                 </div>
                 <div className="text-xs text-muted-foreground">
                   #{op.rank} · {op.class_tier} · 7d: +{op.movement_7d}

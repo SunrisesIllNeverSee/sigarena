@@ -1,6 +1,6 @@
 import { Crown, TrendingUp, Swords, Zap } from "lucide-react";
 import type { Spotlight, DethroneAlert } from "@/lib/campaign";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorDisplayName } from "@/lib/utils";
 
 export function SpotlightSection({
   spotlight,
@@ -23,7 +23,7 @@ export function SpotlightSection({
     cards.push({
       icon: Crown,
       label: "The King",
-      name: spotlight.topOperator.display_name ?? spotlight.topOperator.codename,
+      name: operatorDisplayName(spotlight.topOperator.display_name, spotlight.topOperator.codename),
       value: `#${spotlight.topOperator.rank}`,
       sub: `Υ ${formatYield(spotlight.topOperator.yield_)}`,
       href: `https://signalaf.com/user/${spotlight.topOperator.codename}`,
@@ -36,8 +36,9 @@ export function SpotlightSection({
       icon: Swords,
       label: "Challenger",
       name:
-        spotlight.closestChallenger.display_name ??
-        spotlight.closestChallenger.codename,
+        operatorDisplayName(
+        spotlight.closestChallenger.display_name,
+        spotlight.closestChallenger.codename),
       value: `#${spotlight.closestChallenger.rank}`,
       sub: `Υ ${formatYield(spotlight.closestChallenger.yield_)}`,
       href: `https://signalaf.com/user/${spotlight.closestChallenger.codename}`,
@@ -50,7 +51,7 @@ export function SpotlightSection({
       icon: TrendingUp,
       label: "Biggest Mover",
       name:
-        spotlight.biggestMover.display_name ?? spotlight.biggestMover.codename,
+        operatorDisplayName(spotlight.biggestMover.display_name, spotlight.biggestMover.codename),
       value: `+${spotlight.biggestMover.movement_24h}`,
       sub: `#${spotlight.biggestMover.rank} · Υ ${formatYield(spotlight.biggestMover.yield_)}`,
       href: `https://signalaf.com/user/${spotlight.biggestMover.codename}`,

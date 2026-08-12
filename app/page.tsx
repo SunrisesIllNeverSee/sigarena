@@ -7,7 +7,7 @@ import { SpotlightSection } from "@/components/spotlight";
 import { Trophy, TrendingUp, Crown, Sparkles } from "lucide-react";
 import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorDisplayName } from "@/lib/utils";
 
 // Force-dynamic: render at request time so the HTML always contains real
 // leaderboard data (not a loading spinner). The API response is edge-cached
@@ -28,6 +28,13 @@ export const metadata: Metadata = {
       "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     url: "https://sigeconomy.com",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — SigRank" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Public LLM Operator Evals — SigRank",
+    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+    images: ["/og.png"],
   },
 };
 
@@ -94,7 +101,7 @@ export default async function HomePage() {
         <div className="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 border border-amber-200">
           <Crown className="h-4 w-4 text-amber-600" aria-hidden="true" />
           <span className="font-semibold text-amber-900">
-            {topOperator.display_name ?? topOperator.codename}
+            {operatorDisplayName(topOperator.display_name, topOperator.codename)}
           </span>
           <span className="text-amber-700">is #{topOperator.rank}</span>
         </div>
@@ -137,7 +144,7 @@ export default async function HomePage() {
                   {i + 1}
                 </span>
                 <span className="flex-1 truncate font-semibold">
-                  {entry.display_name ?? entry.codename}
+                  {operatorDisplayName(entry.display_name, entry.codename)}
                 </span>
                 <span className="rounded-md border border-border px-2 py-0.5 text-xs font-medium">
                   {entry.platform}
@@ -182,7 +189,7 @@ export default async function HomePage() {
                   #{i + 1}
                 </span>
                 <span className="flex-1 truncate font-medium">
-                  {entry.display_name ?? entry.codename}
+                  {operatorDisplayName(entry.display_name, entry.codename)}
                 </span>
                 <span className="rounded-md border border-border px-2 py-0.5 text-xs">
                   {entry.class_tier}

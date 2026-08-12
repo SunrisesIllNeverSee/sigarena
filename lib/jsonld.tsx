@@ -36,11 +36,6 @@ export function websiteSchema() {
       name: "SigRank",
       url: ORG_URL,
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${ORG_URL}/user/{search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 

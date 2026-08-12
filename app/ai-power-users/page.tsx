@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { operatorDisplayName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -80,7 +81,7 @@ export default async function AIPowerUsersPage() {
                 className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-1.5 text-sm font-medium text-green-900 border border-green-200 hover:bg-green-100"
               >
                 <span className="text-green-600">+{op.movement_7d}</span>
-                {op.display_name ?? op.codename}
+                {operatorDisplayName(op.display_name, op.codename)}
                 <span className="text-muted-foreground">#{op.rank}</span>
               </Link>
             ))}

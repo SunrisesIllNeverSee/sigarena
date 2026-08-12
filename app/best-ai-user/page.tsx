@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Trophy, Crown } from "lucide-react";
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
-import { formatYield } from "@/lib/utils";
+import { formatYield, operatorDisplayName } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
 // Force-dynamic: render at request time so the HTML always contains real
@@ -85,7 +85,7 @@ export default async function BestAIUserPage() {
 
   const { deltas } = computeDeltaFromAverage(data.entries);
   const top = data.entries[0];
-  const topName = top.display_name ?? top.codename;
+  const topName = operatorDisplayName(top.display_name, top.codename);
   const allPrompts = getActivePrompts();
 
   // Spotlight + dethrone watch — only on the canonical unfiltered view.
