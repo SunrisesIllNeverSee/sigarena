@@ -43,14 +43,14 @@ const nextConfig = {
         ],
       },
       {
-        // SSG prompt pages — OpenNext doesn't set static cache headers for
-        // App Router dynamic routes (/[slug]) even with force-static +
-        // dynamicParams=false. This explicitly sets s-maxage=31536000 for
-        // all pre-rendered prompt slugs so Cloudflare's CDN caches them.
-        // Listed slugs match generateStaticParams output.
+        // Dynamic leaderboard pages — these are force-dynamic (render at
+        // request time with real API data) but the API responses are edge-cached
+        // for 5 minutes via cachedFetch(). Set a short s-maxage so Cloudflare's
+        // CDN caches the rendered HTML and serves it instantly on cache hit,
+        // while still refreshing frequently enough for SEO/AEO credibility.
         source: "/(best-ai-user|most-output-per-token|most-context-reuse|cleanest-signal|best-op-ratio|cheapest-tokens|largest-scale|most-efficient-overall|most-normalized)",
         headers: [
-          { key: "Cache-Control", value: "s-maxage=31536000, stale-while-revalidate=2592000" },
+          { key: "Cache-Control", value: "s-maxage=300, stale-while-revalidate=600" },
         ],
       },
       {

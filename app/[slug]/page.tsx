@@ -4,13 +4,14 @@ import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View,
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
-// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
-// generateStaticParams pre-renders known prompt slugs at build time; unknown
-// slugs render on-demand and 404 via notFound() if not in the prompts list.
+// Force-dynamic: render at request time so the HTML always contains real
+// leaderboard data (not a loading spinner). The API response is edge-cached
+// for 5 minutes via cachedFetch() in lib/api.ts.
+// Unknown slugs 404 via notFound() if not in the prompts list.
 // Filter buttons remain as visual navigation but the server-rendered content
 // always shows the canonical default view.
-export const revalidate = 31536000; // 1 year — effectively static, no ISR revalidation at request time
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;

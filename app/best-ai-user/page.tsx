@@ -10,13 +10,14 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema }
 import { formatYield } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
-// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
+// Force-dynamic: render at request time so the HTML always contains real
+// leaderboard data (not a loading spinner). The API response is edge-cached
+// for 5 minutes via cachedFetch() in lib/api.ts.
 // The page renders with default filter values (all platforms, peak view,
 // human category, all_time window). Filter buttons remain as visual navigation
 // but the server-rendered content is always the canonical default.
-export const dynamic = "force-static";
-export const dynamicParams = false;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",
