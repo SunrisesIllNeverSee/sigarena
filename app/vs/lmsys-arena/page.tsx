@@ -6,9 +6,9 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export const metadata: Metadata = {
-  title: "SigRank vs LMSYS Arena — Ranking Humans vs Ranking Models",
+  title: "SigRank vs LMSYS Arena — Operator Evals vs Model Evals",
   description:
-    "LMSYS Arena ranks AI models. SigRank ranks the humans who use AI. Different questions, different metrics, different leaderboards.",
+    "LMSYS Arena runs public model evals. SigRank runs public operator evals — evaluating the humans using AI. Different subjects, different metrics, different leaderboards.",
   alternates: { canonical: "/vs/lmsys-arena" },
   openGraph: {
     title: "SigRank vs LMSYS Arena — Humans vs Models",
@@ -34,7 +34,7 @@ export default function VsLMSYSArenaPage() {
           <span className="gradient-text">SigRank vs LMSYS Arena</span>
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Ranking the humans who use AI vs ranking the AI models
+          Public operator evals vs public model evals
         </p>
       </div>
 

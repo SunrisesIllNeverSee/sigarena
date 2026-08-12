@@ -1,6 +1,6 @@
 name = "signaaf"
 main = ".open-next/worker.js"
-compatibility_date = "2024-12-01"
+compatibility_date = "2025-07-01"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
 [assets]
@@ -13,6 +13,10 @@ service = "signaaf"
 
 [images]
 binding = "IMAGES"
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1
 
 [vars]
 NEXT_PUBLIC_POSTHOG_KEY = "phc_DosVqZCDFVNghfXCfLQBHG5ZpntSRmzrJZRzhKLMqTkh"

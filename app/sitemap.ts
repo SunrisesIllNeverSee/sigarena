@@ -5,6 +5,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://sigeconomy.com";
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
+    { url: `${base}/operator-evals`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${base}/public-operator-evals`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/best-ai-user`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${base}/ai-user-leaderboard`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: `${base}/ai-power-users`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
@@ -12,6 +14,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/ai-user-ranking`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/how-it-works`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/compare`, lastModified: new Date(), changeFrequency: "daily", priority: 0.5 },
+    { url: `${base}/articles/why-operator-evals-matter`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/articles/operator-evals-vs-model-evals`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/vs/vals-ai`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/vs/topaiusers`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/ccusage`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/langfuse`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },

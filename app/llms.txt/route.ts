@@ -3,26 +3,35 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
-  const body = `# AI User Leaderboard
+  const body = `# Public LLM Operator Evals
 
-> Who's the best AI user? The competitive leaderboard for AI operators — ranked by Yield (Υ), not raw token count.
+> Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ), not raw token count.
 
-The AI User Leaderboard (sigarena) is the competitive arena for AI operators.
-It reads from SigRank's public API (signalaf.com) and ranks operators on
+SigRank (sigarena) is the public evaluation platform for AI operators.
+It reads from SigRank's public API (signalaf.com) and evaluates operators on
 canonical token-telemetry metrics — the "yield cascade." Unlike model
-leaderboards (LMSYS, LiveBench), this ranks the HUMANS using AI — not the
-models themselves. Powered by SigRank.
+evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
+evaluating the HUMANS using AI, not the models themselves. Powered by SigRank.
+
+## Operator evals
+- [Operator Evals](https://sigeconomy.com/operator-evals): the public evaluation layer for AI operators — model evals vs operator evals
+- [Public Operator Evals Thesis](https://sigeconomy.com/public-operator-evals): why public operator evals matter — the case for public AI operator evaluation
+- [SigRank vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
 
 ## Core pages
-- [Leaderboard](https://sigeconomy.com/): live operator rankings — who's #1 right now
+- [Leaderboard](https://sigeconomy.com/): live operator evals — who's #1 right now
 - [Weekly drop](https://sigeconomy.com/weekly): this week's rankings drop — biggest movers, new challengers, class distribution
 - [How it works](https://sigeconomy.com/how-it-works): the 60-second Yield (Υ) explainer
 - [Compare](https://sigeconomy.com/compare): head-to-head operator comparison — who's better?
 
+## Articles
+- [Why Operator Evals Matter](https://sigeconomy.com/articles/why-operator-evals-matter): the case for public AI operator evaluation
+- [Operator Evals vs Model Evals](https://sigeconomy.com/articles/operator-evals-vs-model-evals): different subjects, different metrics, different questions
+
 ## Topic hubs
 - [Best AI User](https://sigeconomy.com/best-ai-user): who is the best AI user? The definitive ranking by Yield (Υ)
-- [AI User Leaderboard](https://sigeconomy.com/ai-user-leaderboard): the competitive leaderboard for AI operators
-- [AI User Ranking](https://sigeconomy.com/ai-user-ranking): how AI users are ranked — the Yield cascade explained
+- [AI User Leaderboard](https://sigeconomy.com/ai-user-leaderboard): the public operator evals leaderboard
+- [AI User Ranking](https://sigeconomy.com/ai-user-ranking): how AI operators are evaluated — the Yield cascade explained
 - [AI Power Users](https://sigeconomy.com/ai-power-users): the top AI power users, ranked by Yield
 
 ## Metric-specific rankings (9 canonical token metrics)
@@ -39,12 +48,13 @@ metrics have a different #1 — metric rotation is a real variety axis.
 - [Best Op Ratio](https://sigeconomy.com/best-op-ratio): Who has the best operating ratio? — Op Ratio = cache:input:output. #1: Richard Fu (claude)
 
 ## Comparisons
+- [vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
 - [vs topaiusers.com](https://sigeconomy.com/vs/topaiusers): SigRank vs TopAIUsers — measured vs curated
 - [vs ccusage](https://sigeconomy.com/vs/ccusage): SigRank vs ccusage — yield vs raw token count
-- [vs Langfuse](https://sigeconomy.com/vs/langfuse): SigRank vs Langfuse — user efficiency vs LLM observability
-- [vs Braintrust](https://sigeconomy.com/vs/braintrust): SigRank vs Braintrust — user evaluation vs AI app evaluation
+- [vs Langfuse](https://sigeconomy.com/vs/langfuse): SigRank vs Langfuse — operator evals vs LLM observability
+- [vs Braintrust](https://sigeconomy.com/vs/braintrust): SigRank vs Braintrust — operator evaluation vs AI app evaluation
 - [vs LangChain + LangSmith](https://sigeconomy.com/vs/langchain): SigRank vs LangChain/LangSmith — operator ranking vs agent framework + observability
-- [vs LMSYS Arena](https://sigeconomy.com/vs/lmsys-arena): ranking humans vs ranking models
+- [vs LMSYS Arena](https://sigeconomy.com/vs/lmsys-arena): operator evals vs model evals — ranking humans vs ranking models
 - [vs WakaTime](https://sigeconomy.com/vs/wakatime): token efficiency vs time tracking
 
 ## Data
@@ -53,7 +63,7 @@ metrics have a different #1 — metric rotation is a real variety axis.
 - [Methodology](https://signalaf.com/methodology): the full scoring methodology — quotable key figures
 - [Score calculator](https://signalaf.com/score): paste your stats, get your Yield + class, no account
 
-## The metric
+## The eval metric
 Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not raw spend.
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output
 has lower Yield than the operator who uses 100K tokens to produce the same 1K output.

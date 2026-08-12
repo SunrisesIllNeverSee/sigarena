@@ -4,13 +4,13 @@ import { Zap } from "lucide-react";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
+  title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank",
   description:
-    "How does SigRank score AI users? The 60-second explainer on Yield (Υ), Leverage, 10xDEV, and the token-cascade efficiency formula. See how AI operators are ranked.",
+    "How does SigRank evaluate AI operators? The 60-second explainer on Yield (Υ), Leverage, 10xDEV, and the token-cascade efficiency formula. See how public operator evals work.",
   alternates: { canonical: "/how-it-works" },
   openGraph: {
-    title: "How It Works — Yield, Leverage & AI User Scoring | SigRank",
-    description: "How does SigRank score AI users? The 60-second explainer.",
+    title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank",
+    description: "How does SigRank evaluate AI operators? The 60-second explainer.",
     url: "https://sigeconomy.com/how-it-works",
     type: "website",
   },
@@ -21,8 +21,8 @@ export default function HowItWorksPage() {
     <div className="mx-auto max-w-2xl space-y-8">
       <JsonLd data={[
         articleSchema(
-          "How It Works — Yield, Leverage & AI User Scoring",
-          "How does SigRank score AI users? The 60-second explainer on Yield, Leverage, 10xDEV, and the token-cascade efficiency formula.",
+          "How Operator Evals Work — Yield, Leverage & Token Cascade",
+          "How does SigRank evaluate AI operators? The 60-second explainer on Yield, Leverage, 10xDEV, and the token-cascade efficiency formula.",
           "/how-it-works",
         ),
         breadcrumbSchema([
@@ -52,15 +52,15 @@ export default function HowItWorksPage() {
           },
           {
             question: "How do I get my rank?",
-            answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, Leverage, 10xDEV, and place you on the AI User Leaderboard with a class tier designation.",
+            answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, Leverage, 10xDEV, and place you on the public operator evals leaderboard with a class tier designation.",
           },
         ]),
       ]} />
       <div className="text-center">
         <Zap className="mx-auto h-10 w-10 text-primary" />
-        <h1 className="mt-4 text-3xl font-bold tracking-tight">How it works</h1>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight">How operator evals work</h1>
         <p className="mt-2 text-muted-foreground">
-          The 60-second explainer. The full methodology lives on{" "}
+          The 60-second explainer on public operator evaluation. The full methodology lives on{" "}
           <Link href="https://signalaf.com/methodology" className="text-primary hover:underline">
             signalaf.com
           </Link>
@@ -124,9 +124,9 @@ export default function HowItWorksPage() {
       </div>
 
       <div className="rounded-lg border border-primary/20 bg-primary/5 p-6 text-center">
-        <p className="text-lg font-semibold">Ready to measure yourself?</p>
+        <p className="text-lg font-semibold">Ready to get your operator eval?</p>
         <p className="mt-1 text-muted-foreground">
-          Get your Υ Yield, your rank, and your operator class on SigRank.
+          Get your Υ Yield, your rank, and your operator class on the public evals leaderboard.
         </p>
         <a
           href="https://signalaf.com/score"

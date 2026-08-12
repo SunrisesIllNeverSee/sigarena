@@ -16,13 +16,14 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export const metadata: Metadata = {
-  title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
+  title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
   description:
-    "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend. Compare your AI usage against the top operators.",
+    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI User Leaderboard — Ranked by Yield (Υ) | SigRank",
-    description: "Who's the best AI user? See how you rank on SigRank.",
+    title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
+    description:
+      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     url: "https://sigeconomy.com",
     type: "website",
   },
@@ -70,17 +71,18 @@ export default async function HomePage() {
       {/* Headline */}
       <div className="text-center py-4">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          <span className="gradient-text">Who&apos;s the best</span>
+          <span className="gradient-text">Public LLM</span>
           <br />
-          <span className="gradient-text">AI user?</span>
+          <span className="gradient-text">Operator Evals</span>
         </h1>
         <p className="mt-3 text-lg text-muted-foreground">
-          See how you rank on SigRank.
+          The public evaluation layer for AI operators.
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Ranked by <span className="font-semibold text-foreground">Υ Yield</span> — token-cascade efficiency, not raw spend.{" "}
-          <a href="/how-it-works" className="text-primary font-medium hover:underline">
-            What&apos;s Υ?
+          Like Vals AI evaluates models, SigRank evaluates the humans using AI.{" "}
+          Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
+          <a href="/operator-evals" className="text-primary font-medium hover:underline">
+            What are operator evals?
           </a>
         </p>
       </div>
