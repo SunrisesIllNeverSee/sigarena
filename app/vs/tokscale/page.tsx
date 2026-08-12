@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsTokscalePage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/tokscale" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and Tokscale?", answer: "Tokscale is the biggest AI usage leaderboard \u2014 1,797 users ranked by total tokens burned. SigRank ranks by Yield \u2014 token-cascade efficiency. Volume tells a developer how much; Yield tells them how well. An AI user with high burn but low output ranks high on Tokscale but low on SigRank." },
+          { question: "Does SigRank compete with Tokscale?", answer: "No \u2014 both are leaderboards but rank by different metrics. Tokscale ranks by volume burned; SigRank ranks by efficiency. A coder who wants to see who burns the most uses Tokscale; one who wants to see who's best at using AI uses SigRank." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsTopAIUsersPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/topaiusers" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and TopAIUsers?", answer: "TopAIUsers is a curated list of 100 hand-picked seats, 10 per AI tool category \u2014 selection is the owner's judgment. SigRank is a measurement system: anyone joins, ranked by Yield from token telemetry. One is an exclusive club; the other measures how good an AI user actually is." },
+          { question: "Does SigRank compete with TopAIUsers?", answer: "No \u2014 different approaches. TopAIUsers curates a community of 100; SigRank measures any developer who submits token telemetry. If you want to be in an exclusive club, apply to TopAIUsers. If you want to know how good you are at using AI \u2014 measured, not opinionated \u2014 run SigRank." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

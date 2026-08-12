@@ -98,7 +98,7 @@ export function articleSchema(
   title: string,
   description: string,
   path: string,
-  datePublished: string = "2026-07-13",
+  datePublished: string = "2026-08-12",
 ) {
   return {
     "@context": "https://schema.org",

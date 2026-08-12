@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsCostHawkPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/costhawk" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and CostHawk?", answer: "CostHawk ranks by total token consumption \u2014 how much you burned, anonymized. SigRank ranks by Yield \u2014 token-cascade efficiency. Consumption rewards volume; Yield rewards skill. An AI user who burns 10M tokens for 1K output ranks high on CostHawk but low on SigRank." },
+          { question: "Does SigRank compete with CostHawk?", answer: "No \u2014 both respect privacy (token counts only) but answer different questions. CostHawk tells a developer how much they consumed. SigRank tells them whether those tokens were well spent. They're complementary for a person using AI who wants both volume and efficiency views." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

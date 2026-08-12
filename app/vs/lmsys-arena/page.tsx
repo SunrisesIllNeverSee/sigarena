@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsLMSYSArenaPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/lmsys-arena" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and LMSYS Arena?", answer: "LMSYS Arena ranks AI models by human preference in blind A/B votes (Elo). SigRank ranks the humans who use AI by Yield from token telemetry. LMSYS measures the tool; SigRank measures the person wielding it. A great AI user with a mediocre model can out-Yield a poor one with the best model." },
+          { question: "Does SigRank compete with LMSYS Arena?", answer: "No \u2014 they measure different subjects. LMSYS ranks models (GPT, Claude, Gemini); SigRank ranks the developers operating them. They're not competing \u2014 one evaluates the AI, the other evaluates the coder using the AI." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

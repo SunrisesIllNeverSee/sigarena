@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsClawdboardPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/clawdboard" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and clawdboard?", answer: "clawdboard ranks by streaks and active days \u2014 how consistently you show up. SigRank ranks by Yield \u2014 how efficiently an AI operator uses tokens. Consistency rewards showing up every day; efficiency rewards skill. A person using AI daily can still have low Yield." },
+          { question: "Does SigRank compete with clawdboard?", answer: "No \u2014 they measure different things. clawdboard gamifies daily habits with streaks; SigRank measures token-cascade efficiency and ranks AI users by skill. A coder could use clawdboard to build a habit and SigRank to measure how good those sessions actually were." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

@@ -16,6 +16,7 @@ interface RankCardProps {
 export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
   const movement = formatMovement(entry.movement_24h);
   const isTop3 = entry.rank <= 3;
+  const displayName = operatorDisplayName(entry.display_name, entry.codename);
 
   const rankStyles = {
     1: "gradient-primary text-white glow-primary",
@@ -31,6 +32,7 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
         isTop3 && "border-primary/20",
         entry.rank === 1 && "glow-gold"
       )}
+      aria-label={`Rank ${entry.rank}: ${displayName}, Yield ${formatYield(entry.yield_)}`}
     >
       {/* Rank number */}
       <div
@@ -38,6 +40,7 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
           "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg font-bold",
           isTop3 ? rankStyles[entry.rank as 1 | 2 | 3] : "bg-muted text-muted-foreground"
         )}
+        aria-hidden="true"
       >
         {entry.rank === 1 ? (
           <Crown className="h-5 w-5" />
@@ -50,10 +53,10 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
           <span className="truncate font-semibold text-foreground">
-            {operatorDisplayName(entry.display_name, entry.codename)}
+            {displayName}
           </span>
           {entry.claimed && (
-            <span className="shrink-0 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">
+            <span className="shrink-0 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700" title="Verified operator">
               ✓
             </span>
           )}
@@ -100,9 +103,9 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
             movement.direction === "none" && "bg-muted text-muted-foreground"
           )}
         >
-          {movement.direction === "up" && <ArrowUp className="h-3 w-3" />}
-          {movement.direction === "down" && <ArrowDown className="h-3 w-3" />}
-          {movement.direction === "none" && <Minus className="h-3 w-3" />}
+          {movement.direction === "up" && <ArrowUp className="h-3 w-3" aria-hidden="true" />}
+          {movement.direction === "down" && <ArrowDown className="h-3 w-3" aria-hidden="true" />}
+          {movement.direction === "none" && <Minus className="h-3 w-3" aria-hidden="true" />}
           {movement.text}
         </div>
         <div className="text-xs text-muted-foreground mt-0.5">24h</div>

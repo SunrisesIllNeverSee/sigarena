@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsWakaTimePage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/wakatime" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and WakaTime?", answer: "WakaTime tracks how many hours you code \u2014 time, languages, editors. SigRank measures how efficiently you use AI tokens with Yield. Time spent doesn't equal value produced; an AI user who uses Claude or Cursor efficiently can produce in 2 hours what used to take 8." },
+          { question: "Does SigRank compete with WakaTime?", answer: "No \u2014 they track different things. WakaTime tracks coding time for time management; SigRank measures AI token efficiency for skill ranking. A developer can use WakaTime for hours and SigRank for how well they use AI during those hours." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

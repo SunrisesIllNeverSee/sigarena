@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsBraintrustPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/braintrust" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and Braintrust?", answer: "Braintrust evaluates your AI application's outputs \u2014 prompt quality, model selection, accuracy, factuality. SigRank evaluates the human operating the AI \u2014 how efficiently a developer turns tokens into output across Claude, GPT, Gemini, Cursor, or Copilot. One scores the app; the other scores the person using AI." },
+          { question: "Does SigRank compete with Braintrust?", answer: "No \u2014 they're complementary. If you build AI apps, use Braintrust to evaluate your app's outputs. If you use AI to code, use SigRank to measure your own efficiency and rank against other AI operators. Both ship MCP servers, so a coding agent can wire in both." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

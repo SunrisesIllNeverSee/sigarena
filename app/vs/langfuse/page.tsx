@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsLangfusePage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/langfuse" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and Langfuse?", answer: "Langfuse traces your AI application's LLM calls \u2014 inputs, outputs, cost, latency \u2014 for debugging. SigRank measures the human operator's token-cascade efficiency for ranking. Langfuse answers 'is my app working?'; SigRank answers 'am I good at using AI?'." },
+          { question: "Does SigRank compete with Langfuse?", answer: "No \u2014 same telemetry, different purpose. If you build AI apps, use Langfuse to monitor your app's LLM calls. If you use AI to code, use SigRank to measure your efficiency and rank against other AI operators. A developer can run both." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

@@ -5,7 +5,7 @@ import type { Prompt, Platform, View, Category, Window } from "@/lib/prompts";
 import { PLATFORMS, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 import { RankCard } from "@/components/rank-card";
 import { ShareBar } from "@/components/share-bar";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 import { operatorDisplayName } from "@/lib/utils";
 
 interface PromptPageProps {
@@ -61,8 +61,34 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
           ),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "AI User Leaderboard", path: "/ai-user-leaderboard" },
+            { name: "Operator Evals", path: "/operator-evals" },
             { name: prompt.question, path: `/${canonicalSlug}` },
+          ]),
+          faqSchema([
+            {
+              question: prompt.aeo_question,
+              answer: top
+                ? `${topName} is #1 with ${prompt.metric_label} ${topValue}. ${data.total_operators} AI users ranked. ${prompt.story}.`
+                : `${prompt.story}. ${data.total_operators} AI users ranked on the public operator evals leaderboard.`,
+            },
+            {
+              question: `What is ${prompt.metric_label}?`,
+              answer: `${prompt.metric_label} = ${prompt.metric_formula}. ${prompt.story}. It measures AI users — developers, coders, and operators — based on token telemetry from their real sessions with Claude, GPT, Gemini, Cursor, Copilot, and other AI coding tools.`,
+            },
+            {
+              question: `How is ${prompt.metric_label} calculated?`,
+              answer: `The formula is ${prompt.metric_formula}. The score is computed from token counts only — input, output, cache_read, cache_create — never prompt content or code. It works across any AI platform: Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others.`,
+            },
+            {
+              question: `Who has the highest ${prompt.metric_label} score?`,
+              answer: top
+                ? `${topName} leads with ${prompt.metric_label} ${topValue}, using ${top.platform}. The leaderboard updates as new operator telemetry is submitted. See the full ranking below.`
+                : `The leaderboard is refreshing. Check back shortly for the latest ${prompt.metric_label} rankings.`,
+            },
+            {
+              question: `How do I get my ${prompt.metric_label} score?`,
+              answer: `Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your ${prompt.metric_label}, your Yield, your rank, and your operator class. Token counts only — never prompt content, never code. The score is public; the work is private.`,
+            },
           ]),
         ]}
       />
@@ -269,9 +295,54 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
         </a>
       </div>
 
+      {/* FAQ — structured Q&A for AI search engines */}
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold text-foreground">Frequently asked questions</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">{prompt.aeo_question}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {top ? (
+                <><span className="font-medium text-foreground">{topName}</span> is #1 with {prompt.metric_label} {topValue}. {data.total_operators} AI users ranked. {prompt.story}.</>
+              ) : (
+                <>{prompt.story}. {data.total_operators} AI users ranked on the public operator evals leaderboard.</>
+              )}
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">What is {prompt.metric_label}?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {prompt.metric_label} = {prompt.metric_formula}. {prompt.story}. It measures AI users — developers, coders, and operators — based on token telemetry from their real sessions with Claude, GPT, Gemini, Cursor, Copilot, and other AI coding tools.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">How is {prompt.metric_label} calculated?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              The formula is {prompt.metric_formula}. The score is computed from token counts only — input, output, cache_read, cache_create — never prompt content or code. It works across any AI platform: Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">Who has the highest {prompt.metric_label} score?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {top ? (
+                <><span className="font-medium text-foreground">{topName}</span> leads with {prompt.metric_label} {topValue}, using {top.platform}. The leaderboard updates as new operator telemetry is submitted.</>
+              ) : (
+                <>The leaderboard is refreshing. Check back shortly for the latest {prompt.metric_label} rankings.</>
+              )}
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground text-sm">How do I get my {prompt.metric_label} score?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your {prompt.metric_label}, your Yield, your rank, and your operator class. Token counts only — never prompt content, never code.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Cross-links to other prompts + existing SEO routes */}
       <div className="space-y-4 rounded-lg border border-border bg-card p-6 text-sm text-muted-foreground">
-        <h2 className="text-lg font-semibold text-foreground">Other AI user rankings</h2>
+        <h2 className="text-lg font-semibold text-foreground">Other operator evals</h2>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {allPrompts
             .filter((p) => p.slug !== prompt.slug)

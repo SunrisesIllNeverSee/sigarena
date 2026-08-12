@@ -61,12 +61,12 @@ export function SpotlightSection({
   if (cards.length === 0) return null;
 
   return (
-    <div className="space-y-3">
+    <section className="space-y-3" aria-label="Spotlight">
       {/* Dethrone alert */}
       {dethrone.active && dethrone.gap > 0 && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4" role="alert">
           <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-red-600" />
+            <Zap className="h-5 w-5 text-red-600" aria-hidden="true" />
             <p className="text-sm font-semibold text-red-900">
               Dethrone watch: {dethrone.challengerName} is closing the gap
             </p>
@@ -86,9 +86,10 @@ export function SpotlightSection({
             key={card.label}
             href={card.href}
             className="group rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md"
+            aria-label={`${card.label}: ${card.name}, ${card.value}`}
           >
             <div className="flex items-center gap-2">
-              <card.icon className={`h-4 w-4 ${card.color}`} />
+              <card.icon className={`h-4 w-4 ${card.color}`} aria-hidden="true" />
               <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {card.label}
               </span>
@@ -103,6 +104,6 @@ export function SpotlightSection({
           </a>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

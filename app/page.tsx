@@ -9,11 +9,13 @@ import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield } from "@/lib/utils";
 
-// ISR — revalidate every 12 hours. sigeconomy.com is a marketing surface for
-// signalaf.com: quick stats, easy clicks, fresh enough to be credible.
-// Data doesn't need to be real-time; 12h stale is fine for SEO/AEO.
-export const dynamic = "force-static";
-export const dynamicParams = false;
+// Force-dynamic: render at request time so the HTML always contains real
+// leaderboard data (not a loading spinner). The API response is edge-cached
+// for 5 minutes via cachedFetch() in lib/api.ts, so the render is fast after
+// the first request. This fixes the SEO/Lighthouse issue where the static
+// build baked in "Loading rankings…" because the API wasn't reachable from CI.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
@@ -59,7 +61,7 @@ export default async function HomePage() {
   const platformTop = sortLeaderboard(data, "yield", platformOfDay, "peak", 3).entries;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <JsonLd data={[
         leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://sigeconomy.com"),
         articleSchema(
@@ -68,36 +70,36 @@ export default async function HomePage() {
           "/",
         ),
       ]} />
-      {/* Headline */}
-      <div className="text-center py-4">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+      {/* Hero */}
+      <section className="text-center pt-6 pb-2">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           <span className="gradient-text">Public LLM</span>
           <br />
           <span className="gradient-text">Operator Evals</span>
         </h1>
-        <p className="mt-3 text-lg text-muted-foreground">
+        <p className="mt-4 text-lg text-muted-foreground sm:text-xl">
           The public evaluation layer for AI operators.
         </p>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
           Like Vals AI evaluates models, SigRank evaluates the humans using AI.{" "}
           Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
           <a href="/operator-evals" className="text-primary font-medium hover:underline">
             What are operator evals?
           </a>
         </p>
-      </div>
+      </section>
 
       {/* Stats bar */}
-      <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+      <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
         <div className="flex items-center gap-1.5 rounded-lg bg-amber-50 px-3 py-1.5 border border-amber-200">
-          <Crown className="h-4 w-4 text-amber-600" />
+          <Crown className="h-4 w-4 text-amber-600" aria-hidden="true" />
           <span className="font-semibold text-amber-900">
             {topOperator.display_name ?? topOperator.codename}
           </span>
           <span className="text-amber-700">is #{topOperator.rank}</span>
         </div>
         <div className="flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 border border-blue-200">
-          <TrendingUp className="h-4 w-4 text-blue-600" />
+          <TrendingUp className="h-4 w-4 text-blue-600" aria-hidden="true" />
           <span className="text-blue-900">{data.total_operators} operators</span>
         </div>
         <div className="text-muted-foreground">
@@ -106,9 +108,9 @@ export default async function HomePage() {
       </div>
 
       {/* Prompt of the day — featured question + answer */}
-      <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent p-6">
+      <section className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="h-5 w-5 text-primary" />
+          <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
           <span className="text-xs font-semibold uppercase tracking-wider text-primary">
             Prompt of the day
           </span>
@@ -153,10 +155,10 @@ export default async function HomePage() {
         >
           See full ranking →
         </Link>
-      </div>
+      </section>
 
       {/* Platform spotlight — rotating platform of the day */}
-      <div className="rounded-xl border border-border bg-card p-5">
+      <section className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Platform spotlight: {platformOfDay}
@@ -194,27 +196,29 @@ export default async function HomePage() {
         ) : (
           <p className="text-sm text-muted-foreground">No operators on this platform yet.</p>
         )}
-      </div>
+      </section>
 
       {/* Spotlight + dethrone watch */}
       <SpotlightSection spotlight={spotlight} dethrone={dethrone} />
 
       {/* Leaderboard list — top 50 by Yield */}
-      <h2 className="text-lg font-semibold pt-2">Top operators by Yield (Υ)</h2>
-      <div className="space-y-2">
-        {data.entries.slice(0, 50).map((entry) => (
-          <RankCard
-            key={entry.codename}
-            entry={entry}
-            deltaFromAverage={deltas.get(entry.codename)}
-          />
-        ))}
-      </div>
+      <section>
+        <h2 className="text-xl font-bold tracking-tight pt-2 pb-3">Top operators by Yield (Υ)</h2>
+        <div className="space-y-2">
+          {data.entries.slice(0, 50).map((entry) => (
+            <RankCard
+              key={entry.codename}
+              entry={entry}
+              deltaFromAverage={deltas.get(entry.codename)}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* Prompt grid — all 9 metric rankings */}
-      <div className="space-y-4 rounded-lg border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground">9 ways to rank AI users</h2>
-        <p className="text-xs text-muted-foreground">
+      <section className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <h2 className="text-xl font-bold tracking-tight text-foreground">9 ways to rank AI users</h2>
+        <p className="text-sm text-muted-foreground">
           Yield is the flagship, but there are other canonical token metrics. Each question
           below has a different #1 — 4 of 8 metrics have a different king.
         </p>
@@ -237,10 +241,10 @@ export default async function HomePage() {
             </Link>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Bottom CTA */}
-      <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
+      <section className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
         <p className="text-xl font-bold">Think you can beat them?</p>
         <p className="mt-2 text-white/80">
           Measure your AI usage and get your rank on SigRank.
@@ -251,7 +255,7 @@ export default async function HomePage() {
         >
           Check my rank
         </a>
-      </div>
+      </section>
 
       {/* Weekly drop banner */}
       <div className="text-center text-sm text-muted-foreground border-t border-border pt-4">

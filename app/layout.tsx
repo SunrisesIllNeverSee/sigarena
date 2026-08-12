@@ -50,8 +50,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-muted/20 font-sans antialiased">
         <PostHogProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-lg"
+          >
+            Skip to content
+          </a>
           <SiteHeader />
-          <main className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</main>
+          <main id="main-content" className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</main>
           <SiteFooter />
         </PostHogProvider>
       </body>

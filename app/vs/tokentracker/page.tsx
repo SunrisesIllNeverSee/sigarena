@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -26,6 +26,12 @@ export default function VsTokenTrackerPage() {
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/tokentracker" },
+        ]),
+        faqSchema([
+          { question: "What is the difference between SigRank and Token Tracker?", answer: "Token Tracker monitors token volume across 29 tools with desktop widgets. SigRank measures token-cascade efficiency with Yield. Tracking tells a developer how much they burned; Yield tells them how well. One monitors volume; the other measures skill." },
+          { question: "Does SigRank compete with Token Tracker?", answer: "No \u2014 they serve different needs. Token Tracker gives an always-on view of token volume across many tools. SigRank ranks AI operators by efficiency. A person using AI can track volume with Token Tracker and measure skill with SigRank." },
+          { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
+          { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
         ]),
       ]} />
 

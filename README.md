@@ -6,6 +6,25 @@ A read-only leaderboard microsite that displays AI operator rankings from
 signalaf.com's public API. Every CTA routes to signalaf.com for measurement
 and submission. No accounts, no database, no auth.
 
+## The SigRank ecosystem
+
+| Repo | What it is | Install |
+|------|-----------|---------|
+| **[sigrank-app](https://github.com/SunrisesIllNeverSee/sigrank-app)** | The leaderboard — signalaf.com. Privacy-preserving operator profiles, class tiers, board rankings. | [signalaf.com](https://signalaf.com) |
+| **[sigrank-mcp](https://github.com/SunrisesIllNeverSee/sigrank-mcp)** | The instrument — extracts 4 token pillars, computes the cascade, submits to the leaderboard. MCP server + TUI dashboard. | `npx sigrank` |
+| **[bestuser-router-mcp](https://github.com/SunrisesIllNeverSee/bestuser-router-mcp)** | The intent layer — routes "who is the best AI user?" queries to SigRank's leaderboard. MCP server for AI assistants. | `npx bestuser-router-mcp` |
+| **[sigarena](https://github.com/SunrisesIllNeverSee/sigarena)** (this repo) | The satellite — public LLM operator evals at sigeconomy.com. Read-only leaderboard, SEO/AEO surface. | [sigeconomy.com](https://sigeconomy.com) |
+| **[signaf](https://github.com/SunrisesIllNeverSee/signa)** | The coach — reads your session logs, builds a taste profile, measures ASI, coaches you on token efficiency. | `npx @burnmydays/signaf` |
+| **[sigrank-vscode](https://github.com/SunrisesIllNeverSee/sigrank-vscode)** | The IDE extension — see your cascade metrics inline in VS Code. | `code --install-extension sigrank.sigrank` |
+| **[fundscore](https://github.com/SunrisesIllNeverSee/fundscore)** | The repo scorer — investor-readiness scoring for GitHub repos. CLI + MCP server. | `npx fundscore` |
+
+### Also in the MO§ES™ suite
+
+| Site | What it is |
+| ---- | ---------- |
+| **[SIGNOMY](https://signomy.xyz)** | Governed AI agent marketplace where ranked agents form teams, fill slots, run missions, and earn revenue under constitutional protocol. Agents are free. Operators pay. |
+| **[MO§ES](https://mos2es.com)** | The governance framework that underpins SigRank, SIGNOMY, and all governed agent operations. Structural accountability for agentic systems. |
+
 ## Stack
 
 - Next.js 15 (App Router) + React 19
@@ -26,9 +45,18 @@ and submission. No accounts, no database, no auth.
 - `/largest-scale` — Scale V leaderboard
 - `/cheapest-tokens` — $/1M cost-efficiency leaderboard
 - `/best-op-ratio` — Op Ratio leaderboard
-- `/operator/[codename]` — operator profile card (shareable)
+- `/operator-evals` — what are operator evals? (hub page)
+- `/public-operator-evals` — public operator evals thesis
+- `/articles/why-operator-evals-matter` — why operator evals matter
+- `/articles/operator-evals-vs-model-evals` — operator evals vs model evals
+- `/ai-user-leaderboard` — what is this? (SEO page)
+- `/ai-user-ranking` — how ranking works (SEO page)
+- `/ai-power-users` — AI power users (SEO page)
+- `/weekly` — weekly rankings drop
 - `/compare` — head-to-head comparison
 - `/how-it-works` — 60-second Υ Yield explainer
+- `/vs/vals-ai` — SigRank vs Vals AI (operator evals vs model evals)
+- `/vs/topaiusers`, `/vs/ccusage`, `/vs/langfuse`, etc. — 12 competitor comparison pages
 - `/prompts.json` — machine-readable prompt registry (shared with bestuser-router-mcp)
 
 ## Development

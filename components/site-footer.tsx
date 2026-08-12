@@ -17,15 +17,24 @@ const FOOTER_COLUMNS: {
   {
     heading: "Metric rankings",
     links: [
+      { href: "/best-ai-user", label: "Yield (Υ)" },
       { href: "/most-output-per-token", label: "Most output/token" },
+      { href: "/most-context-reuse", label: "Most context reuse" },
       { href: "/cleanest-signal", label: "Cleanest signal" },
+      { href: "/most-normalized", label: "10xDEV" },
+      { href: "/most-efficient-overall", label: "Most efficient" },
       { href: "/largest-scale", label: "Largest scale" },
       { href: "/cheapest-tokens", label: "Cheapest tokens" },
+      { href: "/best-op-ratio", label: "Best op ratio" },
     ],
   },
   {
-    heading: "How it works",
+    heading: "Operator evals",
     links: [
+      { href: "/operator-evals", label: "What are operator evals?" },
+      { href: "/public-operator-evals", label: "Public evals thesis" },
+      { href: "/articles/why-operator-evals-matter", label: "Why evals matter" },
+      { href: "/articles/operator-evals-vs-model-evals", label: "Operator vs model evals" },
       { href: "/how-it-works", label: "Υ Yield in 60 sec" },
       { href: "/ai-user-ranking", label: "How ranking works" },
       { href: "/ai-user-leaderboard", label: "What is this?" },
@@ -35,12 +44,14 @@ const FOOTER_COLUMNS: {
   {
     heading: "Compare",
     links: [
+      { href: "/vs/vals-ai", label: "vs Vals AI" },
       { href: "/vs/topaiusers", label: "vs TopAIUsers" },
       { href: "/vs/ccusage", label: "vs ccusage" },
       { href: "/vs/langfuse", label: "vs Langfuse" },
       { href: "/vs/braintrust", label: "vs Braintrust" },
       { href: "/vs/langchain", label: "vs LangChain" },
       { href: "/vs/lmsys-arena", label: "vs LMSYS Arena" },
+      { href: "/vs/wakatime", label: "vs WakaTime" },
       { href: "/vs/tokscale", label: "vs Tokscale" },
       { href: "/vs/mytokentracker", label: "vs mytokentracker" },
       { href: "/vs/clawdboard", label: "vs clawdboard" },
@@ -76,7 +87,7 @@ const FOOTER_COLUMNS: {
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-gradient-to-b from-transparent to-blue-50/50">
-      <div className="mx-auto max-w-5xl px-4 py-8">
+      <div className="mx-auto max-w-5xl px-4 py-10">
         {/* SEO link grid */}
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
           {FOOTER_COLUMNS.map((col) => (
@@ -86,7 +97,7 @@ export function SiteFooter() {
               </p>
               <ul className="flex flex-col gap-1.5">
                 {col.links.map((l) => (
-                  <li key={l.href}>
+                  <li key={`${col.heading}-${l.href}-${l.label}`}>
                     <Link
                       href={l.href}
                       className="text-[11px] text-muted-foreground transition-colors hover:text-foreground"
@@ -101,7 +112,7 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-4 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>Powered by</span>
             <Link
@@ -116,7 +127,7 @@ export function SiteFooter() {
               href="mailto:hello@signalaf.com"
               className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
             >
-              <Mail className="h-4 w-4" />
+              <Mail className="h-4 w-4" aria-hidden="true" />
               Contact
             </a>
           </div>
