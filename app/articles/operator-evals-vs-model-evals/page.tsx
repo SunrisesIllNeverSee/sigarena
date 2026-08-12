@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -33,6 +33,34 @@ export default function OperatorEvalsVsModelEvalsPage() {
             { name: "Home", path: "/" },
             { name: "Articles", path: "/articles/operator-evals-vs-model-evals" },
             { name: "Operator Evals vs Model Evals", path: "/articles/operator-evals-vs-model-evals" },
+          ]),
+          faqSchema([
+            {
+              question:
+                "What is the difference between operator evals and model evals?",
+              answer:
+                "Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate the humans using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.",
+            },
+            {
+              question: "Are operator evals and model evals competing?",
+              answer:
+                "No, they're complementary. Model evals tell you which model to use. Operator evals tell you how well you're using it. A great operator with a mediocre model can out-Yield a poor operator with the best model.",
+            },
+            {
+              question: "What are examples of model evals?",
+              answer:
+                "Vals AI, LMSYS Arena, LiveBench, and Hugging Face Open LLM Leaderboard are all public model evals. They run standardized test prompts against models and publish the results.",
+            },
+            {
+              question: "What is the only public operator eval?",
+              answer:
+                "SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not operators.",
+            },
+            {
+              question: "Why is there a missing layer in AI evaluation?",
+              answer:
+                "Models are evaluated publicly. Applications are evaluated privately (Braintrust, Langfuse). But operators — the humans using AI — had no public evaluation layer until SigRank. That's the missing layer.",
+            },
           ]),
         ]}
       />
@@ -199,6 +227,54 @@ export default function OperatorEvalsVsModelEvalsPage() {
           evals. The gap was simple: nobody was evaluating the human wielding
           the model. SigRank is the public evaluation layer for operators.
         </p>
+      </div>
+
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6 text-sm text-muted-foreground">
+        <h2 className="text-2xl font-semibold text-foreground">
+          Frequently asked questions
+        </h2>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What is the difference between operator evals and model evals?
+            </h3>
+            <p>
+              Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate the humans using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              Are operator evals and model evals competing?
+            </h3>
+            <p>
+              No, they&apos;re complementary. Model evals tell you which model to use. Operator evals tell you how well you&apos;re using it. A great operator with a mediocre model can out-Yield a poor operator with the best model.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What are examples of model evals?
+            </h3>
+            <p>
+              Vals AI, LMSYS Arena, LiveBench, and Hugging Face Open LLM Leaderboard are all public model evals. They run standardized test prompts against models and publish the results.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What is the only public operator eval?
+            </h3>
+            <p>
+              SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not operators.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              Why is there a missing layer in AI evaluation?
+            </h3>
+            <p>
+              Models are evaluated publicly. Applications are evaluated privately (Braintrust, Langfuse). But operators — the humans using AI — had no public evaluation layer until SigRank. That&apos;s the missing layer.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">

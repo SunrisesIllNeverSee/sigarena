@@ -9,21 +9,24 @@ import { websiteSchema, organizationSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sigeconomy.com"),
-  title: "AI User Leaderboard — Powered by SigRank",
+  title: "Public LLM Operator Evals — Powered by SigRank",
   description:
-    "Who's the best AI user? See how you rank on SigRank. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
+    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency.",
+  authors: [{ name: "SigRank", url: "https://signalaf.com" }],
+  publisher: "SigRank",
   openGraph: {
-    title: "AI User Leaderboard — Powered by SigRank",
+    title: "Public LLM Operator Evals — Powered by SigRank",
     description:
-      "Who's the best AI user? See how you rank on SigRank.",
+      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     type: "website",
     url: "https://sigeconomy.com",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "AI User Leaderboard — SigRank" }],
+    siteName: "SigRank",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI User Leaderboard — Powered by SigRank",
-    description: "Who's the best AI user? See how you rank on SigRank.",
+    title: "Public LLM Operator Evals — SigRank",
+    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     images: ["/og.png"],
   },
 };

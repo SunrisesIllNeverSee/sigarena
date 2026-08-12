@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -33,6 +33,38 @@ export default function WhyOperatorEvalsMatterPage() {
             { name: "Home", path: "/" },
             { name: "Articles", path: "/articles/why-operator-evals-matter" },
             { name: "Why Operator Evals Matter", path: "/articles/why-operator-evals-matter" },
+          ]),
+          faqSchema([
+            {
+              question: "What are operator evals?",
+              answer:
+                "Operator evals are public evaluations of AI operators — the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions.",
+            },
+            {
+              question: "Why do operator evals matter?",
+              answer:
+                "Operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it's a measurable, comparable number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.",
+            },
+            {
+              question: "What is the accountability gap?",
+              answer:
+                "Models have public evals (Vals AI, LMSYS Arena, LiveBench). Operators don't. This creates an accountability gap where operator skill is invisible. Public operator evals close that gap.",
+            },
+            {
+              question: "How do operator evals help with hiring?",
+              answer:
+                "Companies hiring AI operators can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio.",
+            },
+            {
+              question: "Are operator evals private?",
+              answer:
+                "SigRank collects token counts only — never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.",
+            },
+            {
+              question: "What metric do operator evals use?",
+              answer:
+                "Yield (Υ) = (cache_read × output) / input². It measures token-cascade efficiency — whether signal is compounding or tokens are being burned.",
+            },
           ]),
         ]}
       />
@@ -132,6 +164,62 @@ export default function WhyOperatorEvalsMatterPage() {
           code you shipped. The evaluation is public and comparable. The work
           stays yours.
         </p>
+      </div>
+
+      <div className="space-y-4 rounded-lg border border-border bg-card p-6 text-sm text-muted-foreground">
+        <h2 className="text-2xl font-semibold text-foreground">
+          Frequently asked questions
+        </h2>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What are operator evals?
+            </h3>
+            <p>
+              Operator evals are public evaluations of AI operators — the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              Why do operator evals matter?
+            </h3>
+            <p>
+              Operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it&apos;s a measurable, comparable number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What is the accountability gap?
+            </h3>
+            <p>
+              Models have public evals (Vals AI, LMSYS Arena, LiveBench). Operators don&apos;t. This creates an accountability gap where operator skill is invisible. Public operator evals close that gap.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              How do operator evals help with hiring?
+            </h3>
+            <p>
+              Companies hiring AI operators can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              Are operator evals private?
+            </h3>
+            <p>
+              SigRank collects token counts only — never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-foreground">
+              What metric do operator evals use?
+            </h3>
+            <p>
+              Yield (Υ) = (cache_read × output) / input². It measures token-cascade efficiency — whether signal is compounding or tokens are being burned.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">

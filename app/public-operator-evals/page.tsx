@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -33,6 +33,38 @@ export default function PublicOperatorEvalsPage() {
             { name: "Home", path: "/" },
             { name: "Operator Evals", path: "/operator-evals" },
             { name: "Thesis", path: "/public-operator-evals" },
+          ]),
+          faqSchema([
+            {
+              question: "What is the public operator evals thesis?",
+              answer:
+                "The thesis: operator skill should be measurable, comparable, and public. Public model evals (Vals AI, LMSYS Arena) created accountability for AI labs. Public operator evals create accountability for AI users. What gets measured publicly gets better publicly.",
+            },
+            {
+              question: "Why should operator skill be public?",
+              answer:
+                "Because accountability creates improvement. When model labs faced public evals, they got better. When operators face public evals, they get better. The leaderboard is the scoreboard. Public evals turned model quality from marketing copy into measurable data; operator evals do the same for operator skill.",
+            },
+            {
+              question: "How do public operator evals create accountability?",
+              answer:
+                "Before public evals, operator skill was vibes \u2014 'they seem productive.' After public evals, it's Yield \u2014 a measurable, comparable, public number. Two operators using the same model can have 100x different Yield. Public evals make that difference visible.",
+            },
+            {
+              question: "What is the privacy contract for operator evals?",
+              answer:
+                "SigRank collects token counts only \u2014 input, output, cache_read, cache_write. Never prompt content. Never code. Never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not. Same privacy contract as a fitness tracker: your step count is public, your location is not.",
+            },
+            {
+              question: "What metric do public operator evals use?",
+              answer:
+                "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Volume is noise; Yield is signal.",
+            },
+            {
+              question: "How will operator evals become infrastructure?",
+              answer:
+                "Public model evals became infrastructure \u2014 every lab checks Vals AI before shipping. Public operator evals will become infrastructure too. Every operator will check their Yield before a performance review. Every team will track aggregate Yield. Every hiring manager will look at the leaderboard before making an offer.",
+            },
           ]),
         ]}
       />
@@ -205,6 +237,42 @@ export default function PublicOperatorEvalsPage() {
             proved it. Operator evals will prove it again.
           </p>
         </section>
+
+        <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+          <h2 className="text-2xl font-semibold">Frequently asked questions</h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-semibold text-foreground">What is the public operator evals thesis?</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                The thesis: operator skill should be measurable, comparable, and public. Public model evals (Vals AI, LMSYS Arena) created accountability for AI labs. Public operator evals create accountability for AI users. What gets measured publicly gets better publicly.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">Why should operator skill be public?</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Because accountability creates improvement. When model labs faced public evals, they got better. When operators face public evals, they get better. The leaderboard is the scoreboard.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">What is the privacy contract?</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                SigRank collects token counts only {"\u2014"} never prompt content, never code, never conversation. The evaluation is public; the work is private. Same privacy contract as a fitness tracker: your step count is public, your location is not.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">What metric do operator evals use?</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. It measures token-cascade efficiency {"\u2014"} whether signal is compounding or tokens are being burned.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-foreground">How will operator evals become infrastructure?</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Every operator will check their Yield before a performance review. Every team will track aggregate Yield. Every hiring manager will look at the leaderboard before making an offer. The same way every lab checks Vals AI before shipping.
+              </p>
+            </div>
+          </div>
+        </div>
 
         <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
           <p className="text-xl font-bold">
