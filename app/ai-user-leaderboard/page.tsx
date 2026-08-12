@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AIUserLeaderboardPage() {
-  const data = await getLeaderboard("all_time", 500, "yield");
+  const data = await getLeaderboard("all_time", 200, "yield");
 
   if (!data || data.entries.length === 0) {
     return (

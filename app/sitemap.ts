@@ -19,6 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vs/langchain`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/lmsys-arena`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/wakatime`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/tokscale`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/mytokentracker`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/clawdboard`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/tokenrank`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/tokentracker`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/costhawk`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
   ];
 
   // New metric-specific prompt routes (8 routes, excluding best-ai-user which is already listed)

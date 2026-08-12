@@ -30,7 +30,7 @@ export default async function ComparePage({
   searchParams: Promise<{ a?: string; b?: string }>;
 }) {
   const params = await searchParams;
-  const board = await getLeaderboard("all_time", 500, "yield");
+  const board = await getLeaderboard("all_time", 200, "yield");
 
   // Resolve slugs (or legacy codenames) to codenames for API calls
   const defaultA = board?.entries[0]?.codename;

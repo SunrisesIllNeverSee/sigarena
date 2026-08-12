@@ -5,7 +5,7 @@
  * Canonical metric sorting: the signalaf.com API only maps `metric=yield` to
  * a real sort; velocity/leverage/snr/dev10x/scale_v/efficiency/cost_per_million/
  * op_ratio fall back to yield sort (API bug, tracked for separate fix). To get
- * correct per-metric ranking, we fetch all 1640 operators once (limit=2000) and
+ * correct per-metric ranking, we fetch the top 500 operators once (limit=500) and
  * sort client-side. The API's `platform=` filter IS used server-side when
  * available; for op_ratio (a string) we sort by leverage (the lead term).
  *
@@ -194,7 +194,7 @@ export async function getLeaderboard(
 }
 
 /**
- * Fetch ALL operators (up to 2000, the public cap) for client-side sorting.
+ * Fetch the top 500 operators for client-side sorting.
  * Used when the API can't sort by the requested canonical metric (everything
  * except yield). One fetch, then sort/slice locally. Cached for 5 minutes.
  */
@@ -203,7 +203,7 @@ export async function getFullLeaderboard(
 ): Promise<LeaderboardResponse | null> {
   try {
     const res = await cachedFetch(
-      `${API_BASE}/leaderboard?window=${window}&limit=2000&metric=yield`,
+      `${API_BASE}/leaderboard?window=${window}&limit=500&metric=yield`,
     );
     if (!res.ok) return null;
     return (await res.json()) as LeaderboardResponse;
