@@ -18,7 +18,7 @@ export async function GET() {
     documentationUrl: "https://sigeconomy.com/how-it-works",
     websiteUrl: "https://sigeconomy.com",
     repository: {
-      url: "https://github.com/SunrisesIllNeverSee",
+      url: "https://github.com/SunrisesIllNeverSee/sigarena",
       source: "github",
     },
     transport: {
