@@ -40,29 +40,39 @@ export default function OperatorEvalsPage() {
                 "Public LLM operator evals are public evaluations of AI operators \u2014 the humans using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively a person uses AI, based on token telemetry from their real coding sessions.",
             },
             {
-              question: "How do operator evals differ from model evals?",
+              question: "How are AI users measured and ranked?",
               answer:
-                "Model evals evaluate the AI model (GPT, Claude, Gemini) using standardized test prompts. Operator evals evaluate the human operator using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI operator?'",
+                "AI users are measured by Yield (\u03a5), a token-cascade efficiency score computed from their real session telemetry. Yield = (cache_read \u00d7 output) / input\u00b2. Users are ranked on a public leaderboard by Yield, with class tiers from NOVICE to SINGULARITY. The measurement uses token counts only \u2014 never prompt content or code.",
             },
             {
-              question: "Why do public operator evals matter?",
+              question: "What is the difference between evaluating AI models and evaluating AI users?",
               answer:
-                "Public operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it's a measurable, comparable, public number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.",
+                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model \u2014 GPT, Claude, Gemini \u2014 using standardized test prompts. Operator evals (SigRank) evaluate the human \u2014 the developer, coder, or AI user \u2014 using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?'",
             },
             {
-              question: "What is the Yield metric?",
+              question: "Why do public benchmarks for AI coders matter?",
               answer:
-                "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Higher Yield means the operator reuses cached context efficiently and produces substantial output relative to fresh input.",
+                "Public benchmarks create accountability. Before public model evals, model quality was marketing copy. After public evals, it was measurable. The same applies to AI coders: before public operator evals, skill was vibes \u2014 'they seem productive.' After public evals, it's a measurable, comparable, public score. What gets measured publicly gets better publicly.",
             },
             {
-              question: "How do I get my operator eval?",
+              question: "What is the Yield score and how is it calculated?",
               answer:
-                "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code. The evaluation is public; the work is private.",
+                "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Higher Yield means the AI user reuses cached context efficiently and produces substantial output relative to fresh input. It works across any platform \u2014 Claude, GPT, Gemini, Cursor, Copilot, or any other AI coding agent.",
             },
             {
-              question: "Is SigRank the only public operator eval?",
+              question: "How do I get my AI user score and rank?",
               answer:
-                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not operators. Braintrust and Langfuse evaluate AI applications privately, not operators publicly.",
+                "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code. The score is public; the work is private. Works with Claude, ChatGPT, Cursor, Copilot, and other AI coding tools.",
+            },
+            {
+              question: "Is SigRank the only public leaderboard for AI developers?",
+              answer:
+                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the humans using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.",
+            },
+            {
+              question: "Does SigRank work with Claude, GPT, Cursor, and Copilot?",
+              answer:
+                "Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry \u2014 Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human's cascade architecture, not the AI model's capability.",
             },
           ]),
         ]}
@@ -344,33 +354,45 @@ export default function OperatorEvalsPage() {
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">How do operator evals differ from model evals?</h3>
+            <h3 className="font-semibold text-foreground">How are AI users measured and ranked?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Model evals evaluate the AI model (GPT, Claude, Gemini) using standardized test prompts. Operator evals evaluate the human operator using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who is the best AI operator?&quot;
+              AI users are measured by Yield ({"\u03a5"}), a token-cascade efficiency score computed from their real session telemetry. Yield = (cache_read {"\u00d7"} output) / input{"\u00b2"}. Users are ranked on a public leaderboard by Yield, with class tiers from NOVICE to SINGULARITY. The measurement uses token counts only {"\u2014"} never prompt content or code.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">Why do public operator evals matter?</h3>
+            <h3 className="font-semibold text-foreground">What is the difference between evaluating AI models and evaluating AI users?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Public operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it&apos;s a measurable, comparable, public number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.
+              Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model {"\u2014"} GPT, Claude, Gemini {"\u2014"} using standardized test prompts. Operator evals (SigRank) evaluate the human {"\u2014"} the developer, coder, or AI user {"\u2014"} using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who is the best AI user?&quot;
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">What is the Yield metric?</h3>
+            <h3 className="font-semibold text-foreground">Why do public benchmarks for AI coders matter?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. It measures token-cascade efficiency {"\u2014"} whether signal is compounding or tokens are being burned. Higher Yield means the operator reuses cached context efficiently and produces substantial output relative to fresh input.
+              Public benchmarks create accountability. Before public model evals, model quality was marketing copy. After public evals, it was measurable. The same applies to AI coders: before public operator evals, skill was vibes. After public evals, it&apos;s a measurable, comparable, public score.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">How do I get my operator eval?</h3>
+            <h3 className="font-semibold text-foreground">What is the Yield score and how is it calculated?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code. The evaluation is public; the work is private.
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. It measures token-cascade efficiency {"\u2014"} whether signal is compounding or tokens are being burned. Higher Yield means the AI user reuses cached context efficiently and produces substantial output relative to fresh input. It works across any platform {"\u2014"} Claude, GPT, Gemini, Cursor, Copilot, or any other AI coding agent.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">Is SigRank the only public operator eval?</h3>
+            <h3 className="font-semibold text-foreground">How do I get my AI user score and rank?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not operators. Braintrust and Langfuse evaluate AI applications privately, not operators publicly.
+              Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only {"\u2014"} never prompt content, never code. The score is public; the work is private. Works with Claude, ChatGPT, Cursor, Copilot, and other AI coding tools.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Is SigRank the only public leaderboard for AI developers?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the humans using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Does SigRank work with Claude, GPT, Cursor, and Copilot?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry {"\u2014"} Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human&apos;s cascade architecture, not the AI model&apos;s capability.
             </p>
           </div>
         </div>

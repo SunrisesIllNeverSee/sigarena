@@ -38,32 +38,32 @@ export default function WhyOperatorEvalsMatterPage() {
             {
               question: "What are operator evals?",
               answer:
-                "Operator evals are public evaluations of AI operators — the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions.",
+                "Operator evals are public evaluations of AI users \u2014 the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.",
             },
             {
               question: "Why do operator evals matter?",
               answer:
-                "Operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it's a measurable, comparable number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.",
+                "Operator evals create accountability for AI users. Before public evals, developer skill with AI was vibes. After public evals, it's a measurable, comparable, public number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI coders.",
             },
             {
               question: "What is the accountability gap?",
               answer:
-                "Models have public evals (Vals AI, LMSYS Arena, LiveBench). Operators don't. This creates an accountability gap where operator skill is invisible. Public operator evals close that gap.",
+                "Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don't. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the human, not the model.",
             },
             {
-              question: "How do operator evals help with hiring?",
+              question: "How do operator evals help with hiring developers?",
               answer:
-                "Companies hiring AI operators can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio.",
+                "Companies hiring AI developers can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio. Works across Claude, GPT, Cursor, Copilot, and any AI coding tool.",
             },
             {
               question: "Are operator evals private?",
               answer:
-                "SigRank collects token counts only — never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.",
+                "SigRank collects token counts only \u2014 never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.",
             },
             {
-              question: "What metric do operator evals use?",
+              question: "What score do operator evals use?",
               answer:
-                "Yield (Υ) = (cache_read × output) / input². It measures token-cascade efficiency — whether signal is compounding or tokens are being burned.",
+                "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Works across any AI platform \u2014 Claude, GPT, Gemini, Cursor, Copilot, or any coding agent.",
             },
           ]),
         ]}
@@ -176,7 +176,7 @@ export default function WhyOperatorEvalsMatterPage() {
               What are operator evals?
             </h3>
             <p>
-              Operator evals are public evaluations of AI operators — the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions.
+              Operator evals are public evaluations of AI users {"\u2014"} the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.
             </p>
           </div>
           <div className="space-y-2">
@@ -184,7 +184,7 @@ export default function WhyOperatorEvalsMatterPage() {
               Why do operator evals matter?
             </h3>
             <p>
-              Operator evals create accountability for AI users. Before public evals, operator skill was vibes. After public evals, it&apos;s a measurable, comparable number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI operators.
+              Operator evals create accountability for AI users. Before public evals, developer skill with AI was vibes. After public evals, it&apos;s a measurable, comparable, public number. The same transparency that public model evals brought to AI labs, public operator evals bring to AI coders.
             </p>
           </div>
           <div className="space-y-2">
@@ -192,15 +192,15 @@ export default function WhyOperatorEvalsMatterPage() {
               What is the accountability gap?
             </h3>
             <p>
-              Models have public evals (Vals AI, LMSYS Arena, LiveBench). Operators don&apos;t. This creates an accountability gap where operator skill is invisible. Public operator evals close that gap.
+              Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don&apos;t. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the human, not the model.
             </p>
           </div>
           <div className="space-y-2">
             <h3 className="text-base font-semibold text-foreground">
-              How do operator evals help with hiring?
+              How do operator evals help with hiring developers?
             </h3>
             <p>
-              Companies hiring AI operators can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio.
+              Companies hiring AI developers can look at public Yield scores instead of take-home assignments. A 6-month Yield history is more reliable than a 2-hour coding test. The leaderboard is the portfolio. Works across Claude, GPT, Cursor, Copilot, and any AI coding tool.
             </p>
           </div>
           <div className="space-y-2">
@@ -208,15 +208,15 @@ export default function WhyOperatorEvalsMatterPage() {
               Are operator evals private?
             </h3>
             <p>
-              SigRank collects token counts only — never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.
+              SigRank collects token counts only {"\u2014"} never prompt content, never code, never conversation. The evaluation is public; the work is private. Your Yield score is on the leaderboard; your code is not.
             </p>
           </div>
           <div className="space-y-2">
             <h3 className="text-base font-semibold text-foreground">
-              What metric do operator evals use?
+              What score do operator evals use?
             </h3>
             <p>
-              Yield (Υ) = (cache_read × output) / input². It measures token-cascade efficiency — whether signal is compounding or tokens are being burned.
+              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. It measures token-cascade efficiency {"\u2014"} whether signal is compounding or tokens are being burned. Works across any AI platform {"\u2014"} Claude, GPT, Gemini, Cursor, Copilot, or any coding agent.
             </p>
           </div>
         </div>

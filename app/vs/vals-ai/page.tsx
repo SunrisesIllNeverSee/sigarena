@@ -37,27 +37,32 @@ export default function VsValsAIPage() {
             {
               question: "What is the difference between SigRank and Vals AI?",
               answer:
-                "Vals AI runs public model evals \u2014 standardized benchmarks that measure how well an AI model performs. SigRank runs public operator evals \u2014 telemetry-based evaluations that measure how effectively a human operator uses AI. Vals AI evaluates the model; SigRank evaluates the person wielding it.",
+                "Vals AI runs public model evals \u2014 standardized benchmarks that measure how well an AI model performs. SigRank runs public operator evals \u2014 telemetry-based evaluations that measure how effectively a human uses AI. Vals AI evaluates the model (GPT, Claude, Gemini); SigRank evaluates the person wielding it.",
             },
             {
               question: "Does SigRank compete with Vals AI?",
               answer:
-                "No, they're complementary. Vals AI tells you which model to use. SigRank tells you how well you're using it. A great operator with a mediocre model can out-Yield a poor operator with the best model \u2014 because Yield measures the cascade architecture, not the model's raw capability.",
+                "No, they're complementary. Vals AI tells you which model to use. SigRank tells you how well you're using it. A great AI user with a mediocre model can out-Yield a poor AI user with the best model \u2014 because Yield measures the cascade architecture, not the model's raw capability.",
             },
             {
               question: "What does SigRank evaluate that Vals AI doesn't?",
               answer:
-                "SigRank evaluates the human operator \u2014 their token-cascade efficiency (Yield). Vals AI evaluates the AI model \u2014 its benchmark performance. Different subjects, different metrics, different questions. SigRank is the only platform running public operator evals.",
+                "SigRank evaluates the human \u2014 the developer, coder, or AI user \u2014 and their token-cascade efficiency (Yield). Vals AI evaluates the AI model \u2014 its benchmark performance. Different subjects, different metrics, different questions. SigRank is the only platform running public evals for AI users.",
             },
             {
-              question: "What metric does SigRank use?",
+              question: "What score does SigRank use vs Vals AI?",
               answer:
-                "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. It measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Vals AI uses benchmark scores (accuracy, pass rate).",
+                "SigRank uses Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Vals AI uses benchmark scores (accuracy, pass rate) from standardized test prompts. SigRank measures the person; Vals AI measures the model.",
             },
             {
               question: "Are both platforms public?",
               answer:
-                "Yes. Both Vals AI and SigRank publish public results with public methodology. Vals AI publishes model benchmark scores publicly. SigRank publishes operator Yield scores on a public leaderboard.",
+                "Yes. Both Vals AI and SigRank publish public results with public methodology. Vals AI publishes model benchmark scores publicly. SigRank publishes AI user Yield scores on a public leaderboard.",
+            },
+            {
+              question: "Does Vals AI rank Claude, GPT, and Gemini? Does SigRank?",
+              answer:
+                "Vals AI ranks AI models \u2014 Claude, GPT, Gemini, and others \u2014 by benchmark performance. SigRank ranks the humans using those models \u2014 developers, coders, AI users \u2014 by Yield. Vals AI tells you which model is best; SigRank tells you who is the best at using it.",
             },
           ]),
         ]}
@@ -215,31 +220,37 @@ export default function VsValsAIPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between SigRank and Vals AI?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Vals AI runs public model evals {"\u2014"} standardized benchmarks that measure how well an AI model performs. SigRank runs public operator evals {"\u2014"} telemetry-based evaluations that measure how effectively a human operator uses AI. Vals AI evaluates the model; SigRank evaluates the person wielding it.
+              Vals AI runs public model evals {"\u2014"} standardized benchmarks that measure how well an AI model performs. SigRank runs public operator evals {"\u2014"} telemetry-based evaluations that measure how effectively a human uses AI. Vals AI evaluates the model (GPT, Claude, Gemini); SigRank evaluates the person wielding it.
             </p>
           </div>
           <div>
             <h3 className="font-semibold text-foreground">Does SigRank compete with Vals AI?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              No, they&apos;re complementary. Vals AI tells you which model to use. SigRank tells you how well you&apos;re using it. A great operator with a mediocre model can out-Yield a poor operator with the best model.
+              No, they&apos;re complementary. Vals AI tells you which model to use. SigRank tells you how well you&apos;re using it. A great AI user with a mediocre model can out-Yield a poor AI user with the best model {"\u2014"} because Yield measures the cascade architecture, not the model&apos;s raw capability.
             </p>
           </div>
           <div>
             <h3 className="font-semibold text-foreground">What does SigRank evaluate that Vals AI doesn&apos;t?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              SigRank evaluates the human operator {"\u2014"} their token-cascade efficiency (Yield). Vals AI evaluates the AI model {"\u2014"} its benchmark performance. Different subjects, different metrics, different questions.
+              SigRank evaluates the human {"\u2014"} the developer, coder, or AI user {"\u2014"} and their token-cascade efficiency (Yield). Vals AI evaluates the AI model {"\u2014"} its benchmark performance. Different subjects, different metrics, different questions. SigRank is the only platform running public evals for AI users.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-foreground">What metric does SigRank use?</h3>
+            <h3 className="font-semibold text-foreground">What score does SigRank use vs Vals AI?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"}. It measures token-cascade efficiency. Vals AI uses benchmark scores (accuracy, pass rate).
+              SigRank uses Yield ({"\u03a5"}) = (cache_read {"\u00d7"} output) / input{"\u00b2"} {"\u2014"} token-cascade efficiency from real sessions. Vals AI uses benchmark scores (accuracy, pass rate) from standardized test prompts. SigRank measures the person; Vals AI measures the model.
             </p>
           </div>
           <div>
             <h3 className="font-semibold text-foreground">Are both platforms public?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yes. Both Vals AI and SigRank publish public results with public methodology. Vals AI publishes model benchmark scores publicly. SigRank publishes operator Yield scores on a public leaderboard.
+              Yes. Both Vals AI and SigRank publish public results with public methodology. Vals AI publishes model benchmark scores publicly. SigRank publishes AI user Yield scores on a public leaderboard.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Does Vals AI rank Claude, GPT, and Gemini? Does SigRank?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Vals AI ranks AI models {"\u2014"} Claude, GPT, Gemini, and others {"\u2014"} by benchmark performance. SigRank ranks the humans using those models {"\u2014"} developers, coders, AI users {"\u2014"} by Yield. Vals AI tells you which model is best; SigRank tells you who is the best at using it.
             </p>
           </div>
         </div>
