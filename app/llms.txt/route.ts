@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { getFullLeaderboard, computeAggregates, formatTokenCount } from "@/lib/api";
 import { formatYield } from "@/lib/utils";
 
-export const revalidate = 3600;
+// Force dynamic: the stats section is computed from the live leaderboard API.
+// Static generation would bake in build-time data (0 operators when the API
+// isn't reachable from CI). The API response is edge-cached for 5 minutes
+// via cachedFetch() in lib/api.ts, so the render is fast after the first hit.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   // Fetch live leaderboard to compute aggregate stats for the llms.txt file.
