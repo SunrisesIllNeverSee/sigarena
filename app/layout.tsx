@@ -13,9 +13,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sigeconomy.com"),
-  title: "Public LLM Operator Evals — Powered by SigRank",
+  title: "Performative Evals & Leaderboard for AI Users | SigRank",
   description:
-    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency.",
+    "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats. Benchmark your AI performance.",
   authors: [{ name: "SigRank", url: "https://signalaf.com" }],
   publisher: "SigRank",
   robots: {
@@ -26,19 +26,19 @@ export const metadata: Metadata = {
     "max-video-preview": -1,
   },
   openGraph: {
-    title: "Public LLM Operator Evals — Powered by SigRank",
+    title: "Performative Evals & Leaderboard for AI Users | SigRank",
     description:
-      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+      "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
     type: "website",
     url: "https://sigeconomy.com",
     siteName: "SigRank",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Public LLM Operator Evals — SigRank",
-    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
-    images: [{ url: "/og.png", alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
+    title: "Performative Evals for AI Users — SigRank",
+    description: "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
+    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
   },
 };
 

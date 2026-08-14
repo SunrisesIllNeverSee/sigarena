@@ -13,7 +13,7 @@ export function organizationSchema() {
     url: ORG_URL,
     logo: `${ORG_URL}/logo.png`,
     description:
-      "SigRank is the public evaluation layer for AI operators — public LLM operator evals. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+      "SigRank is the statistical layer for AI users — performative evals and ranking for users not models. Custom metrics like Yield turn AI usage into stats, like ERA for baseball. Benchmark your AI performance on the public leaderboard.",
     sameAs: [
       "https://github.com/SunrisesIllNeverSee",
       "https://x.com/burnmydays",
@@ -26,11 +26,11 @@ export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Public LLM Operator Evals",
+    name: "SigRank — Performative Evals for AI Users",
     alternateName: "SigRank",
     url: SITE_URL,
     description:
-      "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ) — token-cascade efficiency.",
+      "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats. Benchmark your AI performance on the public leaderboard.",
     publisher: {
       "@type": "Organization",
       name: "SigRank",

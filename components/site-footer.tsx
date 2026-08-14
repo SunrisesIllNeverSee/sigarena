@@ -29,12 +29,12 @@ const FOOTER_COLUMNS: {
     ],
   },
   {
-    heading: "Operator evals",
+    heading: "AI user stats",
     links: [
-      { href: "/operator-evals", label: "What are operator evals?" },
-      { href: "/public-operator-evals", label: "Public evals thesis" },
-      { href: "/articles/why-operator-evals-matter", label: "Why evals matter" },
-      { href: "/articles/operator-evals-vs-model-evals", label: "Operator vs model evals" },
+      { href: "/operator-evals", label: "What are performative evals?" },
+      { href: "/public-operator-evals", label: "The statistical layer" },
+      { href: "/articles/why-operator-evals-matter", label: "Why AI user stats matter" },
+      { href: "/articles/operator-evals-vs-model-evals", label: "User vs model evals" },
       { href: "/how-it-works", label: "Υ Yield in 60 sec" },
       { href: "/ai-user-ranking", label: "How ranking works" },
       { href: "/ai-user-leaderboard", label: "What is this?" },
