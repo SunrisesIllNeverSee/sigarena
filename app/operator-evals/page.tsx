@@ -74,6 +74,26 @@ export default function OperatorEvalsPage() {
               answer:
                 "Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry \u2014 Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human's cascade architecture, not the AI model's capability.",
             },
+            {
+              question: "Why not just count tokens?",
+              answer:
+                "Raw token count measures volume, not efficiency. An operator who burns 10M input tokens with no cache reuse and little output has high volume but low signal. Yield (Υ = cache_read × output / input²) penalizes un-cached volume and rewards compounding — the quadratic input penalty means waste is non-linear. Two operators with the same token count can have 100× different Yield.",
+            },
+            {
+              question: "Isn't this just measuring who spends the most?",
+              answer:
+                "No — the opposite. Yield's formula (Υ = cache_read × output / input²) penalizes spending. The input² term means every additional fresh input token reduces your score quadratically. Operators who spend more on fresh input without reusing cache or producing output score lower, not higher. SigRank rewards efficiency, not expenditure.",
+            },
+            {
+              question: "Doesn't the model matter more than the user?",
+              answer:
+                "The data says no. Two operators using the same model, the same tools, and similar prompts can have 100× different Yield. The difference is the cascade architecture — how the human structures context reuse, output extraction, and input minimization. SigRank measures the human's skill, not the model's capability. Model evals (Vals AI, LMSYS) already cover model quality.",
+            },
+            {
+              question: "Is SigRank just for Claude users?",
+              answer:
+                "No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the human's cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.",
+            },
           ]),
         ]}
       />
@@ -393,6 +413,30 @@ export default function OperatorEvalsPage() {
             <h3 className="font-semibold text-foreground">Does SigRank work with Claude, GPT, Cursor, and Copilot?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
               Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry {"\u2014"} Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human&apos;s cascade architecture, not the AI model&apos;s capability.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Why not just count tokens?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Raw token count measures volume, not efficiency. An operator who burns 10M input tokens with no cache reuse and little output has high volume but low signal. Yield ({"\u03a5"} = cache_read {"\u00d7"} output) / input{"\u00b2"} penalizes un-cached volume and rewards compounding {"\u2014"} the quadratic input penalty means waste is non-linear. Two operators with the same token count can have 100{"\u00d7"} different Yield.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Isn&apos;t this just measuring who spends the most?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              No {"\u2014"} the opposite. Yield&apos;s formula ({"\u03a5"} = cache_read {"\u00d7"} output) / input{"\u00b2"} penalizes spending. The input{"\u00b2"} term means every additional fresh input token reduces your score quadratically. Operators who spend more on fresh input without reusing cache or producing output score lower, not higher. SigRank rewards efficiency, not expenditure.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Doesn&apos;t the model matter more than the user?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              The data says no. Two operators using the same model, the same tools, and similar prompts can have 100{"\u00d7"} different Yield. The difference is the cascade architecture {"\u2014"} how the human structures context reuse, output extraction, and input minimization. SigRank measures the human&apos;s skill, not the model&apos;s capability. Model evals (Vals AI, LMSYS) already cover model quality.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Is SigRank just for Claude users?</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the human&apos;s cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.
             </p>
           </div>
         </div>
