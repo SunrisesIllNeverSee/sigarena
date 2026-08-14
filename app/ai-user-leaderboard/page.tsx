@@ -11,7 +11,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "AI User Leaderboard — Public Operator Evals | SigRank",
   description:
-    "The public operator evals leaderboard. AI users ranked by Yield (Υ) — token-cascade efficiency. See the full ranking, compare operators, and get your own rank.",
+    "The public operator evals leaderboard. AI users ranked by Yield (Υ) — token-cascade efficiency. Compare operators and get your own rank at signalaf.com/score.",
   alternates: { canonical: "/ai-user-leaderboard" },
   openGraph: {
     title: "AI User Leaderboard — Public Operator Evals | SigRank",

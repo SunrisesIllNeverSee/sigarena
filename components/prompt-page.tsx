@@ -82,7 +82,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
             {
               question: `Who has the highest ${prompt.metric_label} score?`,
               answer: top
-                ? `${topName} leads with ${prompt.metric_label} ${topValue}, using ${top.platform}. The leaderboard updates as new operator telemetry is submitted. See the full ranking below.`
+                ? `${topName} leads with ${prompt.metric_label} ${topValue}, using ${top.platform}. The leaderboard updates as new operator telemetry is submitted.`
                 : `The leaderboard is refreshing. Check back shortly for the latest ${prompt.metric_label} rankings.`,
             },
             {

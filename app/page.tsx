@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFullLeaderboard, computeDeltaFromAverage, sortLeaderboard } from "@/lib/api";
+import { getFullLeaderboard, computeDeltaFromAverage, sortLeaderboard, computeAggregates, formatTokenCount } from "@/lib/api";
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
 import { SpotlightSection } from "@/components/spotlight";
-import { Trophy, TrendingUp, Crown, Sparkles } from "lucide-react";
-import { JsonLd, leaderboardSchema, articleSchema } from "@/lib/jsonld";
+import { Trophy, TrendingUp, Crown, Sparkles, BarChart3, Layers, Zap } from "lucide-react";
+import { JsonLd, leaderboardSchema, articleSchema, websiteSchemaWithStats } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield, operatorDisplayName } from "@/lib/utils";
 
@@ -54,12 +54,14 @@ export default async function HomePage() {
   }
 
   const { deltas } = computeDeltaFromAverage(data.entries);
+  const aggregates = computeAggregates(data);
   const spotlight = deriveSpotlight(data);
   const dethrone = checkDethrone(data);
   const topOperator = data.entries[0];
   const promptOfDay = getPromptOfTheDay();
   const platformOfDay = getPlatformOfTheDay();
   const allPrompts = getActivePrompts();
+  const platformCount = Object.keys(aggregates.platforms).length;
 
   // Sort the already-fetched full board locally for the prompt-of-the-day and
   // platform-spotlight sections. Avoids 2 extra 1640-row network fetches per
@@ -76,6 +78,7 @@ export default async function HomePage() {
           "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",
           "/",
         ),
+        websiteSchemaWithStats(aggregates, platformCount),
       ]} />
       {/* Hero */}
       <section className="text-center pt-6 pb-2">
@@ -111,6 +114,30 @@ export default async function HomePage() {
         </div>
         <div className="text-muted-foreground">
           Updated {new Date(data.generated_at).toLocaleDateString()}
+        </div>
+      </div>
+
+      {/* Aggregate stats — citable numbers for AI search engines */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="rounded-xl border border-border bg-card p-4 text-center">
+          <BarChart3 className="h-5 w-5 text-primary mx-auto mb-1" aria-hidden="true" />
+          <div className="text-2xl font-bold tabular-nums">{aggregates.total_operators.toLocaleString()}</div>
+          <div className="text-xs text-muted-foreground">operators ranked</div>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-4 text-center">
+          <Zap className="h-5 w-5 text-primary mx-auto mb-1" aria-hidden="true" />
+          <div className="text-2xl font-bold tabular-nums">{formatTokenCount(aggregates.total_tokens)}</div>
+          <div className="text-xs text-muted-foreground">tokens analyzed</div>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-4 text-center">
+          <Layers className="h-5 w-5 text-primary mx-auto mb-1" aria-hidden="true" />
+          <div className="text-2xl font-bold tabular-nums">{platformCount}</div>
+          <div className="text-xs text-muted-foreground">platforms tracked</div>
+        </div>
+        <div className="rounded-xl border border-border bg-card p-4 text-center">
+          <TrendingUp className="h-5 w-5 text-primary mx-auto mb-1" aria-hidden="true" />
+          <div className="text-2xl font-bold tabular-nums">{formatYield(aggregates.median_yield)}</div>
+          <div className="text-xs text-muted-foreground">median Yield (Υ)</div>
         </div>
       </div>
 

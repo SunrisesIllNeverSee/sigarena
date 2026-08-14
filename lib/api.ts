@@ -402,6 +402,86 @@ export function computeDeltaFromAverage(entries: LeaderboardEntry[]): {
   return { average, deltas };
 }
 
+/** Aggregate stats computed from the full leaderboard. */
+export interface AggregateStats {
+  total_operators: number;
+  total_tokens: number;
+  total_input_tokens: number;
+  total_output_tokens: number;
+  total_cache_read_tokens: number;
+  median_yield: number;
+  average_yield: number;
+  max_yield: number;
+  platforms: Record<string, number>;
+  class_tiers: Record<string, number>;
+}
+
+/**
+ * Compute aggregate stats from a full leaderboard response.
+ * Pure function — no API calls. Used for homepage stats bar, JSON-LD,
+ * llms.txt, and FAQ answers. AI search engines prefer content with
+ * concrete numbers (Princeton GEO-Bench: up to 41% citation lift).
+ */
+export function computeAggregates(data: LeaderboardResponse): AggregateStats {
+  const entries = data.entries;
+  if (entries.length === 0) {
+    return {
+      total_operators: 0,
+      total_tokens: 0,
+      total_input_tokens: 0,
+      total_output_tokens: 0,
+      total_cache_read_tokens: 0,
+      median_yield: 0,
+      average_yield: 0,
+      max_yield: 0,
+      platforms: {},
+      class_tiers: {},
+    };
+  }
+
+  const total_tokens = entries.reduce((s, e) => s + e.total_tokens, 0);
+  const total_input_tokens = entries.reduce((s, e) => s + e.input_tokens, 0);
+  const total_output_tokens = entries.reduce((s, e) => s + e.output_tokens, 0);
+  const total_cache_read_tokens = entries.reduce((s, e) => s + e.cache_read_tokens, 0);
+
+  const yields = entries.map((e) => e.yield_).sort((a, b) => a - b);
+  const n = yields.length;
+  const median_yield = n % 2 ? yields[(n - 1) / 2] : (yields[n / 2 - 1] + yields[n / 2]) / 2;
+  const average_yield = yields.reduce((s, y) => s + y, 0) / n;
+  const max_yield = yields[n - 1];
+
+  const platforms: Record<string, number> = {};
+  const class_tiers: Record<string, number> = {};
+  for (const e of entries) {
+    platforms[e.platform] = (platforms[e.platform] || 0) + 1;
+    if (e.class_tier) {
+      class_tiers[e.class_tier] = (class_tiers[e.class_tier] || 0) + 1;
+    }
+  }
+
+  return {
+    total_operators: entries.length,
+    total_tokens,
+    total_input_tokens,
+    total_output_tokens,
+    total_cache_read_tokens,
+    median_yield,
+    average_yield,
+    max_yield,
+    platforms,
+    class_tiers,
+  };
+}
+
+/** Format a token count as a human-readable string (e.g. "741B", "1.5T"). */
+export function formatTokenCount(n: number): string {
+  if (n >= 1e12) return `${(n / 1e12).toFixed(1)}T`;
+  if (n >= 1e9) return `${(n / 1e9).toFixed(1)}B`;
+  if (n >= 1e6) return `${(n / 1e6).toFixed(1)}M`;
+  if (n >= 1e3) return `${(n / 1e3).toFixed(1)}K`;
+  return n.toString();
+}
+
 /**
  * Build a slug → codename lookup map from leaderboard entries.
  * Used to resolve SEO-friendly URL slugs back to API codenames.

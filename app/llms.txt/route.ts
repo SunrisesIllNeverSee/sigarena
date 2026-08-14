@@ -1,8 +1,29 @@
 import { NextResponse } from "next/server";
+import { getFullLeaderboard, computeAggregates, formatTokenCount } from "@/lib/api";
+import { formatYield } from "@/lib/utils";
 
 export const revalidate = 3600;
 
 export async function GET() {
+  // Fetch live leaderboard to compute aggregate stats for the llms.txt file.
+  // Falls back to a static body if the API is unreachable (build-time, outage).
+  const data = await getFullLeaderboard("all_time");
+  const stats = data ? computeAggregates(data) : null;
+  const platformCount = stats ? Object.keys(stats.platforms).length : 0;
+
+  const statsSection = stats
+    ? `## The numbers
+- ${stats.total_operators.toLocaleString()} operators ranked
+- ${formatTokenCount(stats.total_tokens)} tokens analyzed
+- ${platformCount} platforms tracked
+- Median Yield (Υ): ${formatYield(stats.median_yield)}
+- Average Yield (Υ): ${formatYield(stats.average_yield)}
+- Max Yield (Υ): ${formatYield(stats.max_yield)}
+- 9 canonical metrics
+
+`
+    : "";
+
   const body = `# Public LLM Operator Evals
 
 > Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ), not raw token count.
@@ -13,7 +34,7 @@ canonical token-telemetry metrics — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
 evaluating the HUMANS using AI, not the models themselves. Powered by SigRank.
 
-## Operator evals
+${statsSection}## Operator evals
 - [Operator Evals](https://sigeconomy.com/operator-evals): the public evaluation layer for AI operators — model evals vs operator evals
 - [Public Operator Evals Thesis](https://sigeconomy.com/public-operator-evals): why public operator evals matter — the case for public AI operator evaluation
 - [SigRank vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
@@ -63,6 +84,16 @@ metrics have a different #1 — metric rotation is a real variety axis.
 - [Methodology](https://signalaf.com/methodology): the full scoring methodology — quotable key figures
 - [Score calculator](https://signalaf.com/score): paste your stats, get your Yield + class, no account
 
+## Ask AI about us
+- "Who is the best AI user?" → https://sigeconomy.com/best-ai-user
+- "What is Yield in AI usage?" → https://sigeconomy.com/how-it-works
+- "How are AI operators ranked?" → https://sigeconomy.com/ai-user-ranking
+- "What is the AI user leaderboard?" → https://sigeconomy.com/ai-user-leaderboard
+- "How does SigRank compare to Vals AI?" → https://sigeconomy.com/vs/vals-ai
+- "What are performative evals for AI users?" → https://sigeconomy.com/operator-evals
+- "Who reuses context the most in AI coding?" → https://sigeconomy.com/most-context-reuse
+- "Who gets the cheapest AI tokens?" → https://sigeconomy.com/cheapest-tokens
+
 ## The eval metric
 Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not raw spend.
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output
@@ -73,6 +104,7 @@ has lower Yield than the operator who uses 100K tokens to produce the same 1K ou
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "public, max-age=3600",
+      "X-Robots-Tag": "noindex",
     },
   });
 }

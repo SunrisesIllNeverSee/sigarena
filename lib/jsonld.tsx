@@ -1,4 +1,4 @@
-import type { LeaderboardEntry, OperatorResponse } from "@/lib/api";
+import type { LeaderboardEntry, OperatorResponse, AggregateStats } from "@/lib/api";
 import { operatorDisplayName, formatYield } from "@/lib/utils";
 
 const SITE_URL = "https://sigeconomy.com";
@@ -35,6 +35,40 @@ export function websiteSchema() {
       "@type": "Organization",
       name: "SigRank",
       url: ORG_URL,
+    },
+  };
+}
+
+/** WebSite schema with aggregate stats — used on the homepage for AI search engines */
+export function websiteSchemaWithStats(stats: AggregateStats, platformCount: number) {
+  const tokenStr = stats.total_tokens >= 1e12
+    ? `${(stats.total_tokens / 1e12).toFixed(1)}T`
+    : stats.total_tokens >= 1e9
+    ? `${(stats.total_tokens / 1e9).toFixed(1)}B`
+    : `${(stats.total_tokens / 1e6).toFixed(1)}M`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "SigRank — Performative Evals for AI Users",
+    alternateName: "SigRank",
+    url: SITE_URL,
+    description: `${stats.total_operators.toLocaleString()} operators ranked across ${platformCount} platforms. ${tokenStr} tokens analyzed. Median Yield: ${formatYield(stats.median_yield)}. Performative evals and ranking for users not models.`,
+    publisher: {
+      "@type": "Organization",
+      name: "SigRank",
+      url: ORG_URL,
+    },
+    about: {
+      "@type": "Thing",
+      name: "AI User Leaderboard",
+      description: `${stats.total_operators} operators ranked by Yield (Υ) — token-cascade efficiency across ${platformCount} platforms.`,
+    },
+    mainEntity: {
+      "@type": "Dataset",
+      name: "SigRank Operator Leaderboard",
+      description: `${stats.total_operators} operators, ${tokenStr} tokens analyzed, ${platformCount} platforms. Ranked by Yield (Υ) = (cache_read × output) / input².`,
+      variableMeasured: ["Yield (Υ)", "Velocity", "Leverage", "SNR", "10xDEV", "Scale V", "Efficiency", "$/1M", "Op Ratio"],
+      measurementTechnique: "Token telemetry from real AI coding sessions",
     },
   };
 }
