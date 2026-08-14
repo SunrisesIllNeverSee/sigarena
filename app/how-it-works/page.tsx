@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 export default function HowItWorksPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-8">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         articleSchema(
           "How Operator Evals Work — Yield, Leverage & Token Cascade",
