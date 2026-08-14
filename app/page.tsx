@@ -18,23 +18,23 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank",
+  title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
   description:
-    "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats, like ERA for baseball. Benchmark your AI performance on the public leaderboard.",
+    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Performative Evals & Leaderboard for AI Users | SigRank",
+    title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
     description:
-      "The statistical layer for AI users. Performative evals and ranking for users not models. Ranked by Yield — like ERA for baseball, but for AI.",
+      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     url: "https://sigeconomy.com",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Performative Evals for AI Users — SigRank",
-    description: "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
-    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    title: "Public LLM Operator Evals — SigRank",
+    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+    images: ["/og.png"],
   },
 };
 
@@ -72,28 +72,26 @@ export default async function HomePage() {
       <JsonLd data={[
         leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://sigeconomy.com"),
         articleSchema(
-          "Performative Evals & Leaderboard for AI Users — Ranked by Yield",
-          "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — custom metrics like Yield turn AI usage into stats, like ERA for baseball.",
+          "AI User Leaderboard — Ranked by Yield",
+          "Who's the best AI user? The AI User Leaderboard ranks operators by Yield — token-cascade efficiency, not raw spend.",
           "/",
         ),
       ]} />
       {/* Hero */}
       <section className="text-center pt-6 pb-2">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          <span className="gradient-text">Performative Evals</span>
+          <span className="gradient-text">Public LLM</span>
           <br />
-          <span className="gradient-text">& Leaderboard for AI Users</span>
+          <span className="gradient-text">Operator Evals</span>
         </h1>
         <p className="mt-4 text-lg text-muted-foreground sm:text-xl">
-          The statistical layer for AI users.{" "}
-          <span className="font-semibold text-foreground">Users not models.</span>
+          The public evaluation layer for AI operators.
         </p>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
-          SigRank turns AI usage into stats {"\u2014"} like ERA for baseball,{" "}
-          <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> for AI.{" "}
-          Benchmark your performance. See your rank. Get better.{" "}
+          Like Vals AI evaluates models, SigRank evaluates the humans using AI.{" "}
+          Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
           <a href="/operator-evals" className="text-primary font-medium hover:underline">
-            What are performative evals?
+            What are operator evals?
           </a>
         </p>
       </section>

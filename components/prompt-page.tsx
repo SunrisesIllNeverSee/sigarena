@@ -61,7 +61,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
           ),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "AI User Stats", path: "/operator-evals" },
+            { name: "Operator Evals", path: "/operator-evals" },
             { name: prompt.question, path: `/${canonicalSlug}` },
           ]),
           faqSchema([
@@ -69,11 +69,11 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
               question: prompt.aeo_question,
               answer: top
                 ? `${topName} is #1 with ${prompt.metric_label} ${topValue}. ${data.total_operators} AI users ranked. ${prompt.story}.`
-                : `${prompt.story}. ${data.total_operators} AI users ranked on the public leaderboard.`,
+                : `${prompt.story}. ${data.total_operators} AI users ranked on the public operator evals leaderboard.`,
             },
             {
               question: `What is ${prompt.metric_label}?`,
-              answer: `${prompt.metric_label} = ${prompt.metric_formula}. ${prompt.story}. It measures AI users — developers, coders, and operators — based on token telemetry from their real sessions with Claude, GPT, Gemini, Cursor, Copilot, and other AI coding tools. Think of it as a stat for AI users, like ERA for baseball.`,
+              answer: `${prompt.metric_label} = ${prompt.metric_formula}. ${prompt.story}. It measures AI users — developers, coders, and operators — based on token telemetry from their real sessions with Claude, GPT, Gemini, Cursor, Copilot, and other AI coding tools.`,
             },
             {
               question: `How is ${prompt.metric_label} calculated?`,
@@ -305,7 +305,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
               {top ? (
                 <><span className="font-medium text-foreground">{topName}</span> is #1 with {prompt.metric_label} {topValue}. {data.total_operators} AI users ranked. {prompt.story}.</>
               ) : (
-                <>{prompt.story}. {data.total_operators} AI users ranked on the public leaderboard.</>
+                <>{prompt.story}. {data.total_operators} AI users ranked on the public operator evals leaderboard.</>
               )}
             </p>
           </div>
@@ -342,7 +342,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
 
       {/* Cross-links to other prompts + existing SEO routes */}
       <div className="space-y-4 rounded-lg border border-border bg-card p-6 text-sm text-muted-foreground">
-        <h2 className="text-lg font-semibold text-foreground">Other AI user rankings</h2>
+        <h2 className="text-lg font-semibold text-foreground">Other operator evals</h2>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {allPrompts
             .filter((p) => p.slug !== prompt.slug)

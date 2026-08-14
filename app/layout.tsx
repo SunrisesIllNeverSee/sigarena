@@ -13,9 +13,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sigeconomy.com"),
-  title: "Performative Evals & Leaderboard for AI Users | SigRank",
+  title: "Public LLM Operator Evals — Powered by SigRank",
   description:
-    "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats. Benchmark your AI performance.",
+    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency.",
   authors: [{ name: "SigRank", url: "https://signalaf.com" }],
   publisher: "SigRank",
   robots: {
@@ -26,19 +26,19 @@ export const metadata: Metadata = {
     "max-video-preview": -1,
   },
   openGraph: {
-    title: "Performative Evals & Leaderboard for AI Users | SigRank",
+    title: "Public LLM Operator Evals — Powered by SigRank",
     description:
-      "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
+      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
     type: "website",
     url: "https://sigeconomy.com",
     siteName: "SigRank",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Performative Evals for AI Users — SigRank",
-    description: "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
-    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    title: "Public LLM Operator Evals — SigRank",
+    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+    images: [{ url: "/og.png", alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
   },
 };
 
