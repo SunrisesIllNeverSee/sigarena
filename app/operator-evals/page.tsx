@@ -224,7 +224,7 @@ export default function OperatorEvalsPage() {
       </div>
 
       <div className="space-y-4 rounded-lg border border-border bg-card p-6">
-        <h2 className="text-2xl font-semibold">The evaluation metric: Yield</h2>
+        <h2 className="text-2xl font-semibold">What is the evaluation metric for AI operators?</h2>
         <p className="text-sm text-muted-foreground">
           Yield (\u03a5) is the public operator evaluation metric. It measures
           token-cascade efficiency \u2014 whether signal is compounding or
@@ -338,7 +338,7 @@ export default function OperatorEvalsPage() {
           href="/public-operator-evals"
           className="rounded-lg border border-border bg-card p-6 hover:border-primary/30 transition-colors"
         >
-          <h3 className="font-semibold mb-2">The Public Evals Thesis</h3>
+          <h3 className="font-semibold mb-2">Why do public operator evals matter?</h3>
           <p className="text-sm text-muted-foreground">
             Why public operator evals are the next frontier in AI accountability.
           </p>
@@ -347,7 +347,7 @@ export default function OperatorEvalsPage() {
           href="/vs/vals-ai"
           className="rounded-lg border border-border bg-card p-6 hover:border-primary/30 transition-colors"
         >
-          <h3 className="font-semibold mb-2">SigRank vs Vals AI</h3>
+          <h3 className="font-semibold mb-2">How does SigRank compare to Vals AI?</h3>
           <p className="text-sm text-muted-foreground">
             Operator evals vs model evals \u2014 different subjects, different
             metrics.
@@ -357,7 +357,7 @@ export default function OperatorEvalsPage() {
           href="/best-ai-user"
           className="rounded-lg border border-border bg-card p-6 hover:border-primary/30 transition-colors"
         >
-          <h3 className="font-semibold mb-2">See the evals</h3>
+          <h3 className="font-semibold mb-2">Where can I see the operator evals?</h3>
           <p className="text-sm text-muted-foreground">
             The public operator leaderboard \u2014 ranked by Yield (\u03a5).
           </p>
