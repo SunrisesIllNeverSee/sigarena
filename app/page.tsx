@@ -18,23 +18,23 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
+  title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank",
   description:
-    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Υ Yield — token-cascade efficiency, not raw spend.",
+    "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats, like ERA for baseball. Benchmark your AI performance on the public leaderboard.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Public LLM Operator Evals — Ranked by Yield (Υ) | SigRank",
+    title: "Performative Evals & Leaderboard for AI Users | SigRank",
     description:
-      "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+      "The statistical layer for AI users. Performative evals and ranking for users not models. Ranked by Yield — like ERA for baseball, but for AI.",
     url: "https://sigeconomy.com",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Public LLM Operator Evals — SigRank",
-    description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
-    images: ["/og.png"],
+    title: "Performative Evals for AI Users — SigRank",
+    description: "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
+    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
   },
 };
 
