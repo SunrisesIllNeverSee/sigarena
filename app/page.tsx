@@ -4,7 +4,7 @@ import { getFullLeaderboard, computeDeltaFromAverage, sortLeaderboard, computeAg
 import { deriveSpotlight, checkDethrone } from "@/lib/campaign";
 import { RankCard } from "@/components/rank-card";
 import { SpotlightSection } from "@/components/spotlight";
-import { Trophy, TrendingUp, Crown, Sparkles, BarChart3, Layers, Zap } from "lucide-react";
+import { Trophy, TrendingUp, Crown, Sparkles, BarChart3, Layers, Zap, Search } from "lucide-react";
 import { JsonLd, leaderboardSchema, articleSchema, websiteSchemaWithStats } from "@/lib/jsonld";
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield, operatorDisplayName } from "@/lib/utils";
@@ -289,6 +289,36 @@ export default async function HomePage() {
         >
           Check my rank
         </a>
+      </section>
+
+      {/* Ask AI about us — copy-pasteable prompts for AI search engines (AEO Item 8b) */}
+      <section className="rounded-lg border border-border bg-card p-6">
+        <h2 className="text-lg font-semibold mb-2">Ask AI about us</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Copy these prompts into ChatGPT, Perplexity, or Google AI Overviews
+          to see how AI search engines answer questions about SigRank.
+        </p>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {[
+            { q: "Who is the best AI user?", link: "/best-ai-user" },
+            { q: "What is Yield in AI usage?", link: "/how-it-works" },
+            { q: "How are AI operators ranked?", link: "/ai-user-ranking" },
+            { q: "What is the AI user leaderboard?", link: "/ai-user-leaderboard" },
+            { q: "How does SigRank compare to Vals AI?", link: "/vs/vals-ai" },
+            { q: "What are performative evals for AI users?", link: "/operator-evals" },
+            { q: "Who reuses context the most in AI coding?", link: "/most-context-reuse" },
+            { q: "Who gets the cheapest AI tokens?", link: "/cheapest-tokens" },
+          ].map((item) => (
+            <a
+              key={item.q}
+              href={item.link}
+              className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
+            >
+              <Search className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
+              <span>&ldquo;{item.q}&rdquo;</span>
+            </a>
+          ))}
+        </div>
       </section>
 
       {/* Weekly drop banner */}
