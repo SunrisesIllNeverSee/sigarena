@@ -11,20 +11,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Weekly Rankings Drop — AI User Leaderboard",
+  title: "Weekly Operator Evals Drop — Public LLM Operator Rankings",
   description:
-    "This week's AI user rankings: biggest movers, new challengers, class distribution. Powered by SigRank.",
+    "This week's operator evals: biggest movers, new challengers, class distribution. Public LLM operator evals powered by SigRank.",
   alternates: { canonical: "/weekly" },
   openGraph: {
-    title: "Weekly Rankings Drop — AI User Leaderboard",
+    title: "Weekly Operator Evals Drop — SigRank",
     description:
-      "This week's AI user rankings: biggest movers, new challengers, class distribution.",
+      "This week's operator evals: biggest movers, new challengers, class distribution.",
     url: "https://sigeconomy.com/weekly",
     type: "website",
   },
@@ -52,13 +52,35 @@ export default async function WeeklyPage() {
     <JsonLd data={[
       leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://sigeconomy.com/weekly"),
       articleSchema(
-        "Weekly Rankings Drop — AI User Leaderboard",
-        "This week's AI user rankings: biggest movers, new challengers, class distribution.",
+        "Weekly Operator Evals Drop — SigRank",
+        "This week's operator evals: biggest movers, new challengers, class distribution.",
         "/weekly",
       ),
       breadcrumbSchema([
         { name: "Home", path: "/" },
         { name: "Weekly Drop", path: "/weekly" },
+      ]),
+      faqSchema([
+        {
+          question: "What is the weekly operator evals drop?",
+          answer:
+            "The weekly drop summarizes the biggest movers, new challengers, and class distribution on the public operator evals leaderboard. It tracks which AI users are climbing, which are falling, and how the field is evolving week over week.",
+        },
+        {
+          question: "How often do the AI user rankings update?",
+          answer:
+            "The leaderboard updates continuously as new operator telemetry is submitted. The weekly drop captures a snapshot of the biggest changes \u2014 rank movements, new entrants, and class tier shifts \u2014 every week.",
+        },
+        {
+          question: "What metrics are tracked in the weekly drop?",
+          answer:
+            "The weekly drop tracks Yield (\u03a5) as the headline metric, along with class tier distribution. Yield = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool.",
+        },
+        {
+          question: "How do I get featured in the weekly drop?",
+          answer:
+            "Submit your token telemetry at signalaf.com/score to get ranked. If your Yield score moves significantly, you'll appear in the weekly drop as a biggest mover or new challenger. Token counts only \u2014 never prompt content or code.",
+        },
       ]),
     ]} />
     {/* Back link */}

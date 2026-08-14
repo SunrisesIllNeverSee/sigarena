@@ -3,20 +3,20 @@ import { RankCard } from "@/components/rank-card";
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 import type { Metadata } from "next";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "AI User Leaderboard — The Competitive Ranking",
+  title: "AI User Leaderboard — Public Operator Evals | SigRank",
   description:
-    "The AI User Leaderboard ranks the best AI operators by Yield (Υ) — token-cascade efficiency. See the full ranking, compare operators, and get your own rank.",
+    "The public operator evals leaderboard. AI users ranked by Yield (Υ) — token-cascade efficiency. See the full ranking, compare operators, and get your own rank.",
   alternates: { canonical: "/ai-user-leaderboard" },
   openGraph: {
-    title: "AI User Leaderboard — The Competitive Ranking",
+    title: "AI User Leaderboard — Public Operator Evals | SigRank",
     description:
-      "The competitive leaderboard for AI operators. Powered by SigRank.",
+      "The public operator evals leaderboard. AI users ranked by Yield (Υ).",
     url: "https://sigeconomy.com/ai-user-leaderboard",
     type: "website",
   },
@@ -41,13 +41,34 @@ export default async function AIUserLeaderboardPage() {
       <JsonLd data={[
         leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigeconomy.com/ai-user-leaderboard"),
         articleSchema(
-          "AI User Leaderboard — The Competitive Ranking",
-          "The AI User Leaderboard ranks the best AI operators by Yield.",
+          "AI User Leaderboard — Public Operator Evals",
+          "The public operator evals leaderboard. AI users ranked by Yield (Υ).",
           "/ai-user-leaderboard",
         ),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "AI User Leaderboard", path: "/ai-user-leaderboard" },
+        ]),
+        faqSchema([
+          {
+            question: "What is the AI User Leaderboard?",
+            answer:
+              "The AI User Leaderboard is the public operator evals leaderboard \u2014 AI users ranked by Yield (\u03a5), a token-cascade efficiency score. It measures how effectively developers, coders, and AI operators use AI tools like Claude, GPT, Gemini, Cursor, and Copilot.",
+          },
+          {
+            question: "How are AI users scored on the leaderboard?",
+            answer:
+              "AI users are scored by Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. Higher Yield means the user reuses cached context efficiently and produces substantial output relative to fresh input. Token counts only \u2014 never prompt content or code.",
+          },
+          {
+            question: "How many AI users are on the leaderboard?",
+            answer: `${data.total_operators} AI users are currently ranked on the public operator evals leaderboard. The ranking updates as new operator telemetry is submitted.`,
+          },
+          {
+            question: "How do I get on the AI User Leaderboard?",
+            answer:
+              "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Works with Claude, ChatGPT, Cursor, Copilot, and any AI coding tool. Token counts only \u2014 never prompt content, never code.",
+          },
         ]),
       ]} />
       <div className="text-center py-4">

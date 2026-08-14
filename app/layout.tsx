@@ -32,13 +32,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://sigeconomy.com",
     siteName: "SigRank",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Public LLM Operator Evals — SigRank",
     description: "Public evals for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
-    images: ["/og.png"],
+    images: [{ url: "/og.png", alt: "Public LLM Operator Evals — Ranked by Yield | SigRank" }],
   },
 };
 

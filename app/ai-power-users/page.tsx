@@ -4,20 +4,20 @@ import { computeDeltaFromAverage } from "@/lib/api";
 import Link from "next/link";
 import { Trophy, Zap } from "lucide-react";
 import type { Metadata } from "next";
-import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema } from "@/lib/jsonld";
+import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 import { operatorDisplayName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "AI Power Users — The Top AI Users Ranked",
+  title: "AI Power Users — Top Operator Evals Performers | SigRank",
   description:
-    "The top AI power users, ranked by Yield (Υ). See who's dominating the leaderboard, who's climbing, and what makes a power user.",
+    "The top AI power users, ranked by Yield (Υ) — token-cascade efficiency. See who's dominating the public operator evals, who's climbing, and what makes a power user.",
   alternates: { canonical: "/ai-power-users" },
   openGraph: {
-    title: "AI Power Users — The Top AI Users Ranked",
-    description: "The top AI power users, ranked by Yield (Υ).",
+    title: "AI Power Users — Top Operator Evals Performers | SigRank",
+    description: "The top AI power users, ranked by Yield (Υ). Public operator evals.",
     url: "https://sigeconomy.com/ai-power-users",
     type: "website",
   },
@@ -46,13 +46,34 @@ export default async function AIPowerUsersPage() {
       <JsonLd data={[
         leaderboardSchema(data.entries, "AI Power Users — Top 25", "https://sigeconomy.com/ai-power-users"),
         articleSchema(
-          "AI Power Users — The Top AI Users Ranked",
-          "The top AI power users, ranked by Yield.",
+          "AI Power Users — Top Operator Evals Performers",
+          "The top AI power users, ranked by Yield (Υ). Public operator evals.",
           "/ai-power-users",
         ),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "AI Power Users", path: "/ai-power-users" },
+        ]),
+        faqSchema([
+          {
+            question: "What is an AI power user?",
+            answer:
+              "An AI power user is a developer, coder, or AI operator who consistently achieves high Yield (\u03a5) scores on the public operator evals leaderboard. Power users reuse cached context efficiently, produce substantial output, and minimize wasted input across Claude, GPT, Gemini, Cursor, Copilot, and other AI tools.",
+          },
+          {
+            question: "Who are the top AI power users?",
+            answer: `The top ${data.total_operators} AI operators are ranked on the public operator evals leaderboard by Yield (\u03a5). The ranking reflects real token-cascade efficiency from actual coding sessions.`,
+          },
+          {
+            question: "What makes someone a power user of AI?",
+            answer:
+              "High Yield \u2014 which means efficient cache reuse (Leverage), productive output (Velocity), and low wasted input. Power users build on prior context instead of starting fresh. The same model, same tools, same prompts can produce 100x different Yield depending on the operator.",
+          },
+          {
+            question: "How do I become an AI power user?",
+            answer:
+              "Submit your token telemetry at signalaf.com/score to get your Yield score. Then optimize your cascade: reuse context, avoid unnecessary fresh input, and maximize productive output. The leaderboard shows where you stand among other AI developers and coders.",
+          },
         ]),
       ]} />
       <div className="text-center py-4">

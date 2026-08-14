@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { Trophy } from "lucide-react";
 import type { Metadata } from "next";
-import { JsonLd, articleSchema, breadcrumbSchema } from "@/lib/jsonld";
+import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export const metadata: Metadata = {
-  title: "AI User Ranking — How AI Users Are Ranked",
+  title: "AI User Ranking — How Operator Evals Work | SigRank",
   description:
-    "How does the AI User Leaderboard rank operators? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, and class tiers.",
+    "How does SigRank rank AI users? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, class tiers. Public operator evals methodology.",
   alternates: { canonical: "/ai-user-ranking" },
   openGraph: {
-    title: "AI User Ranking — How AI Users Are Ranked",
+    title: "AI User Ranking — How Operator Evals Work | SigRank",
     description:
-      "The Yield (Υ) cascade explained. How AI operators are ranked.",
+      "How public operator evals rank AI users. The Yield (Υ) cascade explained.",
     url: "https://sigeconomy.com/ai-user-ranking",
     type: "website",
   },
@@ -25,13 +25,40 @@ export default function AIUserRankingPage() {
     <div className="space-y-6">
       <JsonLd data={[
         articleSchema(
-          "AI User Ranking — How AI Users Are Ranked",
-          "How does the AI User Leaderboard rank operators? The Yield cascade explained.",
+          "AI User Ranking — How Operator Evals Work",
+          "How does SigRank rank AI users? The Yield cascade explained. Public operator evals methodology.",
           "/ai-user-ranking",
         ),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "AI User Ranking", path: "/ai-user-ranking" },
+        ]),
+        faqSchema([
+          {
+            question: "How are AI users ranked on SigRank?",
+            answer:
+              "AI users are ranked by Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2. Yield measures token-cascade efficiency \u2014 whether signal is compounding or tokens are being burned. Higher Yield means the AI user reuses cached context efficiently and produces substantial output relative to fresh input.",
+          },
+          {
+            question: "What metrics does the operator evals leaderboard use?",
+            answer:
+              "SigRank uses 9 canonical metrics: Yield (overall efficiency), Velocity (output per token), Leverage (cache reuse), SNR (signal quality), 10xDEV (normalized leverage), Efficiency (blended score), Scale V (volume), $/1M (cost efficiency), and Op Ratio (cascade shape). Yield is the headline metric.",
+          },
+          {
+            question: "What are the class tiers for AI users?",
+            answer:
+              "Operators are classified into tiers from NOVICE to SINGULARITY based on their Yield score. The tiers provide a quick way to compare operators across different volume levels. A higher tier means more efficient token-cascade architecture.",
+          },
+          {
+            question: "Does the ranking work across different AI tools?",
+            answer:
+              "Yes. The Yield metric is platform-agnostic \u2014 it works across Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The ranking measures the human's efficiency, not the AI model's capability.",
+          },
+          {
+            question: "How do I get my AI user ranking?",
+            answer:
+              "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, your class tier, and your scores across all 9 metrics. Token counts only \u2014 never prompt content, never code.",
+          },
         ]),
       ]} />
       <div className="text-center py-4">
