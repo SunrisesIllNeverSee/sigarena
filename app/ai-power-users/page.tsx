@@ -11,12 +11,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "AI Power Users — Top Operator Evals Performers | SigRank",
+  title: "AI Power Users — Top Operator Evals Performers | SigRank SignalAF",
   description:
     "The top AI power users, ranked by Yield (Υ) — token-cascade efficiency. See who's dominating the public operator evals, who's climbing, and what makes a power user.",
   alternates: { canonical: "/ai-power-users" },
   openGraph: {
-    title: "AI Power Users — Top Operator Evals Performers | SigRank",
+    title: "AI Power Users — Top Operator Evals Performers | SigRank SignalAF",
     description: "The top AI power users, ranked by Yield (Υ). Public operator evals.",
     url: "https://sigeconomy.com/ai-power-users",
     type: "website",
@@ -43,6 +43,7 @@ export default async function AIPowerUsersPage() {
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         leaderboardSchema(data.entries, "AI Power Users — Top 25", "https://sigeconomy.com/ai-power-users"),
         articleSchema(

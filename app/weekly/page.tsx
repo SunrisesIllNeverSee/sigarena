@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "This week's operator evals: biggest movers, new challengers, class distribution. Public LLM operator evals powered by SigRank.",
   alternates: { canonical: "/weekly" },
   openGraph: {
-    title: "Weekly Operator Evals Drop — SigRank",
+    title: "Weekly Operator Evals Drop — SigRank SignalAF",
     description:
       "This week's operator evals: biggest movers, new challengers, class distribution.",
     url: "https://sigeconomy.com/weekly",
@@ -49,10 +49,11 @@ export default async function WeeklyPage() {
 
   return (
     <div className="space-y-6">
+    <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
     <JsonLd data={[
       leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://sigeconomy.com/weekly"),
       articleSchema(
-        "Weekly Operator Evals Drop — SigRank",
+        "Weekly Operator Evals Drop — SigRank SignalAF",
         "This week's operator evals: biggest movers, new challengers, class distribution.",
         "/weekly",
       ),

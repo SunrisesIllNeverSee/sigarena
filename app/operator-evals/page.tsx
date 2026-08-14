@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ) — token-cascade efficiency.",
   alternates: { canonical: "/operator-evals" },
   openGraph: {
-    title: "Public LLM Operator Evals — SigRank",
+    title: "Public LLM Operator Evals — SigRank SignalAF",
     description:
       "The public evaluation layer for AI operators. Public evals for the humans wielding AI.",
     url: "https://sigeconomy.com/operator-evals",

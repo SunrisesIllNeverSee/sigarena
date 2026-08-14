@@ -9,12 +9,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "AI User Leaderboard — Public Operator Evals | SigRank",
+  title: "AI User Leaderboard — Public Operator Evals | SigRank SignalAF",
   description:
     "The public operator evals leaderboard. AI users ranked by Yield (Υ) — token-cascade efficiency. Compare operators and get your own rank at signalaf.com/score.",
   alternates: { canonical: "/ai-user-leaderboard" },
   openGraph: {
-    title: "AI User Leaderboard — Public Operator Evals | SigRank",
+    title: "AI User Leaderboard — Public Operator Evals | SigRank SignalAF",
     description:
       "The public operator evals leaderboard. AI users ranked by Yield (Υ).",
     url: "https://sigeconomy.com/ai-user-leaderboard",
@@ -38,6 +38,7 @@ export default async function AIUserLeaderboardPage() {
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         leaderboardSchema(data.entries, "AI User Leaderboard", "https://sigeconomy.com/ai-user-leaderboard"),
         articleSchema(

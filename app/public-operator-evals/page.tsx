@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 export default function PublicOperatorEvalsPage() {
   return (
     <div className="space-y-8 max-w-3xl mx-auto">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd
         data={[
           articleSchema(

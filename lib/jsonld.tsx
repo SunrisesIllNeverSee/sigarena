@@ -4,16 +4,17 @@ import { operatorDisplayName, formatYield } from "@/lib/utils";
 const SITE_URL = "https://sigeconomy.com";
 const ORG_URL = "https://signalaf.com";
 
-/** Organization schema for SigRank — used site-wide */
+/** Organization schema for SigRank SignalAF — used site-wide */
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "SigRank",
+    name: "SigRank SignalAF",
+    alternateName: ["SigRank", "SignalAF", "signalaf"],
     url: ORG_URL,
     logo: `${ORG_URL}/logo.png`,
     description:
-      "SigRank is the statistical layer for AI users — performative evals and ranking for users not models. Custom metrics like Yield turn AI usage into stats, like ERA for baseball.",
+      "SigRank SignalAF is the statistical layer for AI users — performative evals and ranking for users not models. Custom metrics like Yield turn AI usage into stats, like ERA for baseball.",
     sameAs: [
       "https://github.com/SunrisesIllNeverSee",
       "https://x.com/burnmydays",
@@ -26,14 +27,14 @@ export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "SigRank — Performative Evals for AI Users",
-    alternateName: "SigRank",
+    name: "SigRank SignalAF — Performative Evals for AI Users",
+    alternateName: ["SigRank", "SignalAF", "SigRank SignalAF", "sigeconomy"],
     url: SITE_URL,
     description:
-      "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats.",
+      "Performative evals and ranking for users not models. SigRank SignalAF is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats.",
     publisher: {
       "@type": "Organization",
-      name: "SigRank",
+      name: "SigRank SignalAF",
       url: ORG_URL,
     },
   };
@@ -49,13 +50,13 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "SigRank — Performative Evals for AI Users",
-    alternateName: "SigRank",
+    name: "SigRank SignalAF — Performative Evals for AI Users",
+    alternateName: ["SigRank", "SignalAF", "SigRank SignalAF"],
     url: SITE_URL,
     description: `${stats.total_operators.toLocaleString()} operators ranked across ${platformCount} platforms. ${tokenStr} tokens analyzed. Median Yield: ${formatYield(stats.median_yield)}. Performative evals and ranking for users not models.`,
     publisher: {
       "@type": "Organization",
-      name: "SigRank",
+      name: "SigRank SignalAF",
       url: ORG_URL,
     },
     about: {
@@ -65,7 +66,7 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
     },
     mainEntity: {
       "@type": "Dataset",
-      name: "SigRank Operator Leaderboard",
+      name: "SigRank SignalAF Operator Leaderboard",
       description: `${stats.total_operators} operators, ${tokenStr} tokens analyzed, ${platformCount} platforms. Ranked by Yield (Υ) = (cache_read × output) / input².`,
       variableMeasured: ["Yield (Υ)", "Velocity", "Leverage", "SNR", "10xDEV", "Scale V", "Efficiency", "$/1M", "Op Ratio"],
       measurementTechnique: "Token telemetry from real AI coding sessions",
@@ -139,12 +140,12 @@ export function articleSchema(
     dateModified: datePublished,
     author: {
       "@type": "Organization",
-      name: "SigRank",
+      name: "SigRank SignalAF",
       url: ORG_URL,
     },
     publisher: {
       "@type": "Organization",
-      name: "SigRank",
+      name: "SigRank SignalAF",
       url: ORG_URL,
     },
     mainEntityOfPage: {

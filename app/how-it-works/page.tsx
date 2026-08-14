@@ -4,12 +4,12 @@ import { Zap } from "lucide-react";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank",
+  title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank SignalAF",
   description:
     "How does SigRank evaluate AI operators? The 60-second explainer on Yield (Υ), Leverage, 10xDEV, and the token-cascade efficiency formula. See how public operator evals work.",
   alternates: { canonical: "/how-it-works" },
   openGraph: {
-    title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank",
+    title: "How Operator Evals Work — Yield, Leverage & Token Cascade | SigRank SignalAF",
     description: "How does SigRank evaluate AI operators? The 60-second explainer.",
     url: "https://sigeconomy.com/how-it-works",
     type: "website",

@@ -100,6 +100,7 @@ export default async function BestAIUserPage() {
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         leaderboardSchema(data.entries, "Best AI User — Top 10", "https://sigeconomy.com/best-ai-user"),
         articleSchema(

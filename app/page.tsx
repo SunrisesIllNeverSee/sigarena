@@ -18,23 +18,23 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank",
+  title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank SignalAF",
   description:
     "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats, like ERA for baseball. Benchmark your AI performance on the public leaderboard.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Performative Evals & Leaderboard for AI Users | SigRank",
+    title: "Performative Evals & Leaderboard for AI Users | SigRank SignalAF",
     description:
       "The statistical layer for AI users. Performative evals and ranking for users not models. Ranked by Yield — like ERA for baseball, but for AI.",
     url: "https://sigeconomy.com",
     type: "website",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Performative Evals & Leaderboard for AI Users — SigRank SignalAF" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Performative Evals for AI Users — SigRank",
+    title: "Performative Evals for AI Users — SigRank SignalAF",
     description: "The statistical layer for AI users. Evals and ranking for users not models. Ranked by Yield.",
-    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank" }],
+    images: [{ url: "/og.png", alt: "Performative Evals & Leaderboard for AI Users — SigRank SignalAF" }],
   },
 };
 
@@ -71,6 +71,7 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-8">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://sigeconomy.com"),
         articleSchema(

@@ -74,7 +74,7 @@ const FOOTER_COLUMNS: {
     ],
   },
   {
-    heading: "SigRank",
+    heading: "SigRank SignalAF",
     links: [
       { href: "https://signalaf.com", label: "signalaf.com" },
       { href: "https://signalaf.com/score", label: "Check my rank" },
@@ -119,7 +119,7 @@ export function SiteFooter() {
               href="https://signalaf.com"
               className="font-bold gradient-text"
             >
-              SigRank
+              SigRank SignalAF
             </Link>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">

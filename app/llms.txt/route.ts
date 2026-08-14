@@ -29,15 +29,15 @@ export async function GET() {
 `
     : "";
 
-  const body = `# Public LLM Operator Evals
+  const body = `# Public LLM Operator Evals — SigRank SignalAF
 
 > Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ), not raw token count.
 
-SigRank (sigarena) is the public evaluation platform for AI operators.
+SigRank SignalAF (sigeconomy.com) is the public evaluation platform for AI operators.
 It reads from SigRank's public API (signalaf.com) and evaluates operators on
 canonical token-telemetry metrics — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
-evaluating the HUMANS using AI, not the models themselves. Powered by SigRank.
+evaluating the HUMANS using AI, not the models themselves. Powered by SigRank SignalAF.
 
 Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not raw spend.
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output

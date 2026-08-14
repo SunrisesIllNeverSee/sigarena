@@ -12,12 +12,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
+  title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank SignalAF",
   description:
     "Compare two AI operators side by side. See who has higher Yield, better Leverage, more efficient token usage. Head-to-head AI user comparison on SigRank.",
   alternates: { canonical: "/compare" },
   openGraph: {
-    title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank",
+    title: "Compare AI Users — Head-to-Head Yield Matchup | SigRank SignalAF",
     description: "Compare two AI operators side by side on SigRank.",
     url: "https://sigeconomy.com/compare",
     type: "website",
@@ -75,6 +75,7 @@ export default async function ComparePage({
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         articleSchema(
           "Compare AI Users — Head-to-Head Yield Matchup",

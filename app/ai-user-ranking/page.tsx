@@ -7,12 +7,12 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export const metadata: Metadata = {
-  title: "AI User Ranking — How Operator Evals Work | SigRank",
+  title: "AI User Ranking — How Operator Evals Work | SigRank SignalAF",
   description:
     "How does SigRank rank AI users? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, class tiers. Public operator evals methodology.",
   alternates: { canonical: "/ai-user-ranking" },
   openGraph: {
-    title: "AI User Ranking — How Operator Evals Work | SigRank",
+    title: "AI User Ranking — How Operator Evals Work | SigRank SignalAF",
     description:
       "How public operator evals rank AI users. The Yield (Υ) cascade explained.",
     url: "https://sigeconomy.com/ai-user-ranking",
@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 export default function AIUserRankingPage() {
   return (
     <div className="space-y-6">
+      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
       <JsonLd data={[
         articleSchema(
           "AI User Ranking — How Operator Evals Work",
