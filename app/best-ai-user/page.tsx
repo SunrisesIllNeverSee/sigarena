@@ -33,26 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-function parsePlatform(s: string | undefined): Platform {
-  if (s && (PLATFORMS as string[]).includes(s)) return s as Platform;
-  return "all";
-}
-
-function parseView(s: string | undefined): View {
-  if (s === "center" || s === "peak") return s;
-  return "peak";
-}
-
-function parseCategory(s: string | undefined): Category {
-  if (s === "all") return "all";
-  return "human";
-}
-
-function parseWindow(s: string | undefined): Window {
-  if (s === "7d" || s === "30d" || s === "90d" || s === "all_time") return s;
-  return "all_time";
-}
-
 function promptUrl(slug: string, platform: Platform, view: View, category: Category, window: Window): string {
   const params = new URLSearchParams();
   if (platform !== "all") params.set("platform", platform);

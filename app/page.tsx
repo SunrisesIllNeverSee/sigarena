@@ -94,9 +94,9 @@ export default async function HomePage() {
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
           Like Vals AI evaluates models, SigRank evaluates the humans using AI.{" "}
           Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
-          <a href="/operator-evals" className="text-primary font-medium hover:underline">
+          <Link href="/operator-evals" className="text-primary font-medium hover:underline">
             What are operator evals?
-          </a>
+          </Link>
         </p>
       </section>
 
@@ -325,9 +325,9 @@ export default async function HomePage() {
       {/* Weekly drop banner */}
       <div className="text-center text-sm text-muted-foreground border-t border-border pt-4">
         New rankings drop every Monday.{" "}
-        <a href="/weekly" className="text-primary font-medium hover:underline">
+        <Link href="/weekly" className="text-primary font-medium hover:underline">
           See this week&apos;s drop →
-        </a>
+        </Link>
       </div>
     </div>
   );

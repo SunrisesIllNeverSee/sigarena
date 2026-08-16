@@ -1,6 +1,6 @@
 import { getSortedLeaderboard } from "@/lib/api";
 import { PromptPage } from "@/components/prompt-page";
-import { getPromptBySlug, getActivePrompts, PLATFORMS, type Platform, type View, type Category, type Window } from "@/lib/prompts";
+import { getPromptBySlug, getActivePrompts, type Platform, type View, type Category, type Window } from "@/lib/prompts";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -15,26 +15,6 @@ export const revalidate = 0;
 
 interface RouteProps {
   params: Promise<{ slug: string }>;
-}
-
-function parsePlatform(s: string | undefined): Platform {
-  if (s && (PLATFORMS as string[]).includes(s)) return s as Platform;
-  return "all";
-}
-
-function parseView(s: string | undefined): View {
-  if (s === "center" || s === "peak") return s;
-  return "peak";
-}
-
-function parseCategory(s: string | undefined): Category {
-  if (s === "all") return "all";
-  return "human";
-}
-
-function parseWindow(s: string | undefined): Window {
-  if (s === "7d" || s === "30d" || s === "90d" || s === "all_time") return s;
-  return "all_time";
 }
 
 // Pre-render all 8 active prompt slugs (canonical view only).
