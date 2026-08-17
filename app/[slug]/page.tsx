@@ -42,8 +42,13 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
   };
 }
 
+// Exploit scanner paths that should 404 immediately without rendering.
+const EXPLOIT_PATTERNS = [/\.(php|asp|aspx|cgi|pl|py|rb|jsp|env|git|sql|bak|ini)$/i, /\/wp-(content|admin|includes)\//i, /\/\.well-known\/(?!agent|mcp|api-catalog)/i];
+
 export default async function PromptRoutePage({ params }: RouteProps) {
   const { slug } = await params;
+  // Reject exploit scanner paths early — no API fetch, no SSR, just 404.
+  if (EXPLOIT_PATTERNS.some((re) => re.test(slug))) notFound();
   // Default filter values — ISR with 12h revalidate. Filter buttons remain
   // as navigation but the server-rendered content always shows the canonical
   // default view.
