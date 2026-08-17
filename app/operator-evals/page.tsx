@@ -104,8 +104,11 @@ export default function OperatorEvalsPage() {
           <span className="gradient-text">Public LLM Operator Evals</span>
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          The public evaluation layer for AI operators. Like Vals AI evaluates
-          models, SigRank evaluates the humans using AI.
+          Public LLM operator evals are public evaluations of human AI operators
+          — the people who drive AI tools — not autonomous agents. Like Vals AI
+          evaluates models, SigRank evaluates the humans using AI. Performative
+          evals assess the AI user&apos;s behavior in real tasks, not just the
+          model&apos;s output quality.
         </p>
       </div>
 

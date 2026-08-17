@@ -92,7 +92,9 @@ export default async function HomePage() {
           The public evaluation layer for AI operators.
         </p>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
-          Like Vals AI evaluates models, SigRank evaluates the humans using AI.{" "}
+          sigeconomy.com is the public AI operator leaderboard for SigRank
+          SignalAF — not related to the gig economy. Like Vals AI evaluates
+          models, SigRank evaluates the humans using AI.{" "}
           Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
           <Link href="/operator-evals" className="text-primary font-medium hover:underline">
             What are operator evals?
