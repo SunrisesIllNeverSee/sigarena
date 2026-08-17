@@ -1,10 +1,23 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Exploit scanner paths that should get a real 404 before hitting the Next.js handler.
+// OpenNext on Cloudflare returns 200 for notFound() — middleware lets us set the
+// correct status code without any API fetch or SSR.
+const EXPLOIT_RE = /\.(php|asp|aspx|cgi|pl|py|rb|jsp|env|git|sql|bak|ini)$/i;
+const WP_RE = /\/wp-(content|admin|includes)\//i;
+
 // Markdown content negotiation — when Accept: text/markdown is sent,
 // serve a markdown representation instead of HTML.
 // This passes the isitagentready.com "Markdown for Agents" check.
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Reject exploit scanner paths with a real 404 status code.
+  if (EXPLOIT_RE.test(pathname) || WP_RE.test(pathname)) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
   const accept = request.headers.get("accept") || "";
 
   // Only intercept markdown negotiation requests
@@ -13,7 +26,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Only serve markdown for the homepage (the scanner checks /)
-  if (request.nextUrl.pathname !== "/") {
+  if (pathname !== "/") {
     return NextResponse.next();
   }
 
@@ -85,5 +98,5 @@ SigRank ranks AI users by token-cascade efficiency (Yield). The AI User Leaderbo
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg|robots.txt|sitemap.xml|llms.txt|llms-full.txt|og.png|indexnow-key.txt|auth.md|prompts.json|api/indexnow).*)"],
 };
