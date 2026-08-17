@@ -30,6 +30,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vs/tokenrank`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/tokentracker`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/costhawk`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/vs/copilot`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/vs/cursor`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
 
   // New metric-specific prompt routes (8 routes, excluding best-ai-user which is already listed)
