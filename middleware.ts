@@ -7,6 +7,42 @@ import type { NextRequest } from "next/server";
 const EXPLOIT_RE = /\.(php|asp|aspx|cgi|pl|py|rb|jsp|env|git|sql|bak|ini)$/i;
 const WP_RE = /\/wp-(content|admin|includes)\//i;
 
+const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+
+async function captureHttpLog(request: NextRequest) {
+  if (!POSTHOG_KEY) return;
+  const ua = request.headers.get("user-agent") ?? "";
+  const ip = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for") ?? "";
+  const host = request.headers.get("host") ?? "sigeconomy.com";
+  const scheme = request.headers.get("x-forwarded-proto") ?? "https";
+  const path = request.nextUrl.pathname + request.nextUrl.search;
+
+  const idSource = `${ip}:${ua}`;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(idSource));
+  const hash = btoa(String.fromCharCode(...new Uint8Array(buf))).slice(0, 22);
+  const distinctId = `http_log_${hash}`;
+
+  await fetch(`${POSTHOG_HOST}/capture/`, {
+    method: "POST",
+    keepalive: true,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_key: POSTHOG_KEY,
+      event: "$http_log",
+      distinct_id: distinctId,
+      properties: {
+        $raw_user_agent: ua,
+        $ip: ip,
+        $pathname: request.nextUrl.pathname,
+        $host: host,
+        $current_url: `${scheme}://${host}${path}`,
+        $process_person_profile: false,
+      },
+    }),
+  }).catch(() => {});
+}
+
 // Markdown content negotiation — when Accept: text/markdown is sent,
 // serve a markdown representation instead of HTML.
 // This passes the isitagentready.com "Markdown for Agents" check.
@@ -17,6 +53,9 @@ export function middleware(request: NextRequest) {
   if (EXPLOIT_RE.test(pathname) || WP_RE.test(pathname)) {
     return new NextResponse("Not Found", { status: 404 });
   }
+
+  // Fire-and-forget $http_log capture for PostHog (AI crawler + bot detection)
+  captureHttpLog(request);
 
   const accept = request.headers.get("accept") || "";
 
