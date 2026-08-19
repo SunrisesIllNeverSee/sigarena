@@ -6,46 +6,77 @@ export async function GET() {
   const body = `# auth.md — SigArena Agent Authentication
 
 This service supports agentic access. SigArena (sigeconomy.com) is a read-only
-leaderboard site. Agent registration is not required — all content is public.
+leaderboard site. All content is public — no credentials needed to read.
+
+Agents that want to submit token telemetry or manage an operator profile must
+register at signalaf.com (the data source).
 
 ## Agent Registration
 
-No agent registration is needed. This service has no authentication, no
-authorization servers, and no protected resources. All endpoints are public.
-
 ### Registration Methods
 
-- **Method:** none (no registration required)
-- **register_uri:** not applicable (no registration endpoint)
-- **agent_auth:** not required (no auth)
-- **Provisioning:** automatic (all endpoints are public, no provisioning needed)
+- **Method:** OAuth 2.0 Authorization Code flow (via signalaf.com)
+- **register_uri:** https://signalaf.com/login
+- **callback_uri:** https://signalaf.com/auth/callback
+- **session_endpoint:** GET https://signalaf.com/api/auth/session
+- **Provisioning:** automatic — first OAuth login mints a free operator account
+
+### agent_auth
+
+\`\`\`json
+{
+  "skill": "Read public leaderboard, operator profiles, and metrics from sigeconomy.com without auth. Submit token telemetry snapshots or manage operator profiles via signalaf.com OAuth.",
+  "register_uri": "https://signalaf.com/login",
+  "methods": [
+    {
+      "type": "oauth_2.0",
+      "flow": "authorization_code",
+      "authorization_endpoint": "https://copqtaqzsdvpdbhpwjmt.supabase.co/auth/v1/oauth/authorize",
+      "token_endpoint": "https://copqtaqzsdvpdbhpwjmt.supabase.co/auth/v1/oauth/token",
+      "callback": "https://signalaf.com/auth/callback",
+      "providers": ["github", "twitter", "email_magic_link"],
+      "scopes": ["openid", "profile", "email", "offline_access"],
+      "session_check": "GET https://signalaf.com/api/auth/session"
+    }
+  ]
+}
+\`\`\`
 
 ### Agent Audience
 
 - **Audience:** all AI agents and crawlers
-- **Resource server:** https://sigeconomy.com (read-only)
-- **Data API:** https://signalaf.com/api/v1 (read-only, no auth)
-- **Authorization servers:** none (no auth required)
-- **Scopes supported:** none (all public)
-- **Bearer methods supported:** none (no auth)
+- **Resource server:** https://sigeconomy.com (read-only, no auth)
+- **Write server:** https://signalaf.com (OAuth required for writes)
+- **Authorization server:** https://copqtaqzsdvpdbhpwjmt.supabase.co/auth/v1
+- **Scopes supported:** openid, profile, email, offline_access
+- **Bearer methods supported:** header (Authorization: Bearer <token>)
 
 ### Credential Use
 
-No credentials are needed. Agents do not need API keys, OAuth tokens, bearer
-tokens, or any other credentials. Simply fetch any URL directly with HTTP GET.
+**Reading sigeconomy.com:** No credentials needed. Fetch any URL directly with
+HTTP GET.
 
-## Agent Authentication
+**Submitting data via signalaf.com:** Agents must redirect the user to
+https://signalaf.com/login to authenticate via GitHub, X/Twitter, or email
+magic link. The OAuth callback at /auth/callback exchanges the code for a
+session cookie. Include the session cookie in all subsequent requests to
+protected endpoints. Check session state via GET /api/auth/session.
 
-Agents do not need credentials to access this service. No API key, OAuth token,
-or bearer token is required. Simply fetch any URL directly.
+## OAuth Metadata (signalaf.com)
 
-## API Access
+- **Protected Resource Metadata:** https://signalaf.com/.well-known/oauth-protected-resource
+- **Authorization Server Metadata:** https://signalaf.com/.well-known/oauth-authorization-server
+- **Supabase OIDC Discovery:** https://copqtaqzsdvpdbhpwjmt.supabase.co/auth/v1/.well-known/openid-configuration
+- **JWKS:** https://copqtaqzsdvpdbhpwjmt.supabase.co/auth/v1/.well-known/jwks.json
+- **Auth.md:** https://signalaf.com/auth.md
 
-The underlying data API is hosted at signalaf.com:
+## Public Endpoints (No Auth)
 
-- **Public leaderboard:** https://signalaf.com/api/v1/leaderboard
-- **Methodology:** https://signalaf.com/methodology
-- **Score calculator:** https://signalaf.com/score
+- **Leaderboard:** GET https://sigeconomy.com/api/leaderboard
+- **Best AI user:** GET https://sigeconomy.com/best-ai-user
+- **Underlying API:** GET https://signalaf.com/api/v1/leaderboard
+- **Methodology:** GET https://signalaf.com/methodology
+- **llms.txt:** GET https://sigeconomy.com/llms.txt
 
 ## Rate Limiting
 
