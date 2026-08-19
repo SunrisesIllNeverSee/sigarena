@@ -54,6 +54,45 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Not Found", { status: 404 });
   }
 
+  // x402 Payment Protocol — gate the /api entry point with HTTP 402.
+  // Free public endpoints remain accessible at /api/indexnow and via
+  // signalaf.com/api/v1/*. This returns payment requirements so agents
+  // can fulfill them automatically. https://x402.org
+  if (pathname === "/api") {
+    const paymentRequired = {
+      x402Version: 1,
+      error: "X-PAYMENT header is required",
+      accepts: [
+        {
+          scheme: "exact",
+          network: "base-sepolia",
+          maxAmountRequired: "10000",
+          asset: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+          payTo: "0xSigRankx402xGatewayx0000000000000000000",
+          resource: "https://sigeconomy.com/api",
+          description: "Premium API access - SigRank analytics and snapshot submission",
+          mimeType: "application/json",
+          outputSchema: null,
+          maxTimeoutSeconds: 60,
+          extra: {
+            name: "USDC",
+            version: "2",
+          },
+        },
+      ],
+    };
+    const body = JSON.stringify(paymentRequired);
+    const b64 = btoa(unescape(encodeURIComponent(body)));
+    return new NextResponse(body, {
+      status: 402,
+      headers: {
+        "Content-Type": "application/json",
+        "PAYMENT-REQUIRED": b64,
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
   // Fire-and-forget $http_log capture for PostHog (AI crawler + bot detection)
   captureHttpLog(request);
 

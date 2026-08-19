@@ -29,6 +29,19 @@ export async function GET() {
       resources: {
         listChanged: false,
       },
+      extensions: [
+        {
+          uri: "https://github.com/google-agentic-commerce/ap2/tree/v0.1",
+          description:
+            "Agent Payments Protocol — enables AI agents to securely transact payments using cryptographically-signed mandates",
+          required: true,
+          params: {
+            roles: ["merchant"],
+            payment_endpoint: "https://signalaf.com/api/v1/billing",
+            supported_methods: ["stripe"],
+          },
+        },
+      ],
     },
     authentication: {
       required: false,
