@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
+import { WebMcpRegistrar } from "@/components/webmcp/register-tools";
 
 export const viewport: Viewport = {
   themeColor: "#3b82f6",
@@ -70,6 +71,7 @@ export default function RootLayout({
           <SiteHeader />
           <main id="main-content" className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</main>
           <SiteFooter />
+          <WebMcpRegistrar />
         </PostHogProvider>
       </body>
     </html>
