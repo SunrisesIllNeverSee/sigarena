@@ -38,13 +38,6 @@ export async function GET() {
           summary: "Get public leaderboard",
           description:
             "Returns top AI operators ranked by Yield (Υ) — token-cascade efficiency",
-          "x-payment-info": {
-            intent: "session",
-            method: "stripe",
-            amount: "0",
-            currency: "USD",
-            description: "Public endpoint — no payment required",
-          },
           responses: {
             "200": {
               description: "Leaderboard JSON",
@@ -61,13 +54,6 @@ export async function GET() {
         get: {
           summary: "Get operator profile",
           description: "Detailed statistics for a specific AI operator",
-          "x-payment-info": {
-            intent: "session",
-            method: "stripe",
-            amount: "0",
-            currency: "USD",
-            description: "Public endpoint — no payment required",
-          },
           parameters: [
             {
               name: "codename",
@@ -96,7 +82,7 @@ export async function GET() {
           "x-payment-info": {
             intent: "charge",
             method: "stripe",
-            amount: "500",
+            amount: "5.00",
             currency: "USD",
             description: "Paid plan subscription — $5.00/month for snapshot submission",
           },
@@ -128,7 +114,7 @@ export async function GET() {
           "x-payment-info": {
             intent: "charge",
             method: "stripe",
-            amount: "500",
+            amount: "5.00",
             currency: "USD",
             description: "Monthly subscription — $5.00/month",
           },
@@ -136,6 +122,40 @@ export async function GET() {
           responses: {
             "200": {
               description: "Subscription created",
+              "content": {
+                "application/json": {
+                  schema: { type: "object" },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/api": {
+        get: {
+          summary: "Premium API access (payable via x402)",
+          description:
+            "Premium SigArena API access — returns a summary of available premium endpoints. Requires payment via x402 protocol.",
+          operationId: "getPremiumApiAccess",
+          tags: ["premium"],
+          "x-payment-info": {
+            intent: "charge",
+            method: "tempo",
+            amount: "0.01",
+            currency: "USDC",
+            description: "Premium API access — SigArena analytics and snapshot submission routing",
+          },
+          responses: {
+            "200": {
+              description: "Premium API summary",
+              "content": {
+                "application/json": {
+                  schema: { type: "object" },
+                },
+              },
+            },
+            "402": {
+              description: "Payment required — x402 payment requirements in response",
               "content": {
                 "application/json": {
                   schema: { type: "object" },
