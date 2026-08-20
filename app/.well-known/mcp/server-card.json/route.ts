@@ -3,6 +3,15 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
+  // The MCP streamable-http endpoint is the Supabase Edge Function deployed
+  // from _01_sigrank-app/supabase/functions/sigrank-mcp. signalaf.com/api/v1
+  // is a REST API, not an MCP server. https://signalaf.com/.well-known/mcp is
+  // a discovery route, not a transport endpoint.
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const mcpEndpoint = supabaseUrl
+    ? `${supabaseUrl}/functions/v1/sigrank-mcp`
+    : "https://copqtaqzsdvpdbhpwjmt.supabase.co/functions/v1/sigrank-mcp";
+
   const card = {
     $schema: "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
     version: "1.0",
@@ -13,7 +22,7 @@ export async function GET() {
       version: "1.0.0",
     },
     description:
-      "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API.",
+      "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API. Tools: get_leaderboard, get_operator, discover_peers, get_best_operator, compare_operators, describe_power_user, optimize_efficiency.",
     iconUrl: "https://sigeconomy.com/og.png",
     documentationUrl: "https://sigeconomy.com/how-it-works",
     websiteUrl: "https://sigeconomy.com",
@@ -23,7 +32,7 @@ export async function GET() {
     },
     transport: {
       type: "streamable-http",
-      endpoint: "https://signalaf.com/api/v1",
+      endpoint: mcpEndpoint,
     },
     capabilities: {
       resources: {
