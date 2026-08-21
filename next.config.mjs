@@ -61,7 +61,7 @@ const nextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://signalaf.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com https://cloudflareinsights.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://signalaf.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://us-assets.i.posthog.com https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://signalaf.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://signalaf.com;",
           },
           // PostHog /ingest reverse proxy — same-origin, no CSP changes needed
           // since connect-src 'self' already covers /ingest.

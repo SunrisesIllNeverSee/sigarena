@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
@@ -73,6 +74,19 @@ export default function RootLayout({
           <SiteFooter />
           <WebMcpRegistrar />
         </PostHogProvider>
+        {/* Google Analytics 4 (gtag.js) — measurement ID G-JGNZVT3M8E */}
+        <Script
+          id="ga4-gtag-src"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-JGNZVT3M8E"
+        />
+        <Script
+          id="ga4-gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JGNZVT3M8E');`,
+          }}
+        />
       </body>
     </html>
   );
