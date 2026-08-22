@@ -14,13 +14,15 @@
  * Network: Base Sepolia (eip155:84532) — a testnet suitable for agent
  * payment flows. Switch to eip155:8453 (Base mainnet) for production.
  *
- * Facilitator: https://facilitator.x402.org — the public x402 facilitator.
+ * Testnet facilitator: https://x402.org/facilitator — the current public
+ * x402.org facilitator for Base Sepolia. Mainnet should use a facilitator
+ * configured with the required production credentials.
  */
 
 import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 
-const FACILITATOR_URL = process.env.X402_FACILITATOR_URL ?? "https://facilitator.x402.org";
+const FACILITATOR_URL = process.env.X402_FACILITATOR_URL ?? "https://x402.org/facilitator";
 
 const PAY_TO = process.env.X402_WALLET_ADDRESS ?? "0x0000000000000000000000000000000000000000";
 
