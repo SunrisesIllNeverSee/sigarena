@@ -174,7 +174,7 @@ async function verifyMachineFiles() {
     "/.well-known/mcp.json",
     "/.well-known/agent.json",
     "/.well-known/agent-card.json",
-    "/.well-known/agent-skills",
+    "/.well-known/agent-skills/index.json",
     "/.well-known/api-catalog",
     "/.well-known/acp.json",
     "/.well-known/http-message-signatures-directory",
