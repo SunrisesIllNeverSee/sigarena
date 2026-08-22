@@ -3,20 +3,27 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const mcpEndpoint = supabaseUrl
+    ? `${supabaseUrl}/functions/v1/sigrank-mcp`
+    : "https://copqtaqzsdvpdbhpwjmt.supabase.co/functions/v1/sigrank-mcp";
+
   const card = {
     $schema: "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
     version: "1.0",
     protocolVersion: "2025-06-18",
     serverInfo: {
       name: "sigrank-sigarena",
-      title: "SigArena — AI User Leaderboard",
+      title: "SigRank SignalAF — AI User Leaderboard",
       version: "1.0.0",
     },
     description:
-      "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API.",
+      "SigRank SignalAF ranks AI operators by Yield (Υ) and other token-telemetry metrics. The MCP server exposes read-oriented leaderboard, operator comparison, peer discovery, and efficiency tools.",
+    documentationUrl: "https://sigeconomy.com/developers",
+    websiteUrl: "https://sigeconomy.com",
     transport: {
       type: "streamable-http",
-      endpoint: "https://signalaf.com/api/v1",
+      endpoint: mcpEndpoint,
     },
     authentication: {
       required: false,
