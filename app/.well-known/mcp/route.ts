@@ -3,11 +3,6 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
-  // The MCP streamable-http endpoint is the Supabase Edge Function deployed
-  // from _01_sigrank-app/supabase/functions/sigrank-mcp. signalaf.com/api/v1
-  // is a REST API, not an MCP server — the previous card incorrectly listed
-  // it as the transport endpoint. https://signalaf.com/.well-known/mcp is a
-  // discovery route (this file), not a transport endpoint.
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const mcpEndpoint = supabaseUrl
     ? `${supabaseUrl}/functions/v1/sigrank-mcp`
@@ -19,13 +14,13 @@ export async function GET() {
     protocolVersion: "2025-06-18",
     serverInfo: {
       name: "sigrank-sigarena",
-      title: "SigArena — AI User Leaderboard",
+      title: "SigRank SignalAF — AI User Leaderboard",
       version: "1.0.0",
     },
     description:
-      "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API. Tools: get_leaderboard, get_operator, discover_peers, get_best_operator, compare_operators, describe_power_user, optimize_efficiency.",
+      "SigRank SignalAF ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Use the MCP server for current leaderboard reads, operator comparison, peer discovery, and efficiency analysis. Tools include get_leaderboard, get_operator, discover_peers, get_best_operator, compare_operators, describe_power_user, and optimize_efficiency.",
     iconUrl: "https://sigeconomy.com/og.png",
-    documentationUrl: "https://sigeconomy.com/how-it-works",
+    documentationUrl: "https://sigeconomy.com/developers",
     websiteUrl: "https://sigeconomy.com",
     transport: {
       type: "streamable-http",
@@ -52,6 +47,13 @@ export async function GET() {
         title: "LLMs.txt",
         uri: "https://sigeconomy.com/llms.txt",
         description: "Machine-readable site summary for AI agents",
+        mimeType: "text/plain",
+      },
+      {
+        name: "agent-instructions",
+        title: "Agent Instructions",
+        uri: "https://sigeconomy.com/agent-instructions.txt",
+        description: "When to use SigRank and which interface to call",
         mimeType: "text/plain",
       },
       {

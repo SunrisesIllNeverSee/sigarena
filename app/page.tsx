@@ -280,6 +280,36 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Server-rendered context for people, crawlers, and agents */}
+      <section className="space-y-5 rounded-lg border border-border bg-card p-6">
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">How to read a SigRank operator eval</h2>
+          <p className="text-sm leading-6 text-muted-foreground">
+            SigRank evaluates the operating pattern around an AI model, not the model itself. The public board is built from token telemetry: fresh input, model output, cache write, and cache read. Those four counts are enough to describe how much new context an operator sends, how much the model produces, how much context is stored for reuse, and how much prior context is actually reused. The canonical measurements do not require the words in a prompt, the content of a model response, source code, or private documents.
+          </p>
+        </div>
+        <div className="grid gap-5 md:grid-cols-3">
+          <div className="space-y-2">
+            <h3 className="font-semibold text-foreground">What Yield measures</h3>
+            <p className="text-sm leading-6 text-muted-foreground">
+              Yield (Υ) is cache read multiplied by output and divided by fresh input squared. It rises when an operator compounds reusable context and produces output without continually rebuilding the same context from scratch. Yield is an efficiency measure of the token cascade. It is not a direct claim about code quality, business productivity, intelligence, or the value of a downstream outcome.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-foreground">Why the other metrics matter</h3>
+            <p className="text-sm leading-6 text-muted-foreground">
+              Leverage isolates cache reuse relative to fresh input. Velocity isolates output relative to fresh input. SNR describes the share of fresh conversational traffic represented by output. Scale V separates operating scale from efficiency, while cost and operating-ratio views expose different shapes of the same cascade. No single ranking should be read as a complete evaluation of a person or workflow.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-semibold text-foreground">How agents and developers should call it</h3>
+            <p className="text-sm leading-6 text-muted-foreground">
+              Current public rankings are available through the SignalAF REST API, while the SigRank MCP server and CLI provide agent-native and local workflows. The <Link href="/developers" className="text-primary font-medium hover:underline">SigRank SignalAF developer portal</Link> links the OpenAPI contract, MCP discovery, authentication guidance, agent instructions, and the official <code>npx sigrank</code> CLI so software can select the correct interface without scraping the visual board.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
       <section className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
         <p className="text-xl font-bold">Think you can beat them?</p>

@@ -80,6 +80,10 @@ const FOOTER_COLUMNS: {
       { href: "https://signalaf.com/score", label: "Check my rank" },
       { href: "https://signalaf.com/methodology", label: "Methodology" },
       { href: "https://signalaf.com/faq", label: "FAQ" },
+      { href: "/developers", label: "Developers" },
+      { href: "/openapi.json", label: "OpenAPI" },
+      { href: "/about", label: "About" },
+      { href: "/privacy", label: "Privacy" },
     ],
   },
 ];
@@ -123,13 +127,15 @@ export function SiteFooter() {
             </Link>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <a
-              href="mailto:hello@signalaf.com"
+            <Link href="/about" className="transition-colors hover:text-foreground">About</Link>
+            <Link href="/privacy" className="transition-colors hover:text-foreground">Privacy</Link>
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
             >
               <Mail className="h-4 w-4" aria-hidden="true" />
               Contact
-            </a>
+            </Link>
           </div>
         </div>
         <p className="mt-4 text-center text-xs text-muted-foreground sm:text-left">

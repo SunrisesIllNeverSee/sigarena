@@ -3,21 +3,27 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
-  // RFC 9727 API Catalog — linkset+json format
   const catalog = {
     linkset: [
       {
         anchor: "https://signalaf.com/api/v1",
         "service-desc": [
           {
-            href: "https://signalaf.com/api/v1/openapi.json",
+            href: "https://sigeconomy.com/openapi.json",
             type: "application/json",
+            title: "SigRank SignalAF OpenAPI",
           },
         ],
         "service-doc": [
           {
-            href: "https://sigeconomy.com/how-it-works",
+            href: "https://sigeconomy.com/developers",
             type: "text/html",
+            title: "SigRank SignalAF Developer Portal",
+          },
+          {
+            href: "https://sigeconomy.com/auth.md",
+            type: "text/markdown",
+            title: "SigRank SignalAF Authentication",
           },
         ],
         status: [
@@ -31,14 +37,31 @@ export async function GET() {
         anchor: "https://sigeconomy.com",
         "service-desc": [
           {
-            href: "https://sigeconomy.com/llms.txt",
-            type: "text/plain",
+            href: "https://sigeconomy.com/openapi.json",
+            type: "application/json",
+            title: "SigRank SignalAF OpenAPI",
+          },
+          {
+            href: "https://sigeconomy.com/.well-known/mcp",
+            type: "application/json",
+            title: "SigRank SignalAF MCP Server Card",
           },
         ],
         "service-doc": [
           {
-            href: "https://sigeconomy.com/llms-full.txt",
+            href: "https://sigeconomy.com/developers",
+            type: "text/html",
+            title: "SigRank SignalAF Developer Portal",
+          },
+          {
+            href: "https://sigeconomy.com/agent-instructions.txt",
             type: "text/plain",
+            title: "SigRank SignalAF Agent Instructions",
+          },
+          {
+            href: "https://sigeconomy.com/llms.txt",
+            type: "text/plain",
+            title: "SigRank SignalAF llms.txt",
           },
         ],
       },
