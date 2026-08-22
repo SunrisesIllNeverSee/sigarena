@@ -3,19 +3,24 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 export async function GET() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const mcpEndpoint = supabaseUrl
+    ? `${supabaseUrl}/functions/v1/sigrank-mcp`
+    : "https://copqtaqzsdvpdbhpwjmt.supabase.co/functions/v1/sigrank-mcp";
+
   const card = {
     $schema: "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
     version: "1.0",
     protocolVersion: "2025-06-18",
     serverInfo: {
       name: "sigrank-sigarena",
-      title: "SigArena — AI User Leaderboard",
+      title: "SigRank SignalAF — AI User Leaderboard",
       version: "1.0.0",
     },
     description:
-      "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API.",
+      "SigRank SignalAF ranks AI operators by Yield (Υ) — token-cascade efficiency — and complementary operator metrics. Use this server for current leaderboard reads, operator comparisons, peer discovery, and efficiency analysis.",
     iconUrl: "https://sigeconomy.com/og.png",
-    documentationUrl: "https://sigeconomy.com/how-it-works",
+    documentationUrl: "https://sigeconomy.com/developers",
     websiteUrl: "https://sigeconomy.com",
     repository: {
       url: "https://github.com/SunrisesIllNeverSee/sigarena",
@@ -23,30 +28,13 @@ export async function GET() {
     },
     transport: {
       type: "streamable-http",
-      endpoint: "https://signalaf.com/api/v1",
+      endpoint: mcpEndpoint,
     },
     capabilities: {
       resources: {
         listChanged: false,
       },
     },
-    // AP2 (Agent Payments Protocol) extension — declares SigRank's role in
-    // agentic commerce so AI agents can securely transact payments using
-    // cryptographically-signed mandates.
-    // Spec: https://ap2-protocol.org/
-    extensions: [
-      {
-        uri: "https://github.com/google-agentic-commerce/AP2/tree/v0.1.0",
-        description:
-          "Agent Payments Protocol — SigRank acts as a merchant, accepting payments for premium API access and operator scoring services.",
-        required: true,
-        params: {
-          roles: ["merchant"],
-          payment_endpoint: "https://signalaf.com/api/v1/billing",
-          supported_methods: ["stripe"],
-        },
-      },
-    ],
     authentication: {
       required: false,
     },
@@ -73,6 +61,13 @@ export async function GET() {
         mimeType: "text/plain",
       },
       {
+        name: "agent-instructions",
+        title: "Agent Instructions",
+        uri: "https://sigeconomy.com/agent-instructions.txt",
+        description: "When to use SigRank and which interface to call",
+        mimeType: "text/plain",
+      },
+      {
         name: "prompts",
         title: "Prompt Registry",
         uri: "https://sigeconomy.com/prompts.json",
@@ -80,12 +75,11 @@ export async function GET() {
         mimeType: "application/json",
       },
     ],
-    tools: [],
-    prompts: [],
     _meta: {
       type: "leaderboard",
       metrics: ["yield", "velocity", "leverage", "snr", "10xdev", "efficiency", "scale_v", "cost_per_m", "op_ratio"],
       dataSource: "https://signalaf.com",
+      cli: "npx sigrank",
     },
   };
 
