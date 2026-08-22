@@ -1,31 +1,24 @@
-# Deploy to Cloudflare Workers on push to main.
+# Deploy sigeconomy.com to Cloudflare Workers on push to main.
 #
-# Builds the Next.js app via @opennextjs/cloudflare and deploys the Worker
-# to signaaf.com. Replaces the manual `npm run cf:deploy` workflow.
-#
-# Required GitHub secrets (Settings → Secrets and variables → Actions):
-#   CLOUDFLARE_API_TOKEN  — Workers edit token (Cloudflare dashboard →
-#                           My Profile → API Tokens → "Edit Cloudflare Workers")
-#   CLOUDFLARE_ACCOUNT_ID — Your Cloudflare account ID (Workers & Pages →
-#                           any Worker → Settings → Account ID)
-#
-# See README.md "Deployment" section for setup walkthrough.
+# Required GitHub secrets:
+#   CLOUDFLARE_API_TOKEN
+#   CLOUDFLARE_ACCOUNT_ID
 
 name: Deploy
 
 on:
   push:
     branches: [main]
-  workflow_dispatch: # manual trigger from the Actions tab
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    name: Build + deploy to Cloudflare Workers
+    name: Verify + build + deploy + smoke test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -38,17 +31,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Agent-readiness contract tests
+        run: npm test
+
       - name: Typecheck
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Build (OpenNext for Cloudflare)
         run: npx opennextjs-cloudflare build
         env:
-          # Next.js build fetches from signalaf.com for ISR pre-rendering.
-          # Timeouts are handled gracefully (pages fall back to client render).
           NEXT_TELEMETRY_DISABLED: "1"
-          # PostHog analytics — NEXT_PUBLIC_* vars are inlined into the JS
-          # bundle at build time, so they must be present during the build.
           NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
           NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
 
@@ -57,3 +52,12 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Verify production agent surfaces
+        run: node scripts/verify-agent-readiness.mjs
+        env:
+          BASE_URL: https://sigeconomy.com
+          # The MCP server lives in a separate Supabase Edge Function. Its
+          # handshake is always probed and reported, but does not block this
+          # site's deployment unless the infrastructure owner opts into strict mode.
+          STRICT_MCP_HANDSHAKE: "0"
