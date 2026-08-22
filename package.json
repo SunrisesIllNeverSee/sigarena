@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "test": "node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit",
     "cf:build": "opennextjs-cloudflare build && node scripts/patch-opennext-cache.mjs",
     "cf:preview": "opennextjs-cloudflare build && wrangler dev",
