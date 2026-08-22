@@ -10,11 +10,22 @@ export function organizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "SigRank SignalAF",
-    alternateName: ["SigRank", "SignalAF", "signalaf"],
+    alternateName: ["SigRank", "SignalAF", "signalaf", "sigeconomy.com"],
     url: ORG_URL,
     logo: `${ORG_URL}/logo.png`,
     description:
       "SigRank SignalAF is the statistical layer for AI users — performative evals and ranking for users not models. Custom metrics like Yield turn AI usage into stats, like ERA for baseball.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: "hello@signalaf.com",
+      url: `${SITE_URL}/contact`,
+      availableLanguage: ["English"],
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "US",
+    },
     sameAs: [
       "https://github.com/SunrisesIllNeverSee",
       "https://x.com/burnmydays",
