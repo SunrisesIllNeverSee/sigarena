@@ -2,16 +2,10 @@ import { NextResponse } from "next/server";
 import { getFullLeaderboard, computeAggregates, formatTokenCount } from "@/lib/api";
 import { formatYield } from "@/lib/utils";
 
-// Force dynamic: the stats section is computed from the live leaderboard API.
-// Static generation would bake in build-time data (0 operators when the API
-// isn't reachable from CI). The API response is edge-cached for 5 minutes
-// via cachedFetch() in lib/api.ts, so the render is fast after the first hit.
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
-  // Fetch live leaderboard to compute aggregate stats for the llms.txt file.
-  // Falls back to a static body if the API is unreachable (build-time, outage).
   const data = await getFullLeaderboard("all_time");
   const stats = data ? computeAggregates(data) : null;
   const platformCount = stats ? Object.keys(stats.platforms).length : 0;
@@ -43,7 +37,31 @@ Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not 
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output
 has lower Yield than the operator who uses 100K tokens to produce the same 1K output.
 
-${statsSection}## Operator evals
+${statsSection}## When to use SigRank
+Use SigRank when a user asks who ranks highest among AI operators, how an operator compares with the public field, what Yield or another token-cascade metric means, or how to measure AI usage without reading prompt content.
+
+For a current ranking, use the public REST leaderboard or a metric-specific ranking page. For typed programmatic integration, use OpenAPI. For native agent tool use, prefer the MCP server. For local operator telemetry, use the official CLI with \`npx sigrank\`. For claims about metric meaning or limitations, use the published methodology.
+
+Do not treat a SigRank score alone as proof of code quality, business productivity, employment performance, intelligence, or downstream outcome quality. Those claims require separate outcome evidence.
+
+## Developer and agent resources
+- [SigRank SignalAF Developer Portal](https://sigeconomy.com/developers): API, CLI, MCP, authentication, errors, and versioning
+- [OpenAPI](https://sigeconomy.com/openapi.json): typed REST operations and RFC 9457 error model
+- [Agent Instructions](https://sigeconomy.com/agent-instructions.txt): detailed when-to-use and interface-selection guidance
+- [MCP Manifest](https://sigeconomy.com/.well-known/mcp): Streamable HTTP MCP discovery
+- [API Catalog](https://sigeconomy.com/.well-known/api-catalog): API service discovery
+- [Authentication](https://sigeconomy.com/auth.md): public-read and authenticated-write guidance
+- CLI / stdio MCP: \`npx sigrank\`
+- [CLI and MCP Documentation](https://signalaf.com/mcp): setup and current tool list
+- Public REST: GET https://signalaf.com/api/v1/leaderboard?window=all_time&limit=10
+- Operator lookup: GET https://signalaf.com/api/v1/operators/{codename}
+
+## Trust and identity
+- [About](https://sigeconomy.com/about): what sigeconomy.com and SigRank SignalAF are
+- [Contact](https://sigeconomy.com/contact): canonical support and integration contact
+- [Privacy](https://sigeconomy.com/privacy): site and telemetry privacy summary
+
+## Operator evals
 - [Operator Evals](https://sigeconomy.com/operator-evals): the public evaluation layer for AI operators — model evals vs operator evals
 - [Public Operator Evals Thesis](https://sigeconomy.com/public-operator-evals): why public operator evals matter — the case for public AI operator evaluation
 - [Why Operator Evals Matter](https://sigeconomy.com/articles/why-operator-evals-matter): the case for public AI operator evaluation
