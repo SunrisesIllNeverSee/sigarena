@@ -60,5 +60,4 @@ jobs:
           # The MCP server lives in a separate Supabase Edge Function. Its
           # handshake is always probed and reported, but does not block this
           # site's deployment unless the infrastructure owner opts into strict mode.
-=======
           STRICT_MCP_HANDSHAKE: "0"
