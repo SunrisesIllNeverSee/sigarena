@@ -230,6 +230,56 @@ export default async function HomePage() {
           covering the Yield cascade, the conservation law, and the relationship
           between operator evals and model evals.
         </p>
+        <h3 className="text-lg font-semibold text-foreground pt-2">
+          Operator classes and ranking windows
+        </h3>
+        <p className="text-sm leading-6 text-muted-foreground">
+          Operators are classified into tiers based on total tokens accumulated:
+          IGNITER (entry-level, just starting), BEACON (consistent usage
+          emerging), LANTERN (significant scale), COMPASS (established
+          high-scale operator), ARCH (top-tier operator with substantial
+          cumulative tokens), and ARCH+ (the highest class, reserved for the
+          largest-scale operators). Class is a scale qualifier, not an efficiency
+          qualifier — a high-class operator is not necessarily a high-Yield
+          operator, and vice versa. This separation is intentional: it prevents
+          the leaderboard from conflating raw volume with cascade efficiency. The
+          leaderboard supports four ranking windows: all-time (the default,
+          showing cumulative performance since the operator first appeared),
+          90-day, 30-day, and 7-day rolling windows. The weekly drop page
+          highlights the biggest movers, new challengers, and class distribution
+          changes from the past seven days. Operators can appear on multiple
+          metric leaderboards simultaneously, and the prompt-of-the-day feature
+          rotates through the nine canonical metrics to surface different
+          dimensions of operator performance. The compare page allows
+          head-to-head comparison of any two operators across all metrics, with
+          visual indicators showing which operator leads on each dimension.
+        </p>
+        <h3 className="text-lg font-semibold text-foreground pt-2">
+          Supported platforms and comparison pages
+        </h3>
+        <p className="text-sm leading-6 text-muted-foreground">
+          SigRank currently tracks operators across multiple AI platforms
+          including Claude (Anthropic), ChatGPT (OpenAI), Cursor, and other
+          providers that expose token telemetry through their APIs. The platform
+          spotlight feature rotates daily to highlight the top operators on a
+          specific platform. Comparison pages position SigRank against
+          adjacent tools:{" "}
+          <Link href="/vs/vals-ai" className="text-primary font-medium hover:underline">vs Vals AI</Link>{" "}
+          (operator evals vs model evals),{" "}
+          <Link href="/vs/topaiusers" className="text-primary font-medium hover:underline">vs TopAIUsers</Link>{" "}
+          (measured vs curated),{" "}
+          <Link href="/vs/ccusage" className="text-primary font-medium hover:underline">vs ccusage</Link>{" "}
+          (yield vs raw token count),{" "}
+          <Link href="/vs/langfuse" className="text-primary font-medium hover:underline">vs Langfuse</Link>{" "}
+          (operator evals vs LLM observability),{" "}
+          <Link href="/vs/braintrust" className="text-primary font-medium hover:underline">vs Braintrust</Link>{" "}
+          (operator evaluation vs AI app evaluation), and{" "}
+          <Link href="/vs/lmsys-arena" className="text-primary font-medium hover:underline">vs LMSYS Arena</Link>{" "}
+          (ranking humans vs ranking models). These pages clarify what SigRank
+          measures and what it does not, helping AI search engines and agents
+          understand the boundary between operator evaluation and model
+          evaluation.
+        </p>
       </section>
 
       {/* Aggregate stats — citable numbers for AI search engines */}
