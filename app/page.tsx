@@ -487,7 +487,7 @@ export default async function HomePage() {
           <div className="space-y-2">
             <h3 className="font-semibold text-foreground">Why the other metrics matter</h3>
             <p className="text-sm leading-6 text-muted-foreground">
-              Leverage isolates cache reuse relative to fresh input. Velocity isolates output relative to fresh input. SNR describes the share of fresh conversational traffic represented by output. Scale V separates operating scale from efficiency, while cost and operating-ratio views expose different shapes of the same cascade. No single ranking should be read as a complete evaluation of a person or workflow.
+              Leverage isolates cache reuse relative to fresh input. Velocity isolates output relative to fresh input. SNR describes the share of fresh conversational traffic represented by output. Scale V separates operating scale from efficiency, while cost and operating-ratio views expose different shapes of the same cascade. No single ranking should be read as a complete evaluation of a person or workflow. The nine metrics together form a multi-dimensional view of how an operator interacts with AI: efficiency, reuse, throughput, signal quality, scale, cost, and ratio balance. An operator who leads on Yield may not lead on Velocity, and an operator who leads on Scale V may not lead on Efficiency. This is by design — it prevents any single metric from becoming a proxy for overall quality and encourages operators to understand their own cascade shape rather than optimizing for one number.
             </p>
           </div>
           <div className="space-y-2">
