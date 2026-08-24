@@ -481,7 +481,7 @@ export default async function HomePage() {
           <div className="space-y-2">
             <h3 className="font-semibold text-foreground">What Yield measures</h3>
             <p className="text-sm leading-6 text-muted-foreground">
-              Yield (Υ) is cache read multiplied by output and divided by fresh input squared. It rises when an operator compounds reusable context and produces output without continually rebuilding the same context from scratch. Yield is an efficiency measure of the token cascade. It is not a direct claim about code quality, business productivity, intelligence, or the value of a downstream outcome.
+              Yield (Υ) is cache read multiplied by output and divided by fresh input squared. It rises when an operator compounds reusable context and produces output without continually rebuilding the same context from scratch. Yield is an efficiency measure of the token cascade. It is not a direct claim about code quality, business productivity, intelligence, or the value of a downstream outcome. An operator with high Yield is efficient at reusing context and producing output relative to the fresh input they consume. An operator with low Yield may be producing valuable work but is doing so with less cascade efficiency — they send more fresh context per unit of output. The leaderboard ranks by Yield because it normalizes for scale: a small-scale operator can out-Yield a large-scale one if their cascade is more efficient. This is why SigRank separates efficiency (Yield) from scale (Scale V, total tokens) — they measure different things and should not be conflated.
             </p>
           </div>
           <div className="space-y-2">
