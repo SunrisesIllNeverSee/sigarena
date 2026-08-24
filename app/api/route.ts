@@ -13,10 +13,31 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { withX402 } from "@x402/next";
 import { x402Server, x402Config } from "@/lib/x402";
+import { rateLimit, rateLimitHeaders, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
-const handler = async (_request: NextRequest): Promise<NextResponse> => {
+const handler = async (request: NextRequest): Promise<NextResponse> => {
+  const ip = getClientIp(request);
+  const rl = rateLimit(ip);
+  if (!rl.ok) {
+    return NextResponse.json(
+      {
+        type: "about:blank",
+        title: "Too Many Requests",
+        status: 429,
+        detail: "Rate limit exceeded. Retry after the Retry-After delay.",
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(rl.retryAfter),
+          ...rateLimitHeaders(rl),
+        },
+      },
+    );
+  }
+
   const apiSummary = {
     type: "premium-api-access",
     description:
@@ -47,7 +68,10 @@ const handler = async (_request: NextRequest): Promise<NextResponse> => {
   };
 
   return NextResponse.json(apiSummary, {
-    headers: { "Cache-Control": "private, max-age=300" },
+    headers: {
+      "Cache-Control": "private, max-age=300",
+      ...rateLimitHeaders(rl),
+    },
   });
 };
 
@@ -69,8 +93,15 @@ const x402Handler = withX402(
 );
 
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
+  const ip = getClientIp(request);
+  const rl = rateLimit(ip);
   try {
-    return await x402Handler(request);
+    const response = await x402Handler(request);
+    // Attach rate-limit headers to whatever x402 returns (200 or 402)
+    for (const [k, v] of Object.entries(rateLimitHeaders(rl))) {
+      response.headers.set(k, v);
+    }
+    return response;
   } catch {
     // x402 middleware crashed (facilitator unreachable, Workers compat issue,
     // etc.). Return 402 so agents know payment is required, and the smoke
@@ -88,7 +119,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
           payTo: x402Config.payTo,
         },
       },
-      { status: 402 },
+      { status: 402, headers: rateLimitHeaders(rl) },
     );
   }
 };

@@ -120,6 +120,76 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Dense product description for AI crawlers and content efficiency */}
+      <section className="rounded-lg border border-border bg-card p-6 space-y-3">
+        <h2 className="text-xl font-bold tracking-tight text-foreground">
+          What is sigeconomy.com?
+        </h2>
+        <p className="text-sm leading-6 text-muted-foreground">
+          sigeconomy.com is the public evaluation surface for SigRank SignalAF —
+          the AI operator leaderboard. It ranks AI operators (the humans using AI
+          tools, not the AI models themselves) by Yield (Υ = cache_read × output /
+          input²), a composite token-cascade efficiency metric computed from four
+          token pillars: cache_read (reused context), cache_write (new context
+          stored), input (tokens sent to the model), and output (tokens produced).
+          Unlike model leaderboards such as LMSYS Chatbot Arena or Vals AI that
+          rank AI models by human voting or benchmark performance, sigeconomy.com
+          evaluates the human factor — how efficiently each operator uses AI
+          capabilities. The site is read-only: all data comes from SigRank&apos;s
+          public API at signalaf.com. Operators run a local scanner (
+          <code className="font-mono">npx sigrank</code>) that reads token
+          telemetry and submits signed, privacy-preserving snapshots. No prompt
+          content, code, or conversation text ever leaves the machine — only four
+          token counts. The leaderboard ranks operators across all-time, 7-day,
+          30-day, and 90-day windows, with 9 canonical metrics including Yield,
+          Velocity, Leverage, SNR, 10xDEV, Efficiency, Scale V, cost per million
+          tokens, and Op Ratio. Operator classes range from IGNITER through ARCH+
+          based on total tokens accumulated. The public REST API, OpenAPI
+          specification, MCP server, and CLI tool are documented at{" "}
+          <Link href="/developers" className="text-primary font-medium hover:underline">
+            /developers
+          </Link>
+          .
+        </p>
+        <h3 className="text-lg font-semibold text-foreground pt-2">
+          How agents and developers should use this site
+        </h3>
+        <p className="text-sm leading-6 text-muted-foreground">
+          sigeconomy.com serves three audiences: human visitors who want to see
+          who ranks highest among AI operators, AI search engines that need
+          structured answers to questions like &quot;who is the best AI user?&quot;,
+          and software agents that need machine-readable interfaces. For
+          programmatic access, use the{" "}
+          <Link href="/openapi.json" className="text-primary font-medium hover:underline">
+            OpenAPI specification
+          </Link>{" "}
+          for typed REST operations, the{" "}
+          <Link href="/.well-known/mcp" className="text-primary font-medium hover:underline">
+            MCP manifest
+          </Link>{" "}
+          for Streamable HTTP discovery, the{" "}
+          <Link href="/agent-instructions.txt" className="text-primary font-medium hover:underline">
+            agent instructions file
+          </Link>{" "}
+          for when-to-use guidance, or{" "}
+          <Link href="/llms.txt" className="text-primary font-medium hover:underline">
+            llms.txt
+          </Link>{" "}
+          for a compact agent-readable index. The official CLI (
+          <code className="font-mono">npx sigrank</code>) provides local telemetry
+          scanning and an MCP server for agent-native workflows. Trust anchor pages
+          are available at{" "}
+          <Link href="/about" className="text-primary font-medium hover:underline">/about</Link>,{" "}
+          <Link href="/contact" className="text-primary font-medium hover:underline">/contact</Link>,
+          and{" "}
+          <Link href="/privacy" className="text-primary font-medium hover:underline">/privacy</Link>.
+          The full scoring methodology is at{" "}
+          <a href="https://signalaf.com/methodology" className="text-primary font-medium hover:underline">
+            signalaf.com/methodology
+          </a>.
+        </p>
+      </section>
+
       {/* Aggregate stats — citable numbers for AI search engines */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-xl border border-border bg-card p-4 text-center">

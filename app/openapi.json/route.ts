@@ -8,6 +8,13 @@ import { NextResponse } from "next/server";
 
 export const revalidate = 3600;
 
+const RATE_LIMIT_HEADERS = {
+  "RateLimit-Policy": "60;w=60",
+  "RateLimit-Limit": "60",
+  "RateLimit-Remaining": "59",
+  "RateLimit-Reset": "60",
+};
+
 export async function GET() {
   const doc = {
     openapi: "3.0.3",
@@ -15,7 +22,7 @@ export async function GET() {
       title: "SigRank SignalAF API",
       version: "1.0.0",
       description:
-        "Public AI-operator leaderboard and token-telemetry API. Public reads are unauthenticated. Authenticated write operations live on SignalAF and may require a paid plan.",
+        "Public AI-operator leaderboard and token-telemetry API. Public reads are unauthenticated. Authenticated write operations live on SignalAF and may require a paid plan. API versioning uses URL path segments (/api/v1, /api/v2). Breaking changes ship under a new major version. Deprecated operations return a Deprecation header (RFC 8594) and a Sunset header with the retirement date. See the versioning and deprecation policy at /developers#versioning.",
       contact: {
         name: "SigRank SignalAF",
         email: "hello@signalaf.com",
@@ -33,6 +40,8 @@ export async function GET() {
         deprecation:
           "When an endpoint is scheduled for retirement, the replacement and sunset date are published before removal. Serving APIs use deprecation/sunset response metadata where supported.",
       },
+      "x-deprecation-policy": "https://sigeconomy.com/developers#versioning",
+      "x-sunset-policy": "https://sigeconomy.com/developers#versioning",
     },
     externalDocs: {
       description: "SigRank SignalAF developer portal",
@@ -145,6 +154,15 @@ export async function GET() {
             currency: "USD",
             description: "Paid plan subscription — $5.00/month for snapshot submission",
           },
+          requestBody: {
+            required: true,
+            description: "Signed token telemetry snapshot payload.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/SnapshotSubmission" },
+              },
+            },
+          },
           responses: {
             "200": {
               description: "Snapshot accepted",
@@ -176,6 +194,15 @@ export async function GET() {
             amount: "5.00",
             currency: "USD",
             description: "Monthly subscription — $5.00/month",
+          },
+          requestBody: {
+            required: false,
+            description: "Optional plan selection. Defaults to the standard monthly plan.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/SubscriptionRequest" },
+              },
+            },
           },
           responses: {
             "200": {
@@ -265,27 +292,28 @@ export async function GET() {
           type: "object",
           required: ["codename", "rank", "platform", "yield_"],
           properties: {
-            codename: { type: "string" },
-            display_name: { type: "string", nullable: true },
-            rank: { type: "integer", minimum: 1 },
-            percentile: { type: "number", nullable: true },
-            platform: { type: "string" },
-            class_tier: { type: "string", nullable: true },
-            yield_: { type: "number", format: "double" },
-            leverage: { type: "number", format: "double" },
-            velocity: { type: "number", format: "double" },
-            movement_24h: { type: "number", nullable: true },
-            movement_7d: { type: "number", nullable: true },
+            codename: { type: "string", description: "Operator's unique public codename." },
+            display_name: { type: "string", nullable: true, description: "Optional display name." },
+            rank: { type: "integer", minimum: 1, description: "Global rank position." },
+            percentile: { type: "number", nullable: true, description: "Percentile rank (0-100)." },
+            platform: { type: "string", description: "AI platform (claude, chatgpt, cursor, etc.)." },
+            class_tier: { type: "string", nullable: true, description: "Operator class tier (IGNITER through ARCH+)." },
+            yield_: { type: "number", format: "double", description: "Yield (Υ) = cache_read × output / input²." },
+            leverage: { type: "number", format: "double", description: "Leverage = cache_read / input." },
+            velocity: { type: "number", format: "double", description: "Velocity = output / input." },
+            movement_24h: { type: "number", nullable: true, description: "Rank change in last 24 hours." },
+            movement_7d: { type: "number", nullable: true, description: "Rank change in last 7 days." },
           },
           additionalProperties: true,
         },
         LeaderboardResponse: {
           type: "object",
           properties: {
-            generated_at: { type: "string", format: "date-time" },
-            total_operators: { type: "integer", minimum: 0 },
+            generated_at: { type: "string", format: "date-time", description: "When the response was generated." },
+            total_operators: { type: "integer", minimum: 0, description: "Total operators in the dataset." },
             entries: {
               type: "array",
+              description: "Ranked operator entries.",
               items: { $ref: "#/components/schemas/LeaderboardEntry" },
             },
           },
@@ -295,48 +323,74 @@ export async function GET() {
           type: "object",
           required: ["codename"],
           properties: {
-            codename: { type: "string" },
-            display_name: { type: "string", nullable: true },
-            platform: { type: "string" },
-            class_tier: { type: "string", nullable: true },
-            rank: { type: "integer", nullable: true },
-            percentile: { type: "number", nullable: true },
-            yield_: { type: "number", format: "double", nullable: true },
-            leverage: { type: "number", format: "double", nullable: true },
-            velocity: { type: "number", format: "double", nullable: true },
-            cascade_str: { type: "string", nullable: true },
-            movement_24h: { type: "number", nullable: true },
-            movement_7d: { type: "number", nullable: true },
+            codename: { type: "string", description: "Operator's unique public codename." },
+            display_name: { type: "string", nullable: true, description: "Optional display name." },
+            platform: { type: "string", description: "AI platform (claude, chatgpt, cursor, etc.)." },
+            class_tier: { type: "string", nullable: true, description: "Operator class tier." },
+            rank: { type: "integer", nullable: true, description: "Global rank position." },
+            percentile: { type: "number", nullable: true, description: "Percentile rank." },
+            yield_: { type: "number", format: "double", nullable: true, description: "Yield (Υ) score." },
+            leverage: { type: "number", format: "double", nullable: true, description: "Leverage score." },
+            velocity: { type: "number", format: "double", nullable: true, description: "Velocity score." },
+            cascade_str: { type: "string", nullable: true, description: "Cascade ratio string (cache:input:output)." },
+            movement_24h: { type: "number", nullable: true, description: "Rank change in 24h." },
+            movement_7d: { type: "number", nullable: true, description: "Rank change in 7d." },
+          },
+          additionalProperties: true,
+        },
+        SnapshotSubmission: {
+          type: "object",
+          required: ["codename", "input", "output", "cache_read", "cache_write", "signature"],
+          properties: {
+            codename: { type: "string", description: "Operator's unique codename." },
+            input: { type: "number", minimum: 0, description: "Total input tokens consumed." },
+            output: { type: "number", minimum: 0, description: "Total output tokens generated." },
+            cache_read: { type: "number", minimum: 0, description: "Tokens read from prompt cache." },
+            cache_write: { type: "number", minimum: 0, description: "Tokens written to prompt cache." },
+            signature: { type: "string", description: "Cryptographic signature proving the snapshot was generated by the CLI." },
+            platform: { type: "string", description: "AI platform identifier." },
           },
           additionalProperties: true,
         },
         SubmissionResult: {
           type: "object",
           properties: {
-            accepted: { type: "boolean" },
-            codename: { type: "string" },
-            rank: { type: "integer", nullable: true },
+            accepted: { type: "boolean", description: "Whether the snapshot was accepted." },
+            codename: { type: "string", description: "Operator codename." },
+            rank: { type: "integer", nullable: true, description: "New rank after submission." },
           },
           additionalProperties: true,
         },
+        SubscriptionRequest: {
+          type: "object",
+          properties: {
+            plan: { type: "string", enum: ["monthly", "annual"], default: "monthly", description: "Subscription plan." },
+          },
+          additionalProperties: false,
+        },
         SubscriptionResult: {
           type: "object",
+          properties: {
+            checkout_url: { type: "string", format: "uri", description: "Stripe checkout URL." },
+            plan: { type: "string", description: "Selected plan." },
+          },
           additionalProperties: true,
         },
         PremiumApiSummary: {
           type: "object",
           properties: {
-            type: { type: "string" },
-            description: { type: "string" },
+            type: { type: "string", description: "Resource type identifier." },
+            description: { type: "string", description: "Human-readable description of the premium API." },
             available_endpoints: {
               type: "array",
+              description: "List of available API endpoints.",
               items: {
                 type: "object",
                 properties: {
-                  path: { type: "string" },
-                  method: { type: "string" },
-                  description: { type: "string" },
-                  payment_required: { type: "boolean" },
+                  path: { type: "string", description: "Endpoint URL or path." },
+                  method: { type: "string", description: "HTTP method (GET, POST, etc.)." },
+                  description: { type: "string", description: "What the endpoint does." },
+                  payment_required: { type: "boolean", description: "Whether payment is required." },
                 },
                 required: ["path", "method", "payment_required"],
               },
@@ -385,6 +439,44 @@ export async function GET() {
               description: "Seconds or HTTP date after which the client may retry.",
               schema: { type: "string" },
             },
+            "RateLimit-Policy": {
+              description: "Rate limit policy description.",
+              schema: { type: "string" },
+            },
+            "RateLimit-Limit": {
+              description: "Maximum requests per window.",
+              schema: { type: "integer" },
+            },
+            "RateLimit-Remaining": {
+              description: "Remaining requests in current window.",
+              schema: { type: "integer" },
+            },
+            "RateLimit-Reset": {
+              description: "Seconds until the window resets.",
+              schema: { type: "integer" },
+            },
+          },
+          content: {
+            "application/problem+json": {
+              schema: { $ref: "#/components/schemas/ProblemDetails" },
+            },
+          },
+        },
+        Deprecated: {
+          description: "This operation is deprecated and will be retired. See the Deprecation and Sunset headers for details.",
+          headers: {
+            Deprecation: {
+              schema: { type: "boolean" },
+              description: "Present and true when the operation is deprecated (RFC 8594).",
+            },
+            Sunset: {
+              schema: { type: "string", format: "http-date" },
+              description: "HTTP-date after which the deprecated operation will no longer be available (RFC 8594).",
+            },
+            Link: {
+              schema: { type: "string" },
+              description: "Link to the replacement operation or deprecation policy.",
+            },
           },
           content: {
             "application/problem+json": {
@@ -425,6 +517,7 @@ export async function GET() {
   return NextResponse.json(doc, {
     headers: {
       "Cache-Control": "public, max-age=3600",
+      ...RATE_LIMIT_HEADERS,
     },
   });
 }

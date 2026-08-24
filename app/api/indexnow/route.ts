@@ -16,6 +16,7 @@
  */
 
 import { NextResponse, type NextRequest } from "next/server";
+import { rateLimit, rateLimitHeaders, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -25,18 +26,36 @@ const SITE_ORIGIN = "https://sigeconomy.com";
 const INDEXNOW_KEY = "ded24467378e292f4206b5fbf258551c";
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req);
+  const rl = rateLimit(ip);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Rate limit exceeded" },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rl.retryAfter), ...rateLimitHeaders(rl) },
+      },
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = (await req.json()) as Record<string, unknown>;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid JSON" },
+      { status: 400, headers: rateLimitHeaders(rl) },
+    );
   }
 
   const urls = Array.isArray(body.urls)
     ? body.urls.filter((u) => typeof u === "string")
     : [];
   if (urls.length === 0) {
-    return NextResponse.json({ error: "No URLs provided" }, { status: 400 });
+    return NextResponse.json(
+      { error: "No URLs provided" },
+      { status: 400, headers: rateLimitHeaders(rl) },
+    );
   }
 
   const key = typeof body.key === "string" ? body.key : INDEXNOW_KEY;
@@ -63,12 +82,12 @@ export async function POST(req: NextRequest) {
         submitted: urls.length,
         key: key.slice(0, 8) + "…",
       },
-      { status: 200, headers: { "Cache-Control": "no-store" } },
+      { status: 200, headers: { "Cache-Control": "no-store", ...rateLimitHeaders(rl) } },
     );
   } catch (e) {
     return NextResponse.json(
       { error: "IndexNow submission failed", detail: (e as Error).message },
-      { status: 502 },
+      { status: 502, headers: rateLimitHeaders(rl) },
     );
   }
 }
