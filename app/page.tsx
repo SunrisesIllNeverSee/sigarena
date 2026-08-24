@@ -280,6 +280,33 @@ export default async function HomePage() {
           understand the boundary between operator evaluation and model
           evaluation.
         </p>
+        <h3 className="text-lg font-semibold text-foreground pt-2">
+          Methodology and reproducibility
+        </h3>
+        <p className="text-sm leading-6 text-muted-foreground">
+          The SigRank methodology is published openly for reproducibility and
+          independent verification. Yield (Υ) is defined as cache_read multiplied
+          by output divided by input squared — a composite efficiency metric that
+          rewards operators who reuse cached context and produce output without
+          continually rebuilding context from scratch. The conservation law
+          states that total tokens equal cache_read plus cache_write plus input
+          plus output, and no operator can increase one pillar without decreasing
+          or holding constant the others. This constraint is what makes the
+          cascade a zero-sum efficiency problem rather than a simple volume
+          contest. The dataset of operator telemetry is published under a Zenodo
+          DOI (10.5281/zenodo.21900519) and the theoretical foundation is
+          documented under a separate DOI (10.5281/zenodo.20029607). The full
+          methodology page at signalaf.com/methodology provides quotable key
+          figures, formula derivations, and the relationship between operator
+          evals and model evals. A score calculator is available at
+          signalaf.com/score where anyone can paste their four token counts and
+          receive their Yield and operator class without creating an account. The
+          canonical test suite verifies that the MOSES seed values produce the
+          expected Yield of 18436.98, ensuring the scoring engine remains stable
+          across deployments. SigRank evaluates AI operators, not AI models — the
+          harness may measure authority, but it cannot manufacture authority, and
+          automated systems may not promote claims into owner-approved truth.
+        </p>
       </section>
 
       {/* Aggregate stats — citable numbers for AI search engines */}
