@@ -143,7 +143,7 @@ function isKnownPath(pathname: string) {
     return true;
   }
 
-  if (pathname === "/api" || pathname === "/api/indexnow") return true;
+  if (pathname === "/api" || pathname === "/api/indexnow" || pathname === "/api/mcp") return true;
   if (pathname.startsWith("/.well-known/")) return true;
 
   return false;
