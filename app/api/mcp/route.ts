@@ -15,6 +15,37 @@ import {
 import type { CanonicalMetric } from "@/lib/prompts";
 
 /**
+ * Build a lightweight OperatorEvaluation object from operator metrics.
+ * SigEconomy doesn't have the cascade module — it reads from SignalAF's API.
+ * This produces a normalized evaluation shape consistent with SignalAF's.
+ */
+function evaluation(
+  metrics: { yield: number; leverage: number; velocity: number; snr: number; dev10x?: number },
+  context?: { codename?: string; display_name?: string; class?: string; platform?: string; rank?: number; percentile?: number; window?: string },
+) {
+  const { yield: y, leverage: l, velocity: v, snr: s } = metrics;
+  let archetype: string, dominant_trait: string;
+  if (l > 100 && v < 5) { archetype = "CONTEXTUAL"; dominant_trait = "high-context reuse"; }
+  else if (l < 10 && v > 5) { archetype = "GENERATOR"; dominant_trait = "high-throughput generation"; }
+  else if (l > 50 && v > 5) { archetype = "BALANCED_ELITE"; dominant_trait = "combined reuse + throughput"; }
+  else if (v < 0.5) { archetype = "READER"; dominant_trait = "input-heavy consumption"; }
+  else { archetype = "STANDARD"; dominant_trait = "moderate all-around"; }
+  return {
+    codename: context?.codename ?? null,
+    display_name: context?.display_name ?? null,
+    class: context?.class ?? null,
+    platform: context?.platform ?? null,
+    rank: context?.rank ?? null,
+    percentile: context?.percentile ?? null,
+    window: context?.window ?? "30d",
+    metrics: { yield: y, leverage: l, velocity: v, snr: s, dev10x: metrics.dev10x ?? null },
+    archetype,
+    dominant_trait,
+    signature: `L${l.toFixed(1)}-V${v.toFixed(2)}-S${s.toFixed(2)}`,
+  };
+}
+
+/**
  * SigEconomy MCP Server — the intent/discovery/interpretation surface.
  *
  * While SignalAF (signalaf.com/api/mcp) is the measurement instrument,
@@ -279,6 +310,10 @@ async function callTool(name: string, args: Record<string, unknown>) {
       window,
       metric,
       interpretation: `${best.display_name || best.codename} is the #1 operator by ${metric} (${best.yield_} Υ) on the ${window} board. Class: ${best.class_tier}. Platform: ${best.platform}.`,
+      evaluation: evaluation(
+        { yield: best.yield_, leverage: best.leverage, velocity: best.velocity, snr: best.snr, dev10x: best.dev10x },
+        { codename: best.codename, display_name: best.display_name || best.codename, class: best.class_tier, platform: best.platform, rank: 1, percentile: best.percentile, window },
+      ),
     });
   }
 
@@ -749,6 +784,10 @@ async function callTool(name: string, args: Record<string, unknown>) {
         total: op.total_tokens,
       },
       explanation,
+      evaluation: evaluation(
+        { yield: m.yield_, leverage: lev, velocity: vel, snr: snr, dev10x: m.dev10x },
+        { codename: op.codename, display_name: op.display_name || op.codename, class: op.class_tier, platform: op.platform, rank: op.current_rank.global, percentile: op.current_rank.percentile, window },
+      ),
     });
   }
 
@@ -795,6 +834,7 @@ export async function POST(req: NextRequest) {
         capabilities: {
           tools: { listChanged: false },
           resources: { listChanged: false },
+          prompts: { listChanged: false },
         },
         serverInfo: {
           name: "sigeconomy",
@@ -1028,6 +1068,116 @@ Archetype: Operating shape
     }
 
     return errorResult(id, -32602, `Unknown resource: ${uri}`);
+  }
+
+  // ── prompts/list ──
+  if (method === "prompts/list") {
+    return Response.json({
+      jsonrpc: "2.0",
+      id,
+      result: {
+        prompts: [
+          {
+            name: "who-is-the-best",
+            title: "Who Is the Best AI Operator?",
+            description: "Finds the #1 operator on the live leaderboard and explains why they're on top.",
+            arguments: [
+              { name: "window", description: "Time window (7d, 30d, 90d, all_time)", required: false },
+              { name: "metric", description: "Ranking metric (yield, leverage, velocity, snr)", required: false },
+            ],
+          },
+          {
+            name: "compare-two-operators",
+            title: "Compare Two Operators",
+            description: "Head-to-head comparison with yield gap, primary differentiator, and natural-language summary.",
+            arguments: [
+              { name: "operator_a", description: "Codename for operator A", required: true },
+              { name: "operator_b", description: "Codename for operator B", required: true },
+            ],
+          },
+          {
+            name: "find-my-peers",
+            title: "Find Operators Like Me",
+            description: "Discovers operators with similar metrics and identifies where they outperform you.",
+            arguments: [
+              { name: "codename", description: "Your codename (or provide pillars)", required: false },
+              { name: "input", description: "Your input tokens", required: false },
+              { name: "output", description: "Your output tokens", required: false },
+              { name: "cache_read", description: "Your cache-read tokens", required: false },
+              { name: "cache_write", description: "Your cache-write tokens", required: false },
+            ],
+          },
+          {
+            name: "how-can-i-improve",
+            title: "How Can I Improve?",
+            description: "Analyzes your metrics, finds your weakest area, and recommends specific actions with projected yield uplift.",
+            arguments: [
+              { name: "codename", description: "Your codename (or provide pillars)", required: false },
+              { name: "input", description: "Your input tokens", required: false },
+              { name: "output", description: "Your output tokens", required: false },
+              { name: "cache_read", description: "Your cache-read tokens", required: false },
+              { name: "cache_write", description: "Your cache-write tokens", required: false },
+            ],
+          },
+          {
+            name: "whats-interesting-on-the-board",
+            title: "What's Interesting on the Board?",
+            description: "Scans the live leaderboard for unusual patterns and anomalies. No input required.",
+            arguments: [
+              { name: "window", description: "Time window (7d, 30d, 90d, all_time)", required: false },
+            ],
+          },
+        ],
+      },
+    });
+  }
+
+  // ── prompts/get ──
+  if (method === "prompts/get") {
+    const promptName = (msg.params as Record<string, unknown>)?.name as string;
+    const promptArgs = ((msg.params as Record<string, unknown>)?.arguments ?? {}) as Record<string, string | number>;
+    if (!promptName) {
+      return errorResult(id, -32602, "Missing prompt name");
+    }
+
+    const prompts: Record<string, { messages: Array<{ role: string; content: { type: string; text: string } }> }> = {
+      "who-is-the-best": {
+        messages: [{
+          role: "user",
+          content: { type: "text", text: `Use the get_best_operator tool to find the #1 AI operator on the ${promptArgs.window || "30d"} board. Then use explain_this_operator to get a full profile. Tell me:\n1. Who they are and their yield\n2. Their class and platform\n3. What makes them elite\n4. Their operating archetype` },
+        }],
+      },
+      "compare-two-operators": {
+        messages: [{
+          role: "user",
+          content: { type: "text", text: `Compare operators "${promptArgs.operator_a || "?"}" and "${promptArgs.operator_b || "?"}". Use the compare_operators tool for the head-to-head comparison, then use operator_gap to decompose the yield gap. Tell me:\n1. Who wins and by how much\n2. The primary differentiator\n3. The secondary differentiator\n4. Any offsetting weakness the winner has` },
+        }],
+      },
+      "find-my-peers": {
+        messages: [{
+          role: "user",
+          content: { type: "text", text: `${promptArgs.codename ? `I am operator "${promptArgs.codename}".` : `My token counts: input=${promptArgs.input || "?"}, output=${promptArgs.output || "?"}, cache_read=${promptArgs.cache_read || "?"}, cache_write=${promptArgs.cache_write || "?"}.`} Use the discover_peers tool to find operators with similar metrics. Tell me:\n1. My 5 nearest peers\n2. How similar they are to me\n3. Where they outperform me\n4. What I can learn from them` },
+        }],
+      },
+      "how-can-i-improve": {
+        messages: [{
+          role: "user",
+          content: { type: "text", text: `${promptArgs.codename ? `I am operator "${promptArgs.codename}".` : `My token counts: input=${promptArgs.input || "?"}, output=${promptArgs.output || "?"}, cache_read=${promptArgs.cache_read || "?"}, cache_write=${promptArgs.cache_write || "?"}.`} Use the optimize_efficiency tool to analyze my metrics and recommend improvements. Tell me:\n1. My weakest metric vs the field\n2. The specific recommendation\n3. My projected yield if I fix it\n4. The yield uplift` },
+        }],
+      },
+      "whats-interesting-on-the-board": {
+        messages: [{
+          role: "user",
+          content: { type: "text", text: `Use the field_anomaly tool to scan the ${promptArgs.window || "30d"} leaderboard for unusual patterns. Then summarize the most interesting findings in plain English — who is doing something unusual, what they're doing, and why it matters.` },
+        }],
+      },
+    };
+
+    const prompt = prompts[promptName];
+    if (!prompt) {
+      return errorResult(id, -32602, `Unknown prompt: ${promptName}`);
+    }
+    return Response.json({ jsonrpc: "2.0", id, result: prompt });
   }
 
   return errorResult(id, -32601, `Unknown method: ${method}`);
