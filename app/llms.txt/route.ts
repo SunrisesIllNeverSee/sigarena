@@ -110,6 +110,18 @@ Do not treat a SigRank score alone as proof of code quality, business productivi
 - "What are performative evals for AI users?" → https://sigeconomy.com/operator-evals
 - "Who reuses context the most in AI coding?" → https://sigeconomy.com/most-context-reuse
 - "Who gets the cheapest AI tokens?" → https://sigeconomy.com/cheapest-tokens
+
+## Contribution Exchange
+
+This domain participates in the Contribution Exchange via the hosted control plane at signalaf.com.
+
+- Exchange Profile: https://sigeconomy.com/.well-known/exchange.json (points to signalaf.com)
+- Contribution Exchange MCP: https://signalaf.com/api/exchange/mcp (server card: https://signalaf.com/.well-known/exchange-mcp.json)
+- Full carry guide: https://signalaf.com/agents.md
+- Proposal API: POST https://signalaf.com/api/exchange/proposals
+- Contribution Commitment schema: https://signalaf.com/exchange.schema.json
+
+This domain does NOT host its own Exchange MCP server. All Exchange interactions go through the central server at signalaf.com.
 `;
 
   return new NextResponse(body, {

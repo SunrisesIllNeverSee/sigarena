@@ -80,6 +80,14 @@ const EXCHANGE_JSON = {
     'Stripe Connect',
     'DID/VC',
   ],
+  mcp: {
+    server_name: 'contribution-exchange',
+    endpoint: 'https://signalaf.com/api/exchange/mcp',
+    server_card: 'https://signalaf.com/.well-known/exchange-mcp.json',
+    transport: 'streamable-http',
+    hosting: 'central',
+    note: 'This domain participates in the central Contribution Exchange MCP hosted at signalaf.com. It does not host its own Exchange MCP server.',
+  },
 }
 
 export async function GET() {
