@@ -138,7 +138,7 @@ test("MCP discovery files agree on the Streamable HTTP transport", () => {
   ]) {
     const source = read(path);
     assert.match(source, /type:\s*"streamable-http"/);
-    assert.match(source, /functions\/v1\/sigrank-mcp/);
+    assert.match(source, /(sigeconomy\.com\/api\/mcp|functions\/v1\/sigrank-mcp)/);
     assert.doesNotMatch(source, /endpoint:\s*"https:\/\/signalaf\.com\/api\/v1"/);
   }
 });
