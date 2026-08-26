@@ -46,6 +46,21 @@ function evaluation(
 }
 
 /**
+ * Build a shareable URL + summary for an MCP tool result.
+ * The share URL encodes the tool name and params so the /share/mcp route
+ * can re-execute the tool and render a visual card.
+ */
+function shareable(
+  toolName: string,
+  params: Record<string, unknown>,
+  summary: string,
+): { share_url: string; share_text: string } {
+  const encoded = encodeURIComponent(JSON.stringify(params));
+  const url = `https://sigeconomy.com/share/mcp?t=${toolName}&d=${encoded}`;
+  return { share_url: url, share_text: summary };
+}
+
+/**
  * SigEconomy MCP Server — the intent/discovery/interpretation surface.
  *
  * While SignalAF (signalaf.com/api/mcp) is the measurement instrument,
@@ -314,6 +329,11 @@ async function callTool(name: string, args: Record<string, unknown>) {
         { yield: best.yield_, leverage: best.leverage, velocity: best.velocity, snr: best.snr, dev10x: best.dev10x },
         { codename: best.codename, display_name: best.display_name || best.codename, class: best.class_tier, platform: best.platform, rank: 1, percentile: best.percentile, window },
       ),
+      share: shareable(
+        "get_best_operator",
+        { window, metric },
+        `${best.display_name || best.codename} is the #1 operator by ${metric} (${best.yield_} Υ) on the ${window} board. Class: ${best.class_tier}. Platform: ${best.platform}.`,
+      ),
     });
   }
 
@@ -377,6 +397,11 @@ async function callTool(name: string, args: Record<string, unknown>) {
       primary_differentiator: { factor: factors[0].factor, gap: Number(factors[0].gap.toFixed(4)) },
       secondary_differentiator: { factor: factors[1].factor, gap: Number(factors[1].gap.toFixed(4)) },
       interpretation: `${winnerDisplay} outranks by ${Math.abs(yieldGap).toFixed(1)} Υ. Primary differentiator: ${factors[0].factor} (gap ${factors[0].gap.toFixed(2)}). Secondary: ${factors[1].factor} (gap ${factors[1].gap.toFixed(2)}).`,
+      share: shareable(
+        "compare_operators",
+        { operator_a: codenameA, operator_b: codenameB, window },
+        `${winnerDisplay} outranks by ${Math.abs(yieldGap).toFixed(1)} Υ. Primary differentiator: ${factors[0].factor} (gap ${factors[0].gap.toFixed(2)}). Secondary: ${factors[1].factor} (gap ${factors[1].gap.toFixed(2)}).`,
+      ),
     });
   }
 
@@ -486,6 +511,11 @@ async function callTool(name: string, args: Record<string, unknown>) {
 
     neighbors.sort((a, b) => (a.signature_distance as number) - (b.signature_distance as number));
 
+    const peerParams: Record<string, unknown> = codename
+      ? { codename, window }
+      : { input: args.input, output: args.output, cache_read: args.cache_read, cache_write: args.cache_write, window };
+    const peerName = myName || "your metrics";
+
     return textResult({
       you: {
         codename,
@@ -498,6 +528,7 @@ async function callTool(name: string, args: Record<string, unknown>) {
       peers: neighbors.slice(0, limit),
       window,
       total_compared: neighbors.length,
+      share: shareable("discover_peers", peerParams, `Nearest peers for ${peerName}`),
     });
   }
 
@@ -572,6 +603,10 @@ async function callTool(name: string, args: Record<string, unknown>) {
       projectedYield = metrics.leverage * fieldMedianVel;
     }
 
+    const optParams: Record<string, unknown> = codename
+      ? { codename, window }
+      : { input: args.input, output: args.output, cache_read: args.cache_read, cache_write: args.cache_write, window };
+
     return textResult({
       operator: myName ? { codename, display_name: myName } : null,
       current_metrics: {
@@ -599,6 +634,7 @@ async function callTool(name: string, args: Record<string, unknown>) {
       projected_yield_if_fixed: Number(projectedYield.toFixed(2)),
       yield_uplift: Number((projectedYield - metrics.yield).toFixed(2)),
       window,
+      share: shareable("optimize_efficiency", optParams, weakest.recommendation),
     });
   }
 
@@ -788,6 +824,7 @@ async function callTool(name: string, args: Record<string, unknown>) {
         { yield: m.yield_, leverage: lev, velocity: vel, snr: snr, dev10x: m.dev10x },
         { codename: op.codename, display_name: op.display_name || op.codename, class: op.class_tier, platform: op.platform, rank: op.current_rank.global, percentile: op.current_rank.percentile, window },
       ),
+      share: shareable("explain_this_operator", { codename, window }, explanation),
     });
   }
 

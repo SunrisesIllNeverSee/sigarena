@@ -25,6 +25,7 @@ export async function GET() {
     capabilities: {
       tools: { listChanged: false },
       resources: { listChanged: false },
+      prompts: { listChanged: true },
     },
     authentication: {
       required: false,
@@ -38,6 +39,13 @@ export async function GET() {
       "operator_gap",
       "field_anomaly",
       "explain_this_operator",
+    ],
+    prompts: [
+      "who-is-the-best",
+      "compare-two-operators",
+      "find-my-peers",
+      "how-can-i-improve",
+      "whats-interesting-on-the-board",
     ],
     resources: [
       {

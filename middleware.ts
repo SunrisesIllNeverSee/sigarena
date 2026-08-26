@@ -145,6 +145,7 @@ function isKnownPath(pathname: string) {
 
   if (pathname === "/api" || pathname === "/api/indexnow" || pathname === "/api/mcp") return true;
   if (pathname.startsWith("/.well-known/")) return true;
+  if (pathname.startsWith("/share/")) return true;
 
   return false;
 }
