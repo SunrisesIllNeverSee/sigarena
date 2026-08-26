@@ -80,6 +80,13 @@ const EXCHANGE_JSON = {
     'Stripe Connect',
     'DID/VC',
   ],
+  signals: {
+    schema: 'https://signalaf.com/schemas/exchange-signal/1.0',
+    collection: 'https://signalaf.com/api/exchange/signals?domain=sigeconomy.com',
+    human: 'https://signalaf.com/exchange/signals?domain=sigeconomy.com',
+    authentication: 'https://signalaf.com/agents.md#signal-authentication',
+    supported_types: ['problem', 'request', 'challenge', 'bounty', 'verification', 'discovery', 'experiment'],
+  },
   mcp: {
     server_name: 'contribution-exchange',
     endpoint: 'https://signalaf.com/api/exchange/mcp',
