@@ -25,6 +25,7 @@ const PUBLIC_PATHS = new Set([
   "/most-efficient-overall",
   "/most-normalized",
   "/most-output-per-token",
+  "/mcp",
   "/openapi.json",
   "/operator-evals",
   "/privacy",
