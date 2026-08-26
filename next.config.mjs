@@ -43,6 +43,15 @@ const nextConfig = {
         ],
       },
       {
+        // Machine-readable endpoints — noindex so Google doesn't flag them as
+        // "Alternate page with proper canonical tag" or "Excluded by noindex tag"
+        // in Search Console. These are for AI agents, not search results.
+        source: "/(llms.txt|llms-full.txt|.well-known/mcp/server-card.json|openapi.json)",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
         // Dynamic leaderboard pages — these are force-dynamic (render at
         // request time with real API data) but the API responses are edge-cached
         // for 5 minutes via cachedFetch(). Set a short s-maxage so Cloudflare's

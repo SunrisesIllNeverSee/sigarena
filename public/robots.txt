@@ -8,6 +8,9 @@ User-agent: *
 Allow: /
 Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 
+# /operator/* redirects to signalaf.com/user/* — don't crawl redirect URLs
+Disallow: /operator/
+
 # Explicitly allow AI answer-engine crawlers (AEO)
 User-agent: GPTBot
 Allow: /
