@@ -53,7 +53,7 @@ const protocolSource = readFileSync(protocolPath, "utf-8");
 // ─── Frozen MCP protocol constants ──────────────────────────────────────────
 
 const PROTOCOL_VERSION = "2025-06-18";
-const SUPPORTED_VERSIONS = ["2025-06-18", "2025-03-26"];
+const SUPPORTED_VERSIONS = ["2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26"];
 
 // ─── Expected tool catalog (8 tools) ────────────────────────────────────────
 
@@ -154,7 +154,8 @@ test("MCP protocol version is 2025-06-18", () => {
   assert.equal(PROTOCOL_VERSION, "2025-06-18");
 });
 
-test("MCP supported versions include current and legacy", () => {
+test("MCP supported versions include modern, current, and legacy", () => {
+  assert.ok(SUPPORTED_VERSIONS.includes("2026-07-28"), "Must support modern protocol version");
   assert.ok(SUPPORTED_VERSIONS.includes("2025-06-18"));
   assert.ok(SUPPORTED_VERSIONS.includes("2025-03-26"));
 });
@@ -163,9 +164,8 @@ test("protocol.ts declares PROTOCOL_VERSION 2025-06-18", () => {
   assert.match(protocolSource, /PROTOCOL_VERSION\s*=\s*["']2025-06-18["']/);
 });
 
-test("protocol.ts declares SUPPORTED_VERSIONS with both versions", () => {
-  assert.match(protocolSource, /2025-06-18/);
-  assert.match(protocolSource, /2025-03-26/);
+test("protocol.ts does NOT export SUPPORTED_VERSIONS (delegates to SDK)", () => {
+  assert.doesNotMatch(protocolSource, /SUPPORTED_VERSIONS/);
 });
 
 // ─── Server identity tests ──────────────────────────────────────────────────
@@ -238,12 +238,14 @@ test("route.ts imports createSigeconomyServer", () => {
   assert.match(routeSource, /createSigeconomyServer/);
 });
 
-test("route.ts handles parse errors with -32700", () => {
-  assert.match(routeSource, /-32700.*Parse error/);
+test("route.ts delegates parse error handling to SDK (no manual -32700)", () => {
+  // The route no longer parses the body — the SDK handles parse errors.
+  assert.doesNotMatch(routeSource, /-32700.*Parse error/);
 });
 
-test("route.ts handles invalid request with -32600", () => {
-  assert.match(routeSource, /-32600.*Invalid Request/);
+test("route.ts delegates invalid request handling to SDK (no manual -32600)", () => {
+  // The route no longer validates JSON-RPC structure — the SDK handles it.
+  assert.doesNotMatch(routeSource, /-32600.*Invalid Request/);
 });
 
 // ─── Tool definitions in tools/index.ts ─────────────────────────────────────
@@ -362,20 +364,33 @@ test("security.ts exports allowedOrigin function", () => {
 // ─── Discovery file consistency ─────────────────────────────────────────────
 
 // Discovery files that should reference sigeconomy.com/api/mcp endpoint
-// (server-card.json and agent.json point to Supabase Edge Function, not /api/mcp)
 const discoveryFilesWithEndpoint = [
   "app/.well-known/mcp/route.ts",
   "app/.well-known/mcp.json/route.ts",
 ];
 
-// Discovery files that declare streamable-http transport (broader set)
+// Discovery files that declare streamable-http transport
+// (server-card.json and server-cards.json are now redirects to /.well-known/mcp)
 const discoveryFilesWithTransport = [
   "app/.well-known/mcp/route.ts",
   "app/.well-known/mcp.json/route.ts",
   "app/.well-known/agent.json/route.ts",
+];
+
+// Stale discovery files that should redirect to /.well-known/mcp
+const staleDiscoveryRedirects = [
   "app/.well-known/mcp/server-card.json/route.ts",
   "app/.well-known/mcp/server-cards.json/route.ts",
 ];
+
+for (const filePath of staleDiscoveryRedirects) {
+  const fullPath = join(root, filePath);
+  test(`stale discovery file ${filePath} redirects to /.well-known/mcp`, () => {
+    const source = readFileSync(fullPath, "utf-8");
+    assert.match(source, /redirect/i);
+    assert.match(source, /\.well-known\/mcp/);
+  });
+}
 
 for (const filePath of discoveryFilesWithTransport) {
   const fullPath = join(root, filePath);

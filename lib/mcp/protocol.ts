@@ -3,15 +3,18 @@
  * route.
  *
  * Extracted from app/api/mcp/route.ts as Phase 7 of the MCP structural
- * renovation. Contains protocol version constants, JSON-RPC helpers, and
- * the textResult helper used by the callTool dispatcher.
+ * renovation. Contains JSON-RPC helpers and the textResult helper used by
+ * the callTool dispatcher.
+ *
+ * Protocol negotiation (modern 2026-07-28 + legacy 2025-era) is delegated
+ * entirely to createMcpHandler in the SDK. PROTOCOL_VERSION is retained for
+ * the jsonRpc/rpcError response helpers only.
  */
 
 import { allowedOrigin } from "@/lib/mcp/security";
 export { allowedOrigin };
 
 export const PROTOCOL_VERSION = "2025-06-18";
-export const SUPPORTED_VERSIONS = new Set(["2025-06-18", "2025-03-26"]);
 
 export type RpcId = string | number | null;
 

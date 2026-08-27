@@ -134,8 +134,12 @@ test("protocol.ts preserves PROTOCOL_VERSION = 2025-06-18", () => {
   assert.match(protocolSource, /2025-06-18/);
 });
 
-test("protocol.ts preserves SUPPORTED_VERSIONS with 2025-03-26", () => {
-  assert.match(protocolSource, /2025-03-26/);
+test("protocol.ts does NOT export SUPPORTED_VERSIONS (delegates to SDK)", () => {
+  assert.doesNotMatch(protocolSource, /SUPPORTED_VERSIONS/);
+});
+
+test("route.ts does NOT import SUPPORTED_VERSIONS (delegates to SDK)", () => {
+  assert.doesNotMatch(routeSource, /SUPPORTED_VERSIONS/);
 });
 
 test("security.ts exports allowedOrigin", () => {
@@ -263,8 +267,9 @@ test(".well-known/mcp.json references sigeconomy.com/api/mcp", () => {
   assert.match(wellKnownMcpJsonSource, /sigeconomy\.com\/api\/mcp/);
 });
 
-test(".well-known/mcp/server-card.json declares streamable-http", () => {
-  assert.match(wellKnownServerCardSource, /streamable-http/);
+test(".well-known/mcp/server-card.json redirects to /.well-known/mcp", () => {
+  assert.match(wellKnownServerCardSource, /redirect/i);
+  assert.match(wellKnownServerCardSource, /\.well-known\/mcp/);
 });
 
 test(".well-known/agent.json declares streamable-http", () => {
