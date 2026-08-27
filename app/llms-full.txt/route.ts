@@ -100,6 +100,25 @@ has lower Yield than the operator who uses 100K tokens to produce the same 1K ou
 - [vs LangChain + LangSmith](https://sigeconomy.com/vs/langchain): SigRank vs LangChain/LangSmith — operator ranking vs agent framework + observability
 - [vs LMSYS Arena](https://sigeconomy.com/vs/lmsys-arena): operator evals vs model evals — ranking humans vs ranking models
 - [vs WakaTime](https://sigeconomy.com/vs/wakatime): token efficiency vs time tracking
+- [vs VibeRank](https://sigeconomy.com/vs/viberank): measured Yield vs vibe coding leaderboard — popularity vs efficiency
+- [vs TokenMaxxer](https://sigeconomy.com/vs/tokenmaxxer): efficiency vs token maximization — volume vs Yield
+- [vs WhoBurnedMore](https://sigeconomy.com/vs/whoburnedmore): Yield vs token burning contest — waste vs efficiency
+- [vs AIUsage](https://sigeconomy.com/vs/aiusage): operator ranking vs usage dashboard — numbers vs a score
+- [vs ccburn](https://sigeconomy.com/vs/ccburn): Yield vs Claude Code burn rate — speed vs efficiency
+- [vs ccflare](https://sigeconomy.com/vs/ccflare): operator ranking vs Claude usage flare — charts vs a score
+- [vs ccstatusline](https://sigeconomy.com/vs/ccstatusline): operator ranking vs Claude status display — inline stats vs a rank
+- [vs TokenForest](https://sigeconomy.com/vs/token-forest): Yield vs token tree visualization — structure vs efficiency
+- [vs SessionWatcher](https://sigeconomy.com/vs/sessionwatcher): Yield vs live session monitoring — activity vs efficiency
+- [vs Omnara](https://sigeconomy.com/vs/omnara): operator ranking vs AI usage dashboard — numbers vs a score
+- [vs Sculptor](https://sigeconomy.com/vs/sculptor): cross-tool Yield vs single-tool metrics
+- [vs VibeIsland](https://sigeconomy.com/vs/vibe-island): measured Yield vs vibe coding community — social vs measured
+- [vs NotchPilot](https://sigeconomy.com/vs/notch-pilot): operator evals vs AI coding assistant metrics
+- [vs Opcode](https://sigeconomy.com/vs/opcode): operator evals vs AI coding tool metrics
+- [vs Lineman](https://sigeconomy.com/vs/lineman): operator evals vs AI coding tool stats
+- [vs CodeBurn](https://sigeconomy.com/vs/codeburn): Yield vs code burn tracking — volume vs efficiency
+- [vs ClaudeCount](https://sigeconomy.com/vs/claudecount): Yield vs Claude token counting — volume vs efficiency
+- [vs ccgather](https://sigeconomy.com/vs/ccgather): Yield vs Claude Code data gathering — raw collection vs a score
+- [vs ClaudeRank](https://sigeconomy.com/vs/clauderank): cross-tool Yield vs Claude-only ranking
 
 ## Data
 
