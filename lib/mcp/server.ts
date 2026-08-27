@@ -17,7 +17,14 @@
  * clients should use signalaf.com/api/mcp instead.
  */
 
-import { McpServer, fromJsonSchema } from "@modelcontextprotocol/server";
+import {
+  McpServer,
+  fromJsonSchema,
+  type StandardSchemaWithJSON,
+  type CallToolResult,
+  type ReadResourceCallback,
+  type PromptCallback,
+} from "@modelcontextprotocol/server";
 import { TOOLS, callTool } from "@/lib/mcp/tools";
 import { RESOURCES, readResource } from "@/lib/mcp/resources";
 import { PROMPTS, getPrompt } from "@/lib/mcp/prompts";
@@ -55,31 +62,35 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
   // Each tool's handler delegates to the existing callTool dispatcher,
   // preserving the exact behavior from the pre-migration implementation.
   // fromJsonSchema wraps raw JSON Schema into StandardSchema for the SDK.
-  // The SDK's type system is strict — we cast the registerTool call to
-  // bridge between our domain types and the SDK's expected types.
   for (const tool of TOOLS) {
     const toolName = tool.name;
-    const inputSchema = fromJsonSchema(tool.inputSchema as Record<string, unknown>);
+    const inputSchema = fromJsonSchema(
+      tool.inputSchema as Record<string, unknown>,
+    ) as StandardSchemaWithJSON<Record<string, unknown>, Record<string, unknown>>;
 
-    const toolConfig: Record<string, unknown> = {
+    const toolConfig = {
       title: tool.title,
       description: tool.description,
       annotations: tool.annotations,
       inputSchema,
     };
 
-    const toolHandler = async (args: unknown) => {
-      const toolArgs = (args && typeof args === "object" && !Array.isArray(args)
-        ? (args as Record<string, unknown>)
-        : {}) as Record<string, unknown>;
-      const result = await callTool(toolName, toolArgs, req!);
-      // callTool returns { content: [{ type: "text", text: "..." }], isError?: boolean }
-      // which matches the SDK's expected CallToolResult shape.
+    const toolHandler = async (
+      args: Record<string, unknown>,
+    ): Promise<CallToolResult> => {
+      const toolArgs =
+        args && typeof args === "object" && !Array.isArray(args)
+          ? (args as Record<string, unknown>)
+          : {};
+      const result = (await callTool(
+        toolName,
+        toolArgs,
+        req!,
+      )) as CallToolResult;
       return result;
     };
 
-    // Cast to any to satisfy the SDK's strict overload resolution
-    (server.registerTool as unknown as (name: string, config: Record<string, unknown>, handler: (args: unknown) => Promise<unknown>) => void)(toolName, toolConfig, toolHandler);
+    server.registerTool(toolName, toolConfig, toolHandler);
   }
 
   // ── Register all 4 resources ──────────────────────────────────────────
@@ -89,7 +100,7 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
       mimeType: resource.mimeType,
     };
 
-    const resourceHandler = async (uri: { href: string }) => {
+    const resourceHandler: ReadResourceCallback = async (uri) => {
       const result = await readResource(uri.href);
       if (!result) {
         return { contents: [] };
@@ -97,7 +108,12 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
       return result;
     };
 
-    (server.registerResource as unknown as (name: string, uri: string, config: Record<string, unknown>, handler: (uri: { href: string }) => Promise<unknown>) => void)(resource.name, resource.uri, resourceConfig, resourceHandler);
+    server.registerResource(
+      resource.name,
+      resource.uri,
+      resourceConfig,
+      resourceHandler,
+    );
   }
 
   // ── Register all 5 prompts ────────────────────────────────────────────
@@ -108,18 +124,21 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
       description: prompt.description,
     };
 
-    const promptHandler = (args: unknown) => {
-      const promptArgs = (args && typeof args === "object"
-        ? (args as Record<string, string | number>)
-        : {}) as Record<string, string | number>;
+    const promptHandler: PromptCallback<StandardSchemaWithJSON> = (args) => {
+      const promptArgs =
+        args && typeof args === "object"
+          ? (args as Record<string, string | number>)
+          : {};
       const result = getPrompt(promptName, promptArgs);
       if (!result) {
         return { messages: [] };
       }
-      return result;
+      // getPrompt returns role: string; the SDK expects role: "user" | "assistant".
+      // All prompt messages use role: "user" — cast to satisfy the SDK's narrower type.
+      return result as { messages: Array<{ role: "user" | "assistant"; content: { type: "text"; text: string } }> };
     };
 
-    (server.registerPrompt as unknown as (name: string, config: Record<string, unknown>, handler: (args: unknown) => unknown) => void)(promptName, promptConfig, promptHandler);
+    server.registerPrompt(promptName, promptConfig, promptHandler);
   }
 
   return server;

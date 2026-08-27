@@ -24,8 +24,12 @@ export function allowedOrigin(req: NextRequest): boolean {
   if (!origin) return true;
   try {
     const u = new URL(origin);
-    return u.hostname.endsWith("sigeconomy.com") ||
-      u.hostname.endsWith("signalaf.com") ||
+    // Use exact match or dot-delimited subdomain check to prevent
+    // lookalike suffix attacks (e.g. evil-sigeconomy.com).
+    return u.hostname === "sigeconomy.com" ||
+      u.hostname.endsWith(".sigeconomy.com") ||
+      u.hostname === "signalaf.com" ||
+      u.hostname.endsWith(".signalaf.com") ||
       u.hostname === "localhost" ||
       u.hostname === "127.0.0.1";
   } catch {
