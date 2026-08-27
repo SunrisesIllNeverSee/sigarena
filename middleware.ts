@@ -7,6 +7,8 @@ const WP_RE = /\/wp-(content|admin|includes)\//i;
 const PUBLIC_PATHS = new Set([
   "/",
   "/about",
+  "/ai-operator-metrics",
+  "/ai-operator-standard",
   "/ai-power-users",
   "/ai-user-leaderboard",
   "/ai-user-ranking",
@@ -21,6 +23,7 @@ const PUBLIC_PATHS = new Set([
   "/docs",
   "/how-it-works",
   "/largest-scale",
+  "/model-vs-agent-vs-operator-evals",
   "/most-context-reuse",
   "/most-efficient-overall",
   "/most-normalized",
@@ -29,6 +32,7 @@ const PUBLIC_PATHS = new Set([
   "/openapi.json",
   "/operator-evals",
   "/privacy",
+  "/privacy-preserving-ai-telemetry",
   "/public-operator-evals",
   "/weekly",
 ]);
