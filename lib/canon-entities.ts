@@ -93,6 +93,9 @@ export const dericMcHenry = {
   "@id_type": "Person",
   canonical_entity_id: CANON_ENTITY_IDS.deric_j_mchenry,
   name: "Deric J. McHenry",
+  description:
+    "Author of Commitment Theory, the Conservation Law of Commitment, and " +
+    "the SigRank operator evaluation system. ORCID 0009-0002-9904-5390.",
   sameAs: "https://orcid.org/0009-0002-9904-5390",
   affiliation: CANON_ENTITY_IDS.ello_cello_llc,
   authorityApprovalRef: "APPROVAL-2026-08-14-001 (ID-DERIC-001)",
