@@ -3,10 +3,14 @@
  *
  * MCP structural renovation regression fixtures for SigEconomy (sigarena).
  *
- * These tests capture the CURRENT MCP behavior before the Streamable HTTP
- * migration. They must pass BEFORE and AFTER the migration. If any test
- * fails after migration, that is a regression unless explicitly documented
- * as an intentional protocol-compliance change.
+ * These tests capture the MCP behavior before and after the Streamable HTTP
+ * migration (Phases 7+8). They verify that the tool/resource/prompt catalogs,
+ * server identity, origin validation, and discovery declarations are preserved
+ * across the migration from custom JSON-RPC to the official MCP SDK v2.
+ *
+ * After the migration, tool/resource/prompt definitions live in lib/mcp/
+ * modules rather than the monolithic route.ts. These tests check the new
+ * module files directly.
  *
  * Run:
  *   node --test tests/mcp/regression-fixtures.test.mjs
@@ -28,9 +32,23 @@ import { dirname, join } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const routePath = join(__dirname, "..", "..", "app", "api", "mcp", "route.ts");
+const root = join(__dirname, "..", "..");
+
+const routePath = join(root, "app", "api", "mcp", "route.ts");
+const toolsPath = join(root, "lib", "mcp", "tools", "index.ts");
+const resourcesPath = join(root, "lib", "mcp", "resources", "index.ts");
+const promptsPath = join(root, "lib", "mcp", "prompts", "index.ts");
+const serverPath = join(root, "lib", "mcp", "server.ts");
+const securityPath = join(root, "lib", "mcp", "security.ts");
+const protocolPath = join(root, "lib", "mcp", "protocol.ts");
 
 const routeSource = readFileSync(routePath, "utf-8");
+const toolsSource = readFileSync(toolsPath, "utf-8");
+const resourcesSource = readFileSync(resourcesPath, "utf-8");
+const promptsSource = readFileSync(promptsPath, "utf-8");
+const serverSource = readFileSync(serverPath, "utf-8");
+const securitySource = readFileSync(securityPath, "utf-8");
+const protocolSource = readFileSync(protocolPath, "utf-8");
 
 // ─── Frozen MCP protocol constants ──────────────────────────────────────────
 
@@ -141,6 +159,15 @@ test("MCP supported versions include current and legacy", () => {
   assert.ok(SUPPORTED_VERSIONS.includes("2025-03-26"));
 });
 
+test("protocol.ts declares PROTOCOL_VERSION 2025-06-18", () => {
+  assert.match(protocolSource, /PROTOCOL_VERSION\s*=\s*["']2025-06-18["']/);
+});
+
+test("protocol.ts declares SUPPORTED_VERSIONS with both versions", () => {
+  assert.match(protocolSource, /2025-06-18/);
+  assert.match(protocolSource, /2025-03-26/);
+});
+
 // ─── Server identity tests ──────────────────────────────────────────────────
 
 test("MCP server identity: name is 'sigeconomy'", () => {
@@ -168,6 +195,10 @@ test("All SigEconomy MCP tools are read-only", () => {
   assert.equal(READ_ONLY_ANNOTATIONS.destructiveHint, false);
 });
 
+test("tools/index.ts declares READ_ONLY_ANNOTATIONS with readOnlyHint true", () => {
+  assert.match(toolsSource, /readOnlyHint:\s*true/);
+});
+
 // ─── JSON-RPC error codes ───────────────────────────────────────────────────
 
 test("JSON-RPC error codes match standard", () => {
@@ -187,109 +218,145 @@ test("route.ts exports GET handler", () => {
   assert.match(routeSource, /export\s+async\s+function\s+GET/);
 });
 
+test("route.ts exports DELETE handler", () => {
+  assert.match(routeSource, /export\s+async\s+function\s+DELETE/);
+});
+
 test("route.ts checks allowedOrigin at entry", () => {
   assert.match(routeSource, /allowedOrigin/);
+});
+
+test("route.ts uses createMcpHandler from SDK v2", () => {
+  assert.match(routeSource, /createMcpHandler/);
+});
+
+test("route.ts delegates to mcpHandler.fetch", () => {
+  assert.match(routeSource, /mcpHandler\.fetch/);
+});
+
+test("route.ts imports createSigeconomyServer", () => {
+  assert.match(routeSource, /createSigeconomyServer/);
 });
 
 test("route.ts handles parse errors with -32700", () => {
   assert.match(routeSource, /-32700.*Parse error/);
 });
 
-// Method dispatch
-test("route.ts handles initialize method", () => {
-  assert.match(routeSource, /method\s*===\s*["']initialize["']/);
+test("route.ts handles invalid request with -32600", () => {
+  assert.match(routeSource, /-32600.*Invalid Request/);
 });
 
-test("route.ts handles notifications/initialized", () => {
-  assert.match(routeSource, /notifications\/initialized/);
-});
+// ─── Tool definitions in tools/index.ts ─────────────────────────────────────
 
-test("route.ts handles ping method", () => {
-  assert.match(routeSource, /method\s*===\s*["']ping["']/);
-});
-
-test("route.ts handles tools/list method", () => {
-  assert.match(routeSource, /tools\/list/);
-});
-
-test("route.ts handles tools/call method", () => {
-  assert.match(routeSource, /tools\/call/);
-});
-
-test("route.ts handles resources/list method", () => {
-  assert.match(routeSource, /resources\/list/);
-});
-
-test("route.ts handles resources/read method", () => {
-  assert.match(routeSource, /resources\/read/);
-});
-
-test("route.ts handles prompts/list method", () => {
-  assert.match(routeSource, /prompts\/list/);
-});
-
-test("route.ts handles prompts/get method", () => {
-  assert.match(routeSource, /prompts\/get/);
-});
-
-// Tool definitions in source
 for (const toolName of EXPECTED_TOOLS) {
-  test(`route.ts defines tool: ${toolName}`, () => {
+  test(`tools/index.ts defines tool: ${toolName}`, () => {
     const escaped = toolName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-    assert.match(routeSource, new RegExp(`name:\\s*["']${escaped}["']`));
+    assert.match(toolsSource, new RegExp(`name:\\s*["']${escaped}["']`));
   });
 }
 
-// Resource definitions in source
-for (const uri of EXPECTED_RESOURCES) {
-  test(`route.ts defines resource: ${uri}`, () => {
-    const escaped = uri.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    assert.match(routeSource, new RegExp(escaped));
-  });
-}
-
-// Prompt definitions in source
-for (const promptName of EXPECTED_PROMPTS) {
-  test(`route.ts defines prompt: ${promptName}`, () => {
-    const escaped = promptName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-    assert.match(routeSource, new RegExp(escaped));
-  });
-}
-
-// Server identity in source
-test("route.ts server name is 'sigeconomy'", () => {
-  assert.match(routeSource, /name:\s*["']sigeconomy["']/);
+test("tools/index.ts exports callTool dispatcher", () => {
+  assert.match(toolsSource, /export\s+async\s+function\s+callTool/);
 });
 
-test("route.ts server websiteUrl is sigeconomy.com", () => {
-  assert.match(routeSource, /websiteUrl:\s*["']https:\/\/sigeconomy\.com["']/);
+test("tools/index.ts exports TOOLS array", () => {
+  assert.match(toolsSource, /export\s+const\s+TOOLS/);
 });
 
 // Share URL generation
-test("route.ts has shareable() helper for share URLs", () => {
-  assert.match(routeSource, /function\s+shareable/);
+test("tools/index.ts has shareable() helper for share URLs", () => {
+  assert.match(toolsSource, /function\s+shareable/);
 });
 
-test("route.ts share URLs point to sigeconomy.com/share/mcp", () => {
-  assert.match(routeSource, /sigeconomy\.com\/share\/mcp/);
+test("tools/index.ts share URLs point to sigeconomy.com/share/mcp", () => {
+  assert.match(toolsSource, /sigeconomy\.com\/share\/mcp/);
+});
+
+// ─── Resource definitions in resources/index.ts ─────────────────────────────
+
+for (const uri of EXPECTED_RESOURCES) {
+  test(`resources/index.ts defines resource: ${uri}`, () => {
+    const escaped = uri.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    assert.match(resourcesSource, new RegExp(escaped));
+  });
+}
+
+test("resources/index.ts exports readResource", () => {
+  assert.match(resourcesSource, /export\s+async\s+function\s+readResource/);
+});
+
+test("resources/index.ts exports RESOURCES array", () => {
+  assert.match(resourcesSource, /export\s+const\s+RESOURCES/);
+});
+
+// ─── Prompt definitions in prompts/index.ts ─────────────────────────────────
+
+for (const promptName of EXPECTED_PROMPTS) {
+  test(`prompts/index.ts defines prompt: ${promptName}`, () => {
+    const escaped = promptName.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    assert.match(promptsSource, new RegExp(`name:\\s*["']${escaped}["']`));
+  });
+}
+
+test("prompts/index.ts exports getPrompt", () => {
+  assert.match(promptsSource, /export\s+function\s+getPrompt/);
+});
+
+test("prompts/index.ts exports PROMPTS array", () => {
+  assert.match(promptsSource, /export\s+const\s+PROMPTS/);
+});
+
+// ─── Server identity in server.ts ───────────────────────────────────────────
+
+test("server.ts server name is 'sigeconomy'", () => {
+  assert.match(serverSource, /name:\s*["']sigeconomy["']/);
+});
+
+test("server.ts server version is '1.0.0'", () => {
+  assert.match(serverSource, /version:\s*["']1\.0\.0["']/);
+});
+
+test("server.ts server websiteUrl is sigeconomy.com", () => {
+  assert.match(serverSource, /websiteUrl:\s*["']https:\/\/sigeconomy\.com["']/);
+});
+
+test("server.ts uses McpServer from SDK v2", () => {
+  assert.match(serverSource, /McpServer/);
+});
+
+test("server.ts uses fromJsonSchema for schema conversion", () => {
+  assert.match(serverSource, /fromJsonSchema/);
+});
+
+test("server.ts exports createSigeconomyServer factory", () => {
+  assert.match(serverSource, /export\s+function\s+createSigeconomyServer/);
 });
 
 // SignalAF API dependency
-test("route.ts depends on SignalAF API (not independent canonical state)", () => {
-  assert.match(routeSource, /signalaf\.com\/api/);
+test("server.ts instructions reference signalaf.com/api/mcp", () => {
+  assert.match(serverSource, /signalaf\.com\/api/);
 });
 
-// Origin validation
-test("route.ts allows sigeconomy.com origins", () => {
-  assert.match(routeSource, /sigeconomy\.com/);
+// ─── Origin validation in security.ts ───────────────────────────────────────
+
+test("security.ts allows sigeconomy.com origins", () => {
+  assert.match(securitySource, /sigeconomy\.com/);
 });
 
-test("route.ts allows signalaf.com origins", () => {
-  assert.match(routeSource, /signalaf\.com/);
+test("security.ts allows signalaf.com origins", () => {
+  assert.match(securitySource, /signalaf\.com/);
 });
 
-test("route.ts allows localhost origins", () => {
-  assert.match(routeSource, /localhost/);
+test("security.ts allows localhost origins", () => {
+  assert.match(securitySource, /localhost/);
+});
+
+test("security.ts allows 127.0.0.1 origins", () => {
+  assert.match(securitySource, /127\.0\.0\.1/);
+});
+
+test("security.ts exports allowedOrigin function", () => {
+  assert.match(securitySource, /export\s+function\s+allowedOrigin/);
 });
 
 // ─── Discovery file consistency ─────────────────────────────────────────────
@@ -311,7 +378,7 @@ const discoveryFilesWithTransport = [
 ];
 
 for (const filePath of discoveryFilesWithTransport) {
-  const fullPath = join(__dirname, "..", "..", filePath);
+  const fullPath = join(root, filePath);
   test(`discovery file ${filePath} declares streamable-http transport`, () => {
     const source = readFileSync(fullPath, "utf-8");
     assert.match(source, /streamable-http/);
@@ -319,7 +386,7 @@ for (const filePath of discoveryFilesWithTransport) {
 }
 
 for (const filePath of discoveryFilesWithEndpoint) {
-  const fullPath = join(__dirname, "..", "..", filePath);
+  const fullPath = join(root, filePath);
   test(`discovery file ${filePath} references sigeconomy.com/api/mcp endpoint`, () => {
     const source = readFileSync(fullPath, "utf-8");
     assert.match(source, /sigeconomy\.com\/api\/mcp/);
