@@ -1,35 +1,19 @@
+/**
+ * app/.well-known/mcp/server-cards.json/route.ts
+ *
+ * Redirects to the canonical MCP server card at /.well-known/mcp.
+ * The previous array here advertised a stale identity ("sigrank-sigarena")
+ * and pointed to signalaf.com/api/v1 (a REST API, not an MCP server).
+ * SigEconomy has a single MCP server card at /.well-known/mcp.
+ */
+
 import { NextResponse } from "next/server";
 
 export const revalidate = 3600;
 
 export async function GET() {
-  // server-cards.json returns an array of server cards
-  const cards = [
-    {
-      $schema: "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
-      version: "1.0",
-      protocolVersion: "2025-06-18",
-      serverInfo: {
-        name: "sigrank-sigarena",
-        title: "SigArena — AI User Leaderboard",
-        version: "1.0.0",
-      },
-      description:
-        "The AI User Leaderboard ranks AI operators by Yield (Υ) — token-cascade efficiency, not raw spend. Read-only leaderboard data from SigRank's public API.",
-      transport: {
-        type: "streamable-http",
-        endpoint: "https://signalaf.com/api/v1",
-      },
-      authentication: {
-        required: false,
-      },
-    },
-  ];
-
-  return new NextResponse(JSON.stringify(cards, null, 2), {
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=3600",
-    },
-  });
+  return NextResponse.redirect(
+    new URL("/.well-known/mcp", "https://sigeconomy.com"),
+    308,
+  );
 }

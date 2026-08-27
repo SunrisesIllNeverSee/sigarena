@@ -1,20 +1,28 @@
 import type { LeaderboardEntry, OperatorResponse, AggregateStats } from "@/lib/api";
 import { operatorDisplayName, formatYield } from "@/lib/utils";
+import { elloCelloLLC, sigrank as sigrankCanon, CANON_LD_CONTEXT, CANON_ENTITY_IDS } from "@/lib/canon-entities";
 
 const SITE_URL = "https://sigeconomy.com";
 const ORG_URL = "https://signalaf.com";
+const ORG_ID = `${SITE_URL}/#org`;
+const SITE_ID = `${SITE_URL}/#website`;
 
-/** Organization schema for SigRank SignalAF — used site-wide */
+/** Organization — site-wide, rendered in root layout.
+ *
+ *  Canon-backed values (name, description, provenance, associatedWith) come
+ *  from lib/canon-entities.ts. The #org @id is site-local (preserved).
+ *  Page-specific values (logo, sameAs, url, alternateName) are preserved
+ *  from the existing builder. */
 export function organizationSchema() {
   return {
-    "@context": "https://schema.org",
+    "@context": CANON_LD_CONTEXT,
     "@type": "Organization",
-    name: "SigRank SignalAF",
+    "@id": ORG_ID,
+    name: elloCelloLLC.name,
     alternateName: ["SigRank", "SignalAF", "signalaf", "sigeconomy.com"],
-    url: ORG_URL,
+    url: SITE_URL,
     logo: `${ORG_URL}/logo.png`,
-    description:
-      "SigRank SignalAF is the statistical layer for AI users — performative evals and ranking for users not models. Custom metrics like Yield turn AI usage into stats, like ERA for baseball.",
+    description: elloCelloLLC.description,
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
@@ -27,27 +35,31 @@ export function organizationSchema() {
       addressCountry: "US",
     },
     sameAs: [
-      "https://github.com/SunrisesIllNeverSee",
+      "https://github.com/SunrisesIllneverSee",
       "https://x.com/burnmydays",
     ],
+    sourceSystem: elloCelloLLC.sourceSystem,
+    canonBacked: elloCelloLLC.canonBacked,
+    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
+    associatedWith: { "@id": elloCelloLLC.associatedWith },
   };
 }
 
-/** WebSite schema — used site-wide in root layout */
+/** WebSite schema — used site-wide in root layout.
+ *
+ *  Site-specific values (name, description) remain locally curated.
+ *  The publisher reference points to #org (Ello Cello LLC via canon). */
 export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": SITE_ID,
     name: "SigRank SignalAF — Performative Evals for AI Users",
     alternateName: ["SigRank", "SignalAF", "SigRank SignalAF", "sigeconomy"],
     url: SITE_URL,
     description:
       "Performative evals and ranking for users not models. SigRank SignalAF is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats.",
-    publisher: {
-      "@type": "Organization",
-      name: "SigRank SignalAF",
-      url: ORG_URL,
-    },
+    publisher: { "@id": ORG_ID },
   };
 }
 
@@ -67,7 +79,7 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
     description: `${stats.total_operators.toLocaleString()} operators ranked across ${platformCount} platforms. ${tokenStr} tokens analyzed. Median Yield: ${formatYield(stats.median_yield)}. Performative evals and ranking for users not models.`,
     publisher: {
       "@type": "Organization",
-      name: "SigRank SignalAF",
+      name: elloCelloLLC.name,
       url: ORG_URL,
     },
     about: {
@@ -151,12 +163,12 @@ export function articleSchema(
     dateModified: datePublished,
     author: {
       "@type": "Organization",
-      name: "SigRank SignalAF",
+      name: elloCelloLLC.name,
       url: ORG_URL,
     },
     publisher: {
       "@type": "Organization",
-      name: "SigRank SignalAF",
+      name: elloCelloLLC.name,
       url: ORG_URL,
     },
     mainEntityOfPage: {
