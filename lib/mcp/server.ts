@@ -19,7 +19,6 @@
 
 import {
   McpServer,
-  fromJsonSchema,
   type StandardSchemaWithJSON,
   type CallToolResult,
   type ReadResourceCallback,
@@ -31,15 +30,55 @@ import { PROMPTS, getPrompt } from "@/lib/mcp/prompts";
 import type { NextRequest } from "next/server";
 
 /**
+ * Mutable per-request context.
+ *
+ * Cloudflare Workers blocks `new Function()` during request handling, which
+ * AJV (used by fromJsonSchema) requires for schema compilation. We bypass
+ * AJV with a passthrough StandardSchema (see passthroughSchema below) and
+ * pass the per-request NextRequest through this mutable reference.
+ */
+let currentRequest: NextRequest | undefined;
+
+export function setRequestContext(req: NextRequest | undefined): void {
+  currentRequest = req;
+}
+
+/**
+ * Passthrough StandardSchema that accepts any object without validation.
+ *
+ * Cloudflare Workers blocks `new Function()`, which AJV uses internally
+ * for schema compilation (modelcontextprotocol/typescript-sdk#689). This
+ * passthrough schema satisfies the SDK's StandardSchemaWithJSON type
+ * without triggering AJV. Tool handlers perform their own validation.
+ */
+function makePassthroughSchema(
+  schema: Record<string, unknown>,
+): StandardSchemaWithJSON<Record<string, unknown>, Record<string, unknown>> {
+  return {
+    "~standard": {
+      version: 1,
+      vendor: "sigeconomy",
+      validate: (data: unknown) => ({
+        value: data as Record<string, unknown>,
+      }),
+      types: undefined,
+      jsonSchema: {
+        input: () => schema,
+        output: () => schema,
+      },
+    },
+  } as unknown as StandardSchemaWithJSON<Record<string, unknown>, Record<string, unknown>>;
+}
+
+/**
  * Create a SigEconomy MCP server with all tools, resources, and prompts registered.
  *
  * This factory is called per-request by the Streamable HTTP transport handler.
  * Each request gets a fresh server instance (stateless mode).
  *
- * The optional `req` parameter is passed to callTool for tools that need
- * request context (e.g., for shareable URL generation).
+ * Per-request context (the NextRequest) is provided via `setRequestContext()`.
  */
-export function createSigeconomyServer(req?: NextRequest): McpServer {
+export function createSigeconomyServer(): McpServer {
   const server = new McpServer(
     {
       name: "sigeconomy",
@@ -64,9 +103,9 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
   // fromJsonSchema wraps raw JSON Schema into StandardSchema for the SDK.
   for (const tool of TOOLS) {
     const toolName = tool.name;
-    const inputSchema = fromJsonSchema(
+    const inputSchema = makePassthroughSchema(
       tool.inputSchema as Record<string, unknown>,
-    ) as StandardSchemaWithJSON<Record<string, unknown>, Record<string, unknown>>;
+    );
 
     const toolConfig = {
       title: tool.title,
@@ -85,7 +124,7 @@ export function createSigeconomyServer(req?: NextRequest): McpServer {
       const result = (await callTool(
         toolName,
         toolArgs,
-        req!,
+        currentRequest!,
       )) as CallToolResult;
       return result;
     };

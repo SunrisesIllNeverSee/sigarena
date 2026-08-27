@@ -24,7 +24,7 @@
 import type { NextRequest } from "next/server";
 import { createMcpHandler } from "@modelcontextprotocol/server";
 import { allowedOrigin } from "@/lib/mcp/security";
-import { createSigeconomyServer } from "@/lib/mcp/server";
+import { createSigeconomyServer, setRequestContext } from "@/lib/mcp/server";
 
 // ── SDK handler ─────────────────────────────────────────────────────────────
 // createMcpHandler returns an object with a .fetch(request) method that
@@ -32,7 +32,8 @@ import { createSigeconomyServer } from "@/lib/mcp/server";
 // The factory receives { era, requestInfo } — we use requestInfo to pass
 // the request context to callTool for shareable URL generation.
 const mcpHandler = createMcpHandler(({ requestInfo }) => {
-  return createSigeconomyServer(requestInfo as NextRequest);
+  setRequestContext(requestInfo as NextRequest);
+  return createSigeconomyServer();
 });
 
 // ── POST handler ────────────────────────────────────────────────────────────
