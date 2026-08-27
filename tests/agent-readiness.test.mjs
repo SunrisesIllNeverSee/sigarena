@@ -131,15 +131,18 @@ test("OpenAPI exposes unique function-call operation IDs and RFC 9457 errors", (
 });
 
 test("MCP discovery files agree on the Streamable HTTP transport", () => {
+  const canonical = read("app/.well-known/mcp/route.ts");
+  assert.match(canonical, /type:\s*"streamable-http"/);
+  assert.match(canonical, /sigeconomy\.com\/api\/mcp/);
+  assert.match(canonical, /2026-07-28/);
+
   for (const path of [
-    "app/.well-known/mcp/route.ts",
     "app/.well-known/mcp.json/route.ts",
     "app/.well-known/agent.json/route.ts",
   ]) {
     const source = read(path);
-    assert.match(source, /type:\s*"streamable-http"/);
-    assert.match(source, /(sigeconomy\.com\/api\/mcp|functions\/v1\/sigrank-mcp)/);
-    assert.doesNotMatch(source, /endpoint:\s*"https:\/\/signalaf\.com\/api\/v1"/);
+    assert.match(source, /from\s+"\.\.\/mcp\/route"/);
+    assert.doesNotMatch(source, /sigrank-sigarena|supabase|2025-06-18/);
   }
 });
 

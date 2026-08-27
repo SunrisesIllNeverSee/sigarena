@@ -366,13 +366,15 @@ test("security.ts exports allowedOrigin function", () => {
 // Discovery files that should reference sigeconomy.com/api/mcp endpoint
 const discoveryFilesWithEndpoint = [
   "app/.well-known/mcp/route.ts",
-  "app/.well-known/mcp.json/route.ts",
 ];
 
 // Discovery files that declare streamable-http transport
 // (server-card.json and server-cards.json are now redirects to /.well-known/mcp)
 const discoveryFilesWithTransport = [
   "app/.well-known/mcp/route.ts",
+];
+
+const canonicalDiscoveryAliases = [
   "app/.well-known/mcp.json/route.ts",
   "app/.well-known/agent.json/route.ts",
 ];
@@ -405,5 +407,14 @@ for (const filePath of discoveryFilesWithEndpoint) {
   test(`discovery file ${filePath} references sigeconomy.com/api/mcp endpoint`, () => {
     const source = readFileSync(fullPath, "utf-8");
     assert.match(source, /sigeconomy\.com\/api\/mcp/);
+  });
+}
+
+for (const filePath of canonicalDiscoveryAliases) {
+  const fullPath = join(root, filePath);
+  test(`discovery file ${filePath} re-exports the canonical MCP card`, () => {
+    const source = readFileSync(fullPath, "utf-8");
+    assert.match(source, /from\s+"\.\.\/mcp\/route"/);
+    assert.doesNotMatch(source, /sigrank-sigarena|supabase|2025-06-18/);
   });
 }

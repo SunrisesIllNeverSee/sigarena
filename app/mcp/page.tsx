@@ -174,7 +174,7 @@ export default function MCPPage() {
             https://sigeconomy.com/api/mcp
           </code>
           <p className="mt-2 text-xs text-muted-foreground">
-            Streamable HTTP transport. Protocol 2025-06-18. No auth required.
+            Streamable HTTP transport. Modern protocol 2026-07-28 with legacy compatibility. No auth required.
             Discovery card at{" "}
             <code className="font-mono text-muted-foreground">
               /.well-known/mcp.json
@@ -273,7 +273,7 @@ export default function MCPPage() {
             </p>
             <p>
               <span className="font-semibold text-foreground">Protocol version:</span>{" "}
-              2025-06-18 (also supports 2025-03-26)
+              2026-07-28 (also supports 2025-11-25, 2025-06-18, and 2025-03-26)
             </p>
             <p>
               <span className="font-semibold text-foreground">Auth:</span> None required (read-only)

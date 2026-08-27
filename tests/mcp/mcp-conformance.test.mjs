@@ -255,16 +255,12 @@ test(".well-known/mcp declares streamable-http", () => {
   assert.match(wellKnownMcpSource, /streamable-http/);
 });
 
-test(".well-known/mcp.json declares streamable-http", () => {
-  assert.match(wellKnownMcpJsonSource, /streamable-http/);
+test(".well-known/mcp.json re-exports canonical discovery", () => {
+  assert.match(wellKnownMcpJsonSource, /from\s+"\.\.\/mcp\/route"/);
 });
 
 test(".well-known/mcp references sigeconomy.com/api/mcp", () => {
   assert.match(wellKnownMcpSource, /sigeconomy\.com\/api\/mcp/);
-});
-
-test(".well-known/mcp.json references sigeconomy.com/api/mcp", () => {
-  assert.match(wellKnownMcpJsonSource, /sigeconomy\.com\/api\/mcp/);
 });
 
 test(".well-known/mcp/server-card.json redirects to /.well-known/mcp", () => {
@@ -272,8 +268,9 @@ test(".well-known/mcp/server-card.json redirects to /.well-known/mcp", () => {
   assert.match(wellKnownServerCardSource, /\.well-known\/mcp/);
 });
 
-test(".well-known/agent.json declares streamable-http", () => {
-  assert.match(wellKnownAgentJsonSource, /streamable-http/);
+test(".well-known/agent.json re-exports canonical discovery", () => {
+  assert.match(wellKnownAgentJsonSource, /from\s+"\.\.\/mcp\/route"/);
+  assert.doesNotMatch(wellKnownAgentJsonSource, /sigrank-sigarena|supabase/);
 });
 
 // ─── No canonical operator state in SigEconomy ──────────────────────────────
