@@ -19,7 +19,7 @@ export default function PrivacyTelemetryPage() {
         data={[
           articleSchema(
             "Privacy-Preserving AI Telemetry — Measure Usage Without Reading Prompts",
-            "A category guide to content-independent AI operator telemetry and the SigRank privacy boundary.",
+            "A category guide to content-independent AI operator telemetry and the Upsilon privacy boundary.",
             "/privacy-preserving-ai-telemetry",
           ),
           breadcrumbSchema([
@@ -30,7 +30,7 @@ export default function PrivacyTelemetryPage() {
             {
               question: "Can AI usage be measured without reading employee prompts?",
               answer:
-                "Yes. A telemetry system can measure numeric usage characteristics without collecting prompt text. The SigRank draft core uses input, output, cache-write, and cache-read token counts and does not require semantic payloads to calculate its core metrics.",
+                "Yes. A telemetry system can measure numeric usage characteristics without collecting prompt text. The Upsilon draft core uses input, output, cache-write, and cache-read token counts and does not require semantic payloads to calculate its core metrics.",
             },
             {
               question: "Does privacy-preserving telemetry prove productivity?",
@@ -84,7 +84,7 @@ export default function PrivacyTelemetryPage() {
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
           <Link href="/ai-operator-metrics" className="text-primary hover:underline">AI operator metrics →</Link>
-          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">SigRank Standard →</Link>
+          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Upsilon Standard →</Link>
         </div>
       </section>
     </div>

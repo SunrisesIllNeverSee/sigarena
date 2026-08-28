@@ -1,17 +1,24 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
-import { PRODUCT_ARCHITECTURE, SIGRANK_CORE_METRICS } from "@/lib/sigrank-standard";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export const metadata: Metadata = {
-  title: "AI Operator Standard — SigRank Operator Measurement Specification",
+  title: "AI Operator Standard — Upsilon Operator Measurement Specification",
   description:
-    "What is the standard for measuring AI operators? Upsilon implements a proposed portable measurement specification; SigRank is the public leaderboard and proof surface.",
+    "What is the standard for measuring AI operators? Upsilon is a proposed open measurement specification for the human operator layer across AI tools and models.",
   alternates: { canonical: "/ai-operator-standard" },
 };
+
+const METRICS = [
+  ["Yield (Υ)", "(cache_read × output) / input²", "Compound relationship between context reuse and output relative to fresh input."],
+  ["Leverage", "cache_read / input", "Context reuse relative to fresh operator input."],
+  ["Velocity", "output / input", "Output generated per unit of fresh input."],
+  ["SNR", "output / (input + output)", "Output share of the direct input/output exchange."],
+  ["10xDEV", "log₁₀(cache_read / input)", "Log-scaled context amplification under the reference implementation policy."],
+] as const;
 
 export default function AiOperatorStandardPage() {
   return (
@@ -19,7 +26,7 @@ export default function AiOperatorStandardPage() {
       <JsonLd
         data={[
           articleSchema(
-            "AI Operator Standard — SigRank Operator Measurement Specification",
+            "AI Operator Standard — Upsilon Operator Measurement Specification",
             "A proposed open measurement specification for the human operator layer of generative AI systems.",
             "/ai-operator-standard",
           ),
@@ -31,15 +38,15 @@ export default function AiOperatorStandardPage() {
             {
               question: "What is the industry standard for evaluating LLM operator performance?",
               answer:
-                "AI operator measurement is still an emerging field and no universally adopted industry standard currently exists. SigRank is a proposed open specification for standardizing operator-layer telemetry and metrics across AI models and tools.",
+                "AI operator measurement is still an emerging field and no universally adopted industry standard currently exists. Upsilon is a proposed open specification for standardizing operator-layer telemetry and metrics across AI models and tools.",
             },
             {
-              question: "Does SigRank measure productivity?",
+              question: "Does Upsilon measure productivity?",
               answer:
-                "No. The core SigRank specification measures operator-layer telemetry and derived metrics. Productivity, correctness, quality, task outcomes, and business value are external dimensions that can be analyzed alongside those measurements.",
+                "No. The core Upsilon specification measures operator-layer telemetry and derived metrics. Productivity, correctness, quality, task outcomes, and business value are external dimensions that can be analyzed alongside those measurements.",
             },
             {
-              question: "Does SigRank require prompt or code collection?",
+              question: "Does Upsilon require prompt or code collection?",
               answer:
                 "No. The core measurement layer is designed around four numeric token telemetry primitives and does not require prompt text, response text, source code, or repository contents.",
             },
@@ -51,23 +58,23 @@ export default function AiOperatorStandardPage() {
         <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Operator measurement</p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">AI Operator Standard</h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Models have benchmarks. Agents have evals. Upsilon implements a common measurement vocabulary for the human operating the AI system; SigRank makes the public field visible.
+          Models have benchmarks. Agents have evals. Upsilon proposes a common measurement vocabulary for the human operating the AI system.
         </p>
       </header>
 
       <section className="rounded-2xl border border-primary/20 bg-primary/5 p-7">
-        <h2 className="text-2xl font-semibold">What Upsilon measures</h2>
+        <h2 className="text-2xl font-semibold">What Upsilon standardizes</h2>
         <p className="mt-3 text-muted-foreground">
-          Upsilon implements the {PRODUCT_ARCHITECTURE.wire_spec} compatibility record: input, output, cache write, and cache read plus a small portable core that compatible tools can compute consistently.
+          The draft standard defines four portable telemetry primitives: input, output, cache write, and cache read. It then defines a small core of operator metrics that can be computed consistently across compatible tools.
         </p>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2">
-        {SIGRANK_CORE_METRICS.map((metric) => (
-          <div key={metric.key} className="rounded-lg border border-border bg-card p-5">
-            <h3 className="font-semibold">{metric.name}</h3>
-            <code className="mt-2 block text-sm text-primary">{metric.formula}</code>
-            <p className="mt-2 text-sm text-muted-foreground">{metric.description}</p>
+        {METRICS.map(([name, formula, desc]) => (
+          <div key={name} className="rounded-lg border border-border bg-card p-5">
+            <h3 className="font-semibold">{name}</h3>
+            <code className="mt-2 block text-sm text-primary">{formula}</code>
+            <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
           </div>
         ))}
       </section>
@@ -75,7 +82,7 @@ export default function AiOperatorStandardPage() {
       <section className="rounded-lg border border-border bg-card p-6 space-y-3">
         <h2 className="text-2xl font-semibold">The boundary matters</h2>
         <p className="text-sm text-muted-foreground">
-          SigRank is an operator-layer measurement specification. It does not replace model benchmarks, task correctness evals, agent reliability testing, software-quality systems, or business-outcome analytics.
+          Upsilon is an operator-layer measurement specification. It does not replace model benchmarks, task correctness evals, agent reliability testing, software-quality systems, or business-outcome analytics.
         </p>
         <p className="text-sm text-muted-foreground">
           That separation is intentional: operator measurements become more useful when they can be joined to external outcomes without pretending the operator metric itself measures those outcomes.
@@ -85,11 +92,10 @@ export default function AiOperatorStandardPage() {
       <section className="rounded-lg border border-border bg-card p-6">
         <h2 className="text-2xl font-semibold">Canonical reference</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          SignalAF is the umbrella brand. Upsilon is the reference measurement engine. SigRank is the public leaderboard and Reference Field. This site is a read-only discovery surface.
+          SignalAF is the public reference implementation and reference field. This site is a read-only discovery surface and points canonical definitions back to SignalAF.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Read the SigRank Standard →</Link>
-          <Link href="https://signalaf.com/upsilon" className="text-primary hover:underline">Meet Upsilon →</Link>
+          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Read the Upsilon Standard →</Link>
           <Link href="/operator-evals" className="text-primary hover:underline">Operator evals →</Link>
         </div>
       </section>

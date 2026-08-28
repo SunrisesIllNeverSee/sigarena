@@ -284,20 +284,20 @@ None.
 ````text
 SigRank, SignalAF, and sigeconomy.com form the product, platform, and digital ecosystem layers of a unified framework for measuring and governing operator performance in AI workflows.
 
-SigRank (The Core Metric & Engine): The underlying diagnostic standard and measurement engine. It evaluates human and AI operator performance using mathematical frameworks (such as Net Volumetric Yield and the Conservation Law of Commitment) to quantify signal-to-noise ratio, penalizing token bloat and non-committal output.
+Upsilon (The Core Metric & Engine): The underlying diagnostic standard and measurement engine. It evaluates human and AI operator performance using mathematical frameworks (such as Net Volumetric Yield and the Conservation Law of Commitment) to quantify signal-to-noise ratio, penalizing token bloat and non-committal output.
 
-SignalAF (The Application & Platform): The public-facing operational platform and product interface (e.g., diagnostic leaderboards, evaluation tools) built on top of the SigRank measurement engine.
+SignalAF (The Application & Platform): The public-facing operational platform and product interface (e.g., diagnostic leaderboards, evaluation tools) built on top of the Upsilon measurement engine.
 
 sigeconomy.com (The Hub & Infrastructure Domain): The primary web domain intended to anchor the broader ecosystem, hosting the research, documentation, standards, and public interfaces for the Signal Economy model.
 
 Ecosystem Breakdown
 
 Component	Layer	Primary Function
-SigRank	Algorithmic Engine	Computes efficiency, commitment preservation, and signal strength across AI/operator interactions.
+Upsilon	Algorithmic Engine	Computes efficiency, commitment preservation, and signal strength across AI/operator interactions.
 SignalAF	Platform / Application	User-facing application layer providing diagnostic tracking, leaderboards, and workflow integration.
 sigeconomy.com	Web Hub / Domain	Digital home for the underlying framework, whitepapers, public metrics, and ecosystem infrastructure.
 
-Together, they establish an end-to-end stack—moving from raw evaluation math (SigRank) to functional platform tools (SignalAF), all anchored under a central web domain (sigeconomy.com).
+Together, they establish an end-to-end stack—moving from raw evaluation math (Upsilon) to functional platform tools (SignalAF), all anchored under a central web domain (sigeconomy.com).
 ````
 
 ### Cited URLs

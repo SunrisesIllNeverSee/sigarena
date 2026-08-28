@@ -8,7 +8,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "Model Evals vs Agent Evals vs Operator Evals",
   description:
-    "Model, task, agent, and operator evaluations measure different layers. See what each answers, what SigRank measures, and why the layers are complementary.",
+    "Model, task, agent, and operator evaluations measure different layers. See what each answers, what Upsilon measures, and why the layers are complementary.",
   alternates: { canonical: "/model-vs-agent-vs-operator-evals" },
 };
 
@@ -92,10 +92,10 @@ export default function EvalLayersPage() {
       </section>
 
       <section className="rounded-xl border border-primary/20 bg-primary/5 p-6">
-        <h2 className="text-2xl font-semibold">Where SigRank sits</h2>
-        <pre className="mt-4 overflow-x-auto rounded-lg bg-background/40 p-4 text-sm">{`BUSINESS OUTCOMES\n        ↑\nORGANIZATIONAL AI PERFORMANCE\n        ↑\nOPERATOR PERFORMANCE      ← SIGRANK\n        ↑\nAGENT PERFORMANCE\n        ↑\nTASK PERFORMANCE\n        ↑\nMODEL PERFORMANCE`}</pre>
+        <h2 className="text-2xl font-semibold">Where Upsilon sits</h2>
+        <pre className="mt-4 overflow-x-auto rounded-lg bg-background/40 p-4 text-sm">{`BUSINESS OUTCOMES\n        ↑\nORGANIZATIONAL AI PERFORMANCE\n        ↑\nOPERATOR PERFORMANCE      ← UPSILON\n        ↑\nAGENT PERFORMANCE\n        ↑\nTASK PERFORMANCE\n        ↑\nMODEL PERFORMANCE`}</pre>
         <p className="mt-4 text-sm text-muted-foreground">
-          SigRank's draft standard is deliberately narrow: it defines a portable measurement vocabulary for the operator layer. It can be joined to the other layers without pretending to replace them.
+          Upsilon's draft standard is deliberately narrow: it defines a portable measurement vocabulary for the operator layer. It can be joined to the other layers without pretending to replace them.
         </p>
       </section>
 
@@ -107,7 +107,7 @@ export default function EvalLayersPage() {
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
           <Link href="/ai-operator-metrics" className="text-primary hover:underline">AI operator metrics →</Link>
           <Link href="/ai-operator-standard" className="text-primary hover:underline">AI operator standard →</Link>
-          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Canonical SigRank Standard →</Link>
+          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Canonical Upsilon Standard →</Link>
         </div>
       </section>
     </div>

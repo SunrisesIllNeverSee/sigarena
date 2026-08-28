@@ -1,10 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
-import {
-  SIGRANK_CORE_METRICS,
-  SIGRANK_CORE_TELEMETRY,
-} from "@/lib/sigrank-standard";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -12,9 +8,17 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Operator Metrics — Measuring the Human Operating AI",
   description:
-    "How do you measure AI token efficiency privately? Learn Upsilon's four numeric primitives, five portable metrics, privacy boundary, and SigRank proof surface.",
+    "AI operator metrics measure how humans operate generative AI systems. Learn the Upsilon primitives, core metrics, privacy boundary, and what operator metrics do not measure.",
   alternates: { canonical: "/ai-operator-metrics" },
 };
+
+const CORE = [
+  ["Yield (Υ)", "(cache_read × output) / input²", "Context reuse and output compounded relative to fresh input."],
+  ["Leverage", "cache_read / input", "Reusable context amplification relative to fresh input."],
+  ["Velocity", "output / input", "Output generated per unit of fresh input."],
+  ["SNR", "output / (input + output)", "Output share of the direct input/output exchange."],
+  ["10xDEV", "log₁₀(cache_read / input)", "Logarithmic view of context amplification under the reference null policy."],
+] as const;
 
 export default function AiOperatorMetricsPage() {
   return (
@@ -23,7 +27,7 @@ export default function AiOperatorMetricsPage() {
         data={[
           articleSchema(
             "AI Operator Metrics — Measuring the Human Operating AI",
-            "A category guide to operator-layer telemetry and the SigRank measurement framework.",
+            "A category guide to operator-layer telemetry and the Upsilon measurement framework.",
             "/ai-operator-metrics",
           ),
           breadcrumbSchema([
@@ -34,7 +38,7 @@ export default function AiOperatorMetricsPage() {
             {
               question: "What are AI operator metrics?",
               answer:
-                "AI operator metrics describe how a human operates an AI system, distinct from model capability or task correctness. Upsilon uses token telemetry to calculate Yield, Leverage, Velocity, SNR, and 10xDEV.",
+                "AI operator metrics are measurements of how a human operates an AI system, distinct from measurements of model capability or task correctness. Upsilon's draft core uses token telemetry to define Yield, Leverage, Velocity, SNR, and 10xDEV.",
             },
             {
               question: "What data does Upsilon need?",
@@ -61,23 +65,21 @@ export default function AiOperatorMetricsPage() {
       <section className="rounded-xl border border-border bg-card p-6">
         <h2 className="text-2xl font-semibold">Four portable telemetry primitives</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {SIGRANK_CORE_TELEMETRY.map((primitive) => (
-            <div key={primitive.key}>
-              <strong>{primitive.name} ({primitive.symbol})</strong>
-              <p className="text-sm text-muted-foreground">{primitive.description}</p>
-            </div>
-          ))}
+          <div><strong>Input (I)</strong><p className="text-sm text-muted-foreground">Fresh input tokens.</p></div>
+          <div><strong>Output (O)</strong><p className="text-sm text-muted-foreground">Output tokens.</p></div>
+          <div><strong>Cache Write (W)</strong><p className="text-sm text-muted-foreground">Tokens written to context cache.</p></div>
+          <div><strong>Cache Read (R)</strong><p className="text-sm text-muted-foreground">Tokens reused from context cache.</p></div>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">SigRank v0.1 draft core</h2>
+        <h2 className="text-2xl font-semibold">Upsilon v0.1 draft core</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {SIGRANK_CORE_METRICS.map((metric) => (
-            <div key={metric.key} className="rounded-lg border border-border bg-card p-5">
-              <h3 className="font-semibold">{metric.name}</h3>
-              <code className="mt-2 block text-sm text-primary">{metric.formula}</code>
-              <p className="mt-2 text-sm text-muted-foreground">{metric.description}</p>
+          {CORE.map(([name, formula, description]) => (
+            <div key={name} className="rounded-lg border border-border bg-card p-5">
+              <h3 className="font-semibold">{name}</h3>
+              <code className="mt-2 block text-sm text-primary">{formula}</code>
+              <p className="mt-2 text-sm text-muted-foreground">{description}</p>
             </div>
           ))}
         </div>
@@ -93,11 +95,10 @@ export default function AiOperatorMetricsPage() {
       <section className="rounded-xl border border-primary/20 bg-primary/5 p-6">
         <h2 className="text-2xl font-semibold">Canonical definitions</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          This page is a discovery surface. Upsilon is the SignalAF measurement engine; SigRank is the public leaderboard and proof surface. The compatibility record remains versioned as sigrank/0.1-draft.
+          This page is a discovery surface. SignalAF maintains the canonical Upsilon Standard draft and public reference implementation.
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
-          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">SigRank Standard →</Link>
-          <Link href="https://signalaf.com/upsilon" className="text-primary hover:underline">Upsilon →</Link>
+          <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Upsilon Standard →</Link>
           <Link href="/ai-operator-standard" className="text-primary hover:underline">AI operator standard →</Link>
           <Link href="/operator-evals" className="text-primary hover:underline">Operator evals →</Link>
         </div>

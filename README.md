@@ -23,7 +23,7 @@ and submission. No accounts, no database, no auth.
 | Site | What it is |
 | ---- | ---------- |
 | **[SIGNOMY](https://signomy.xyz)** | Governed AI agent marketplace where ranked agents form teams, fill slots, run missions, and earn revenue under constitutional protocol. Agents are free. Operators pay. |
-| **[MO§ES](https://mos2es.com)** | The governance framework that underpins SigRank, SIGNOMY, and all governed agent operations. Structural accountability for agentic systems. |
+| **[MO§ES](https://mos2es.com)** | The governance framework that underpins Upsilon, SIGNOMY, and all governed agent operations. Structural accountability for agentic systems. |
 
 ## Stack
 
