@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
-import { SIGRANK_CORE_METRICS } from "@/lib/sigrank-standard";
+import { PRODUCT_ARCHITECTURE, SIGRANK_CORE_METRICS } from "@/lib/sigrank-standard";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -9,7 +9,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Operator Standard — SigRank Operator Measurement Specification",
   description:
-    "What is the standard for measuring AI operators? SigRank is a proposed open measurement specification for the human operator layer across AI tools and models.",
+    "What is the standard for measuring AI operators? Upsilon implements a proposed portable measurement specification; SigRank is the public leaderboard and proof surface.",
   alternates: { canonical: "/ai-operator-standard" },
 };
 
@@ -51,14 +51,14 @@ export default function AiOperatorStandardPage() {
         <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Operator measurement</p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">AI Operator Standard</h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Models have benchmarks. Agents have evals. SigRank proposes a common measurement vocabulary for the human operating the AI system.
+          Models have benchmarks. Agents have evals. Upsilon implements a common measurement vocabulary for the human operating the AI system; SigRank makes the public field visible.
         </p>
       </header>
 
       <section className="rounded-2xl border border-primary/20 bg-primary/5 p-7">
-        <h2 className="text-2xl font-semibold">What SigRank standardizes</h2>
+        <h2 className="text-2xl font-semibold">What Upsilon measures</h2>
         <p className="mt-3 text-muted-foreground">
-          The draft standard defines four portable telemetry primitives: input, output, cache write, and cache read. It then defines a small core of operator metrics that can be computed consistently across compatible tools.
+          Upsilon implements the {PRODUCT_ARCHITECTURE.wire_spec} compatibility record: input, output, cache write, and cache read plus a small portable core that compatible tools can compute consistently.
         </p>
       </section>
 
@@ -85,10 +85,11 @@ export default function AiOperatorStandardPage() {
       <section className="rounded-lg border border-border bg-card p-6">
         <h2 className="text-2xl font-semibold">Canonical reference</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          SignalAF is the public reference implementation and reference field. This site is a read-only discovery surface and points canonical definitions back to SignalAF.
+          SignalAF is the umbrella brand. Upsilon is the reference measurement engine. SigRank is the public leaderboard and Reference Field. This site is a read-only discovery surface.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link href="https://signalaf.com/standard" className="text-primary hover:underline">Read the SigRank Standard →</Link>
+          <Link href="https://signalaf.com/upsilon" className="text-primary hover:underline">Meet Upsilon →</Link>
           <Link href="/operator-evals" className="text-primary hover:underline">Operator evals →</Link>
         </div>
       </section>

@@ -12,7 +12,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Operator Metrics — Measuring the Human Operating AI",
   description:
-    "AI operator metrics measure how humans operate generative AI systems. Learn the SigRank primitives, core metrics, privacy boundary, and what operator metrics do not measure.",
+    "How do you measure AI token efficiency privately? Learn Upsilon's four numeric primitives, five portable metrics, privacy boundary, and SigRank proof surface.",
   alternates: { canonical: "/ai-operator-metrics" },
 };
 
@@ -34,10 +34,10 @@ export default function AiOperatorMetricsPage() {
             {
               question: "What are AI operator metrics?",
               answer:
-                "AI operator metrics are measurements of how a human operates an AI system, distinct from measurements of model capability or task correctness. SigRank's draft core uses token telemetry to define Yield, Leverage, Velocity, SNR, and 10xDEV.",
+                "AI operator metrics describe how a human operates an AI system, distinct from model capability or task correctness. Upsilon uses token telemetry to calculate Yield, Leverage, Velocity, SNR, and 10xDEV.",
             },
             {
-              question: "What data does SigRank need?",
+              question: "What data does Upsilon need?",
               answer:
                 "The core measurement layer uses four token telemetry primitives: input, output, cache write, and cache read. It does not require prompt text, response text, source code, or repository contents.",
             },
@@ -93,10 +93,11 @@ export default function AiOperatorMetricsPage() {
       <section className="rounded-xl border border-primary/20 bg-primary/5 p-6">
         <h2 className="text-2xl font-semibold">Canonical definitions</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          This page is a discovery surface. SignalAF maintains the canonical SigRank Standard draft and public reference implementation.
+          This page is a discovery surface. Upsilon is the SignalAF measurement engine; SigRank is the public leaderboard and proof surface. The compatibility record remains versioned as sigrank/0.1-draft.
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
           <Link href="https://signalaf.com/standard" className="text-primary hover:underline">SigRank Standard →</Link>
+          <Link href="https://signalaf.com/upsilon" className="text-primary hover:underline">Upsilon →</Link>
           <Link href="/ai-operator-standard" className="text-primary hover:underline">AI operator standard →</Link>
           <Link href="/operator-evals" className="text-primary hover:underline">Operator evals →</Link>
         </div>

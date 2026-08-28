@@ -1,6 +1,14 @@
 export const SIGRANK_STANDARD_VERSION = "sigrank/0.1-draft" as const;
 export const SIGRANK_STANDARD_URL = "https://signalaf.com/standard" as const;
 
+export const PRODUCT_ARCHITECTURE = {
+  brand: "SignalAF",
+  governance: "MO§ES™",
+  product: "Upsilon",
+  leaderboard: "SigRank",
+  wire_spec: SIGRANK_STANDARD_VERSION,
+} as const;
+
 export const SIGRANK_CORE_TELEMETRY = [
   { key: "input", name: "Input", symbol: "I", description: "Fresh input tokens." },
   { key: "output", name: "Output", symbol: "O", description: "Output tokens." },

@@ -11,6 +11,7 @@
 import { getFullLeaderboard } from "@/lib/api";
 import {
   SIGRANK_CORE_METRICS,
+  PRODUCT_ARCHITECTURE,
   SIGRANK_REFERENCE_EXTENSIONS,
   SIGRANK_STANDARD_VERSION,
 } from "@/lib/sigrank-standard";
@@ -62,14 +63,16 @@ export async function readResource(
       contents: [{
         uri,
         mimeType: "text/plain",
-        text: `SigRank Methodology
+        text: `Upsilon Measurement Methodology
 
-SigRank measures AI operator token-cascade relationships from privacy-preserving
-numeric telemetry. It evaluates operators, not models, and does not establish
+Upsilon is ${PRODUCT_ARCHITECTURE.brand}'s measurement engine. It measures AI
+operator token-cascade relationships from privacy-preserving numeric telemetry.
+${PRODUCT_ARCHITECTURE.leaderboard} is the public leaderboard and proof surface.
+Upsilon evaluates operators, not models, and does not establish
 correctness, work quality, employee productivity, or business value.
 
 ${SIGRANK_STANDARD_VERSION} portable core
-Required for base SigRank compatibility:
+Required for compatibility with the existing wire record:
 ${CORE_METRIC_LINES}
 
 Optional SignalAF reference extensions
@@ -88,10 +91,10 @@ Build Archetypes reference extension and do not affect base compatibility.`,
       contents: [{
         uri,
         mimeType: "text/plain",
-        text: `SigRank Metric Definitions
+        text: `Upsilon Metric Definitions
 
 ${SIGRANK_STANDARD_VERSION} portable core
-Required for base SigRank compatibility:
+Required for compatibility with the existing wire record:
 ${CORE_METRIC_LINES}
 
 Missing cache telemetry remains null. It must not be fabricated as observed zero.
@@ -115,7 +118,7 @@ reference extension.`,
         mimeType: "application/json",
         text: JSON.stringify({
           platforms: ["claude", "cursor", "cline", "windsurf", "codex", "gemini", "chatgpt", "other"],
-          description: "SigRank tracks AI operators across these platforms. Platform is determined by the session log source.",
+          description: "Upsilon measures operators across these platforms; SigRank presents the public proof surface. Platform is determined by the session log source.",
         }, null, 2),
       }],
     };

@@ -16,7 +16,7 @@ export async function GET() {
       version: "1.0.0",
     },
     description:
-      "SigEconomy is the discovery and interpretation layer for SigRank. It reads from SignalAF's public leaderboard and exposes 8 tools: get_best_operator, compare_operators, describe_power_user, discover_peers, optimize_efficiency, operator_gap, field_anomaly, explain_this_operator. Also exposes 4 resources: leaderboard, methodology, metrics, platforms. Use SigEconomy when you need to discover, compare, or explain operators. For raw cascade math, use signalaf.com/api/mcp instead.",
+      "SigEconomy is the discovery layer for SigRank, the public leaderboard and proof surface. Upsilon is the SignalAF measurement engine that produces the underlying operator measurements. This server exposes 8 discovery tools and 4 resources. For raw Upsilon measurement records, use signalaf.com/api/mcp.",
     iconUrl: "https://sigeconomy.com/og.png",
     documentationUrl: "https://sigeconomy.com/developers",
     websiteUrl: "https://sigeconomy.com",
@@ -59,16 +59,16 @@ export async function GET() {
       },
       {
         name: "methodology",
-        title: "Methodology",
+        title: "Upsilon Measurement Methodology",
         uri: "sigeconomy://methodology",
-        description: "How SigRank measures AI operators — the cascade metric system",
+        description: "How Upsilon measures AI operator token-processing patterns used by SigRank",
         mimeType: "text/plain",
       },
       {
         name: "metrics",
         title: "Metric Definitions",
         uri: "sigeconomy://metrics",
-        description: "Definitions of Yield, Leverage, Velocity, SNR, 10xDEV, and class tiers",
+        description: "Definitions of Upsilon's portable core and the separate SigRank leaderboard layers",
         mimeType: "text/plain",
       },
       {

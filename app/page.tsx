@@ -20,7 +20,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank SignalAF",
   description:
-    "Performative evals and ranking for users not models. SigRank is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats, like ERA for baseball. Benchmark your AI performance on the public leaderboard.",
+    "SigRank is the public proof surface for AI operators, powered by Upsilon's privacy-preserving measurement engine. Public rankings by Yield—not raw token volume.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Performative Evals & Leaderboard for AI Users | SigRank SignalAF",

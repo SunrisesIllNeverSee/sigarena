@@ -61,3 +61,14 @@ test("LLM surfaces do not call all leaderboard dimensions canonical metrics", ()
   assert.match(compact, /5 portable-core metrics/i);
   assert.match(full, /five portable-core metrics/i);
 });
+
+test("Upsilon measures while SigRank remains the public proof surface", () => {
+  const shared = read("lib/sigrank-standard.ts");
+  assert.match(shared, /product:\s*"Upsilon"/);
+  assert.match(shared, /leaderboard:\s*"SigRank"/);
+  assert.match(shared, /wire_spec:\s*SIGRANK_STANDARD_VERSION/);
+
+  const compact = read("app/llms.txt/route.ts");
+  assert.match(compact, /Upsilon is the SignalAF measurement engine/);
+  assert.match(compact, /SigRank is the public leaderboard and proof surface/);
+});
