@@ -32,6 +32,10 @@ const FOOTER_COLUMNS: {
     heading: "Operator evals",
     links: [
       { href: "/operator-evals", label: "What are operator evals?" },
+      { href: "/ai-operator-standard", label: "AI operator standard" },
+      { href: "/ai-operator-metrics", label: "AI operator metrics" },
+      { href: "/model-vs-agent-vs-operator-evals", label: "Eval layers explained" },
+      { href: "/privacy-preserving-ai-telemetry", label: "Privacy-preserving telemetry" },
       { href: "/public-operator-evals", label: "Public evals thesis" },
       { href: "/articles/why-operator-evals-matter", label: "Why evals matter" },
       { href: "/articles/operator-evals-vs-model-evals", label: "Operator vs model evals" },

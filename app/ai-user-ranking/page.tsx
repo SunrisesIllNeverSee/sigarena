@@ -42,12 +42,12 @@ export default function AIUserRankingPage() {
           {
             question: "What metrics does the operator evals leaderboard use?",
             answer:
-              "SigRank uses 9 canonical metrics: Yield (overall efficiency), Velocity (output per token), Leverage (cache reuse), SNR (signal quality), 10xDEV (normalized leverage), Efficiency (blended score), Scale V (volume), $/1M (cost efficiency), and Op Ratio (cascade shape). Yield is the headline metric.",
+              "SigRank's portable core uses five metrics: Yield, Velocity, Leverage, SNR, and 10xDEV. The leaderboard adds four product-level views: Efficiency, Scale V, $/1M, and Op Ratio. Yield is the headline metric.",
           },
           {
             question: "What are the class tiers for AI users?",
             answer:
-              "Operators are classified into tiers from NOVICE to SINGULARITY based on their Yield score. The tiers provide a quick way to compare operators across different volume levels. A higher tier means more efficient token-cascade architecture.",
+              "Operator classes qualify operating scale and participation; they are not an efficiency score or a substitute for rank. Yield and the other metrics are evaluated separately.",
           },
           {
             question: "Does the ranking work across different AI tools?",
@@ -57,7 +57,7 @@ export default function AIUserRankingPage() {
           {
             question: "How do I get my AI user ranking?",
             answer:
-              "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, your class tier, and your scores across all 9 metrics. Token counts only \u2014 never prompt content, never code.",
+              "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, rank, class, five portable core metrics, and product-level views. Token counts only \u2014 never prompt content, never code.",
           },
         ]),
       ]} />

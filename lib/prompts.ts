@@ -1,7 +1,7 @@
 /**
- * Prompt registry — the 9 canonical token-metric prompts for sigeconomy.com.
+ * Prompt registry — the nine leaderboard-dimension prompts for sigeconomy.com.
  *
- * Each prompt is a canonical token metric (per CANON_QUICKREF §1) phrased as an
+ * Each prompt is a leaderboard dimension phrased as an
  * SEO/AEO/GEO question. 4 of 8 metrics have a different #1 (verified against the
  * live signalaf.com API, 1640 operators, 2026-07-18):
  *   - yield, leverage, dev10x, efficiency → Richard Fu (claude)

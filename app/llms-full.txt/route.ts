@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SIGRANK_STANDARD_VERSION } from "@/lib/sigrank-standard";
 
 export const revalidate = 3600;
 
@@ -11,7 +12,7 @@ export async function GET() {
 
 SigRank SignalAF (sigeconomy.com) is the public evaluation platform for AI operators.
 It reads from SigRank's public API (signalaf.com) and evaluates operators on
-canonical token-telemetry metrics — the "yield cascade." Unlike model
+operator telemetry and leaderboard dimensions — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
 evaluating the HUMANS using AI, not the models themselves. Powered by SigRank SignalAF.
 
@@ -37,7 +38,11 @@ Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not 
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output
 has lower Yield than the operator who uses 100K tokens to produce the same 1K output.
 
-### All 9 canonical metrics
+### Five portable-core metrics and four product/leaderboard dimensions
+
+The first five rows are the ${SIGRANK_STANDARD_VERSION} portable core. Efficiency,
+Scale V, cost, and Op Ratio are useful product views but are not required for
+base SigRank compatibility.
 
 | Metric | Formula | Question | #1 Operator |
 |--------|---------|----------|-------------|
@@ -51,13 +56,20 @@ has lower Yield than the operator who uses 100K tokens to produce the same 1K ou
 | $/1M | blended cost per million tokens | Who gets the cheapest tokens? | takuma.saito (claude) $0.35/M |
 | Op Ratio | cache:input:output | Who has the best operating ratio? | Richard Fu (claude) |
 
-4 of 8 metrics have a different #1 — metric rotation is a real variety axis.
+4 of 9 leaderboard dimensions have a different #1 — metric rotation is a real variety axis.
 
 ## Operator evals
 
 - [Operator Evals](https://sigeconomy.com/operator-evals): the public evaluation layer for AI operators — model evals vs operator evals
 - [Public Operator Evals Thesis](https://sigeconomy.com/public-operator-evals): why public operator evals matter — the case for public AI operator evaluation
 - [SigRank vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
+
+## SigRank Standard and operator measurement
+
+- [AI Operator Standard](https://sigeconomy.com/ai-operator-standard): proposed portable specification for the human operator layer
+- [AI Operator Metrics](https://sigeconomy.com/ai-operator-metrics): I/O/W/R plus the five-metric SigRank v0.1 draft core
+- [Model vs Agent vs Operator Evals](https://sigeconomy.com/model-vs-agent-vs-operator-evals): the evaluation layers and what each measures
+- [Privacy-Preserving AI Telemetry](https://sigeconomy.com/privacy-preserving-ai-telemetry): content-independent measurement and its limits
 
 ## Articles
 
