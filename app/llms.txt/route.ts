@@ -18,7 +18,7 @@ export async function GET() {
 - Median Yield (Υ): ${formatYield(stats.median_yield)}
 - Average Yield (Υ): ${formatYield(stats.average_yield)}
 - Max Yield (Υ): ${formatYield(stats.max_yield)}
-- 9 canonical metrics
+- 5 portable-core metrics plus 4 product/leaderboard dimensions
 
 `
     : "";
@@ -29,7 +29,7 @@ export async function GET() {
 
 SigRank SignalAF (sigeconomy.com) is the public evaluation platform for AI operators.
 It reads from SigRank's public API (signalaf.com) and evaluates operators on
-canonical token-telemetry metrics — the "yield cascade." Unlike model
+operator telemetry and leaderboard dimensions — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
 evaluating the HUMANS using AI, not the models themselves. Powered by SigRank SignalAF.
 
@@ -67,6 +67,12 @@ Do not treat a SigRank score alone as proof of code quality, business productivi
 - [Why Operator Evals Matter](https://sigeconomy.com/articles/why-operator-evals-matter): the case for public AI operator evaluation
 - [Operator Evals vs Model Evals](https://sigeconomy.com/articles/operator-evals-vs-model-evals): different subjects, different metrics, different questions
 - [SigRank vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
+
+## SigRank Standard and operator measurement
+- [AI Operator Standard](https://sigeconomy.com/ai-operator-standard): proposed portable specification for the human operator layer
+- [AI Operator Metrics](https://sigeconomy.com/ai-operator-metrics): I/O/W/R plus the five-metric SigRank v0.1 draft core
+- [Model vs Agent vs Operator Evals](https://sigeconomy.com/model-vs-agent-vs-operator-evals): the evaluation layers and what each measures
+- [Privacy-Preserving AI Telemetry](https://sigeconomy.com/privacy-preserving-ai-telemetry): content-independent measurement and its limits
 
 ## Core pages
 - [Leaderboard](https://sigeconomy.com/): live operator evals — who's #1 right now

@@ -9,6 +9,19 @@
  */
 
 import { getFullLeaderboard } from "@/lib/api";
+import {
+  SIGRANK_CORE_METRICS,
+  SIGRANK_REFERENCE_EXTENSIONS,
+  SIGRANK_STANDARD_VERSION,
+} from "@/lib/sigrank-standard";
+
+const CORE_METRIC_LINES = SIGRANK_CORE_METRICS
+  .map((metric) => `  ${metric.name} = ${metric.formula}`)
+  .join("\n");
+
+const REFERENCE_EXTENSION_LINES = SIGRANK_REFERENCE_EXTENSIONS
+  .map((extension) => `  ${extension.name} — ${extension.description}`)
+  .join("\n");
 
 export const RESOURCES = [
   {
@@ -20,7 +33,7 @@ export const RESOURCES = [
   {
     uri: "sigeconomy://methodology",
     name: "Methodology",
-    description: "How SigRank measures AI operators — the cascade metric system",
+    description: "How SigEconomy interprets the SigRank portable core and optional SignalAF reference extensions",
     mimeType: "text/plain",
   },
   {
@@ -32,7 +45,7 @@ export const RESOURCES = [
   {
     uri: "sigeconomy://metrics",
     name: "Metric Definitions",
-    description: "Definitions of Yield, Leverage, Velocity, SNR, 10xDEV, and class tiers",
+    description: "Definitions of the five-metric portable core and its boundary from leaderboard/reference extensions",
     mimeType: "text/plain",
   },
 ];
@@ -51,38 +64,21 @@ export async function readResource(
         mimeType: "text/plain",
         text: `SigRank Methodology
 
-SigRank measures AI operator efficiency from privacy-preserving token telemetry.
-No prompts, no code, no content — only token counts.
+SigRank measures AI operator token-cascade relationships from privacy-preserving
+numeric telemetry. It evaluates operators, not models, and does not establish
+correctness, work quality, employee productivity, or business value.
 
-Core metric: Yield (Υ)
-  Υ = (cache_read / input) × (output / input) = (cache_read × output) / input²
+${SIGRANK_STANDARD_VERSION} portable core
+Required for base SigRank compatibility:
+${CORE_METRIC_LINES}
 
-Yield captures how efficiently an operator converts input tokens into output
-through context reuse. Higher Yield = more efficient operator.
+Optional SignalAF reference extensions
+Not required for base SigRank compatibility:
+${REFERENCE_EXTENSION_LINES}
 
-Supporting metrics:
-  Leverage = cache_read / input (how much context is reused)
-  Velocity = output / input (how much output per input)
-  SNR = output / (input + output) (signal-to-noise ratio)
-  10xDEV = log10(cache_read / input) (log-scale leverage)
-  Scale V = log10(total_tokens) (total volume scale)
-
-Class taxonomy (24 stages, RS05):
-  IGNITER III → IGNITER II → IGNITER I
-  BEARER III → BEARER II → BEARER I
-  REFINER III → REFINER II → REFINER I
-  SEEKER III → SEEKER II → SEEKER I
-  BASE III → BASE II → BASE I
-  POWER III → POWER II → POWER I
-  ARCH III → ARCH II → ARCH I
-  ARCH+ III → ARCH+ II → ARCH+ I
-
-Class is determined by total token volume. Rank is determined by Yield
-position within the field. Archetype is determined by operating shape
-(leverage/velocity/SNR ratios).
-
-SigRank evaluates AI operators, not models. The harness measures authority
-but cannot manufacture authority.`,
+Archetype = operating shape. Class = scale or qualification. Rank = field
+position. SigEconomy's local explanatory signature labels are not the 10-type
+Build Archetypes reference extension and do not affect base compatibility.`,
       }],
     };
   }
@@ -94,39 +90,20 @@ but cannot manufacture authority.`,
         mimeType: "text/plain",
         text: `SigRank Metric Definitions
 
-Yield (Υ): (cache_read × output) / input²
-  The canonical efficiency metric. Captures how well an operator reuses
-  context (leverage) and converts it to output (velocity).
+${SIGRANK_STANDARD_VERSION} portable core
+Required for base SigRank compatibility:
+${CORE_METRIC_LINES}
 
-Leverage: cache_read / input
-  How many cache-read tokens per input token. High leverage = heavy
-  context reuse. Low leverage = fresh input dominates.
+Missing cache telemetry remains null. It must not be fabricated as observed zero.
 
-Velocity: output / input
-  How many output tokens per input token. High velocity = productive
-  generation. Low velocity = input-heavy consumption.
+Optional SignalAF reference extensions
+Not required for base SigRank compatibility:
+${REFERENCE_EXTENSION_LINES}
 
-SNR (Signal-to-Noise Ratio): output / (input + output)
-  What fraction of total flow is output. High SNR = mostly generating.
-  Low SNR = mostly consuming.
-
-10xDEV: log10(cache_read / input)
-  Log-scale leverage. Compresses the wide range of leverage values
-  into a 0-5 scale. Requires all four pillars > 0.
-
-Scale V: log10(total_tokens)
-  Total volume on a log scale. Used for class tier assignment.
-
-Class Tier: 24-stage taxonomy from IGNITER III to ARCH+ I
-  Determined by total token volume thresholds (RS05).
-
-Archetype: Operating shape
-  CONTEXTUAL: high leverage, low velocity (context reuser)
-  GENERATOR: low leverage, high velocity (fast generator)
-  BALANCED_ELITE: high leverage AND high velocity
-  READER: very low velocity (input-heavy)
-  COMMITTER: high cache creation
-  STANDARD: moderate all-around`,
+SigEconomy also presents product-specific leaderboard views such as Efficiency,
+cost per million tokens, and Op Ratio. Those views are not portable-core metrics.
+Its local five-label explanatory shapes are not the 10-type Build Archetypes
+reference extension.`,
       }],
     };
   }

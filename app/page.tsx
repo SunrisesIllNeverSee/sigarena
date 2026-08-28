@@ -141,9 +141,10 @@ export default async function HomePage() {
           telemetry and submits signed, privacy-preserving snapshots. No prompt
           content, code, or conversation text ever leaves the machine — only four
           token counts. The leaderboard ranks operators across all-time, 7-day,
-          30-day, and 90-day windows, with 9 canonical metrics including Yield,
+          30-day, and 90-day windows, with nine leaderboard dimensions. Five form
+          the portable SigRank core: Yield,
           Velocity, Leverage, SNR, 10xDEV, Efficiency, Scale V, cost per million
-          tokens, and Op Ratio. Operator classes range from IGNITER through ARCH+
+          tokens, and Op Ratio remain product-level views. Operator classes range from IGNITER through ARCH+
           based on total tokens accumulated. The public REST API, OpenAPI
           specification, MCP server, and CLI tool are documented at{" "}
           <Link href="/developers" className="text-primary font-medium hover:underline">
@@ -189,11 +190,13 @@ export default async function HomePage() {
           </a>.
         </p>
         <h3 className="text-lg font-semibold text-foreground pt-2">
-          The nine canonical metrics
+          The portable core and product views
         </h3>
         <p className="text-sm leading-6 text-muted-foreground">
-          SigRank defines nine canonical token-cascade metrics, each answering a
-          different question about AI operator performance. Yield (Υ) is the
+          SigRank&apos;s portable core defines five token-cascade metrics: Yield,
+          Velocity, Leverage, SNR, and 10xDEV. The leaderboard also presents four
+          product-level views, so each dimension answers a different question
+          about AI operator performance. Yield (Υ) is the
           flagship: it measures token-cascade efficiency as cache_read multiplied
           by output divided by input squared. Velocity measures output per unit of
           fresh input — who gets the most done with the least new context.
@@ -249,7 +252,7 @@ export default async function HomePage() {
           highlights the biggest movers, new challengers, and class distribution
           changes from the past seven days. Operators can appear on multiple
           metric leaderboards simultaneously, and the prompt-of-the-day feature
-          rotates through the nine canonical metrics to surface different
+          rotates through the nine leaderboard dimensions to surface different
           dimensions of operator performance. The compare page allows
           head-to-head comparison of any two operators across all metrics, with
           visual indicators showing which operator leads on each dimension.
