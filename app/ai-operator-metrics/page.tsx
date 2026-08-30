@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
+import { SIGRANK_CORE_METRICS, SIGRANK_CORE_TELEMETRY } from "@/lib/sigrank-standard";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -11,14 +12,6 @@ export const metadata: Metadata = {
     "AI operator metrics measure how humans operate generative AI systems. Learn the Upsilon primitives, core metrics, privacy boundary, and what operator metrics do not measure.",
   alternates: { canonical: "/ai-operator-metrics" },
 };
-
-const CORE = [
-  ["Yield (Υ)", "(cache_read × output) / input²", "Context reuse and output compounded relative to fresh input."],
-  ["Leverage", "cache_read / input", "Reusable context amplification relative to fresh input."],
-  ["Velocity", "output / input", "Output generated per unit of fresh input."],
-  ["SNR", "output / (input + output)", "Output share of the direct input/output exchange."],
-  ["10xDEV", "log₁₀(cache_read / input)", "Logarithmic view of context amplification under the reference null policy."],
-] as const;
 
 export default function AiOperatorMetricsPage() {
   return (
@@ -75,11 +68,11 @@ export default function AiOperatorMetricsPage() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Upsilon v0.1 draft core</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {CORE.map(([name, formula, description]) => (
-            <div key={name} className="rounded-lg border border-border bg-card p-5">
-              <h3 className="font-semibold">{name}</h3>
-              <code className="mt-2 block text-sm text-primary">{formula}</code>
-              <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+          {SIGRANK_CORE_METRICS.map((m) => (
+            <div key={m.key} className="rounded-lg border border-border bg-card p-5">
+              <h3 className="font-semibold">{m.name}</h3>
+              <code className="mt-2 block text-sm text-primary">{m.formula}</code>
+              <p className="mt-2 text-sm text-muted-foreground">{m.description}</p>
             </div>
           ))}
         </div>
