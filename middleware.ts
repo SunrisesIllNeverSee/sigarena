@@ -35,6 +35,20 @@ const PUBLIC_PATHS = new Set([
   "/privacy-preserving-ai-telemetry",
   "/public-operator-evals",
   "/weekly",
+  // AI evaluation topic pages — from content brief (2026-09-15)
+  "/ai-evaluation",
+  "/ai-evaluation-tools",
+  "/best-ai-evaluation-tools-for-production",
+  "/ai-evaluation-frameworks",
+  "/ai-agent-evaluation",
+  "/ai-evaluator",
+  "/ai-evaluation-platform",
+  "/evaluating-ai",
+  "/ai-evaluation-news",
+  "/ai-compliance-standards",
+  "/ai-model-evaluation",
+  "/confirmation-hacking-ai-evaluation",
+  "/ai-model-safety-evaluation-benchmark-continuous-testing",
 ]);
 
 const ARTICLE_PATHS = new Set([
