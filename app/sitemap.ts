@@ -59,6 +59,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vs/claudecount`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/ccgather`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/vs/clauderank`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    // AI evaluation topic pages — from content brief (2026-09-15)
+    { url: `${base}/ai-evaluation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/ai-evaluation-tools`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/best-ai-evaluation-tools-for-production`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/ai-evaluation-frameworks`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/ai-agent-evaluation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/ai-evaluator`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/ai-evaluation-platform`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/evaluating-ai`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/ai-evaluation-news`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/ai-compliance-standards`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/ai-model-evaluation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/confirmation-hacking-ai-evaluation`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/ai-model-safety-evaluation-benchmark-continuous-testing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
 
   const promptRoutes: MetadataRoute.Sitemap = getActivePrompts()

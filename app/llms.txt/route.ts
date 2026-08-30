@@ -75,6 +75,21 @@ Do not treat a SigRank score alone as proof of code quality, business productivi
 - [Model vs Agent vs Operator Evals](https://sigeconomy.com/model-vs-agent-vs-operator-evals): the evaluation layers and what each measures
 - [Privacy-Preserving AI Telemetry](https://sigeconomy.com/privacy-preserving-ai-telemetry): content-independent measurement and its limits
 
+## AI evaluation topic pages
+- [AI Evaluation](https://sigeconomy.com/ai-evaluation): what AI evaluation means — the four layers and where operator evals fit
+- [AI Evaluation Tools](https://sigeconomy.com/ai-evaluation-tools): the complete tools landscape across all four layers
+- [Best AI Evaluation Tools for Production](https://sigeconomy.com/best-ai-evaluation-tools-for-production): the production evaluation stack
+- [AI Evaluation Frameworks](https://sigeconomy.com/ai-evaluation-frameworks): NIST AI RMF, OpenAI Evals, DeepEval, Braintrust, and SigRank
+- [AI Agent Evaluation](https://sigeconomy.com/ai-agent-evaluation): evaluating AI agents and the humans who direct them
+- [AI Evaluator](https://sigeconomy.com/ai-evaluator): what an AI evaluator is and what SigRank does differently
+- [AI Evaluation Platform](https://sigeconomy.com/ai-evaluation-platform): SigRank as a public evaluation platform for operators
+- [Evaluating AI](https://sigeconomy.com/evaluating-ai): the operator layer is the missing piece
+- [AI Evaluation News](https://sigeconomy.com/ai-evaluation-news): trends and developments in AI evaluation for 2026
+- [AI Compliance Standards](https://sigeconomy.com/ai-compliance-standards): NIST AI RMF, EU AI Act, and governed operator evaluation
+- [AI Model Evaluation](https://sigeconomy.com/ai-model-evaluation): model evaluation vs operator evaluation
+- [Confirmation Hacking](https://sigeconomy.com/confirmation-hacking-ai-evaluation): when evaluation confirms what you already believe — and how content-free telemetry avoids it
+- [AI Model Safety Evaluation](https://sigeconomy.com/ai-model-safety-evaluation-benchmark-continuous-testing): safety benchmarks and continuous testing, extended to operators
+
 ## Core pages
 - [Leaderboard](https://sigeconomy.com/): live operator evals — who's #1 right now
 - [Weekly drop](https://sigeconomy.com/weekly): this week's rankings drop — biggest movers, new challengers, class distribution
