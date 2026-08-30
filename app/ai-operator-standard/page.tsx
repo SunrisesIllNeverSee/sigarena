@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd, articleSchema, breadcrumbSchema, faqSchema } from "@/lib/jsonld";
+import { SIGRANK_CORE_METRICS, SIGRANK_CORE_TELEMETRY } from "@/lib/sigrank-standard";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -11,14 +12,6 @@ export const metadata: Metadata = {
     "What is the standard for measuring AI operators? Upsilon is a proposed open measurement specification for the human operator layer across AI tools and models.",
   alternates: { canonical: "/ai-operator-standard" },
 };
-
-const METRICS = [
-  ["Yield (Υ)", "(cache_read × output) / input²", "Compound relationship between context reuse and output relative to fresh input."],
-  ["Leverage", "cache_read / input", "Context reuse relative to fresh operator input."],
-  ["Velocity", "output / input", "Output generated per unit of fresh input."],
-  ["SNR", "output / (input + output)", "Output share of the direct input/output exchange."],
-  ["10xDEV", "log₁₀(cache_read / input)", "Log-scaled context amplification under the reference implementation policy."],
-] as const;
 
 export default function AiOperatorStandardPage() {
   return (
@@ -70,11 +63,11 @@ export default function AiOperatorStandardPage() {
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2">
-        {METRICS.map(([name, formula, desc]) => (
-          <div key={name} className="rounded-lg border border-border bg-card p-5">
-            <h3 className="font-semibold">{name}</h3>
-            <code className="mt-2 block text-sm text-primary">{formula}</code>
-            <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+        {SIGRANK_CORE_METRICS.map((m) => (
+          <div key={m.key} className="rounded-lg border border-border bg-card p-5">
+            <h3 className="font-semibold">{m.name}</h3>
+            <code className="mt-2 block text-sm text-primary">{m.formula}</code>
+            <p className="mt-2 text-sm text-muted-foreground">{m.description}</p>
           </div>
         ))}
       </section>
