@@ -12,6 +12,7 @@ const PUBLIC_PATHS = new Set([
   "/ai-power-users",
   "/ai-user-leaderboard",
   "/ai-user-ranking",
+  "/all-time",
   "/agent-instructions.txt",
   "/best-ai-user",
   "/best-op-ratio",
