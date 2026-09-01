@@ -82,7 +82,6 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
   return {
     "@context": CANON_LD_CONTEXT,
     "@type": "WebSite",
-    "@id": SITE_ID,
     name: "SigRank SignalAF — Performative Evals for AI Users",
     alternateName: ["SigRank", "SignalAF", "SigRank SignalAF"],
     url: SITE_URL,
