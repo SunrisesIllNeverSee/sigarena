@@ -48,10 +48,12 @@ export function organizationSchema() {
 /** WebSite schema — used site-wide in root layout.
  *
  *  Site-specific values (name, description) remain locally curated.
- *  The publisher reference points to #org (Ello Cello LLC via canon). */
+ *  The publisher reference points to #org (Ello Cello LLC via canon).
+ *  Canon provenance fields mark this as a Search Authority-backed
+ *  canonical entity. */
 export function websiteSchema() {
   return {
-    "@context": "https://schema.org",
+    "@context": CANON_LD_CONTEXT,
     "@type": "WebSite",
     "@id": SITE_ID,
     name: "SigRank SignalAF — Performative Evals for AI Users",
@@ -60,6 +62,13 @@ export function websiteSchema() {
     description:
       "Performative evals and ranking for users not models. SigRank SignalAF is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats.",
     publisher: { "@id": ORG_ID },
+    sourceSystem: elloCelloLLC.sourceSystem,
+    canonBacked: elloCelloLLC.canonBacked,
+    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
+    associatedWith: [
+      { "@id": ORG_ID },
+      { "@id": elloCelloLLC.associatedWith },
+    ],
   };
 }
 
@@ -71,8 +80,9 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
     ? `${(stats.total_tokens / 1e9).toFixed(1)}B`
     : `${(stats.total_tokens / 1e6).toFixed(1)}M`;
   return {
-    "@context": "https://schema.org",
+    "@context": CANON_LD_CONTEXT,
     "@type": "WebSite",
+    "@id": SITE_ID,
     name: "SigRank SignalAF — Performative Evals for AI Users",
     alternateName: ["SigRank", "SignalAF", "SigRank SignalAF"],
     url: SITE_URL,
@@ -94,6 +104,13 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
       variableMeasured: ["Yield (Υ)", "Velocity", "Leverage", "SNR", "10xDEV", "Scale V", "Efficiency", "$/1M", "Op Ratio"],
       measurementTechnique: "Token telemetry from real AI coding sessions",
     },
+    sourceSystem: elloCelloLLC.sourceSystem,
+    canonBacked: elloCelloLLC.canonBacked,
+    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
+    associatedWith: [
+      { "@id": ORG_ID },
+      { "@id": elloCelloLLC.associatedWith },
+    ],
   };
 }
 
