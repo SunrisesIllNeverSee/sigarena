@@ -1,6 +1,6 @@
-import { getLeaderboard } from "@/lib/api";
+import { getLeaderboard, getFullLeaderboard, sortLeaderboard } from "@/lib/api";
 import { buildWeeklyDrop } from "@/lib/campaign";
-import { formatYield, operatorDisplayName } from "@/lib/utils";
+import { formatYield, operatorDisplayName, formatNumber } from "@/lib/utils";
 import {
   Crown,
   TrendingUp,
@@ -8,6 +8,12 @@ import {
   Share2,
   Users,
   Calendar,
+  Zap,
+  Layers,
+  Gauge,
+  Activity,
+  Scale,
+  DollarSign,
 } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -164,11 +170,11 @@ export default async function WeeklyPage() {
         <div className="text-xs text-muted-foreground">Climbed</div>
       </div>
       <div className="rounded-lg border border-border bg-card p-4 text-center">
-        <TrendingDown className="mx-auto h-5 w-5 text-red-500" />
-        <div className="mt-2 text-2xl font-bold tabular-nums text-red-500">
+        <TrendingDown className="mx-auto h-5 w-5 text-muted-foreground" />
+        <div className="mt-2 text-2xl font-bold tabular-nums">
           {drop.biggestLosers.length}
         </div>
-        <div className="text-xs text-muted-foreground">Dropped</div>
+        <div className="text-xs text-muted-foreground">Field movement</div>
       </div>
       <div className="rounded-lg border border-border bg-card p-4 text-center">
         <Crown className="mx-auto h-5 w-5 text-amber-600" />
@@ -281,6 +287,17 @@ export default async function WeeklyPage() {
       </div>
     )}
 
+    {/* Hall Top-Ten Boards — compact per-metric leaderboards from the hall.
+        Fetches the full board once (already fetched for the weekly drop),
+        then sorts locally for each metric. Shows top 5 per metric in a
+        compact grid (the hall shows top 10 — this is the weekly summary). */}
+    <HallTopTenBoards data={data} />
+
+    {/* Spotlight Comparison — head-to-head between the #1 on different metrics.
+        Picks the Yield leader vs the Velocity leader vs the Leverage leader
+        and shows their stats side by side. */}
+    <SpotlightComparison data={data} />
+
     {/* CTA */}
     <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
       <p className="text-xl font-bold">Think you can beat them?</p>
@@ -294,6 +311,190 @@ export default async function WeeklyPage() {
         Check my rank
       </a>
     </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// HallTopTenBoards — compact per-metric top-5 leaderboards from the hall.
+// Fetches the full board once (already in `data`), sorts locally for each
+// metric. The hall on signalaf.com/hall shows top 10 per metric; this is the
+// weekly summary showing top 5 across 6 key metrics.
+// ============================================================================
+const HALL_METRICS = [
+  { id: "yield" as const, label: "Yield (Υ)", icon: Crown, format: (v: number) => formatYield(v), field: "yield_" as const },
+  { id: "velocity" as const, label: "Velocity", icon: Zap, format: (v: number) => `${v.toFixed(1)}×`, field: "velocity" as const },
+  { id: "leverage" as const, label: "Leverage", icon: Layers, format: (v: number) => `${formatNumber(v)}×`, field: "leverage" as const },
+  { id: "snr" as const, label: "SNR", icon: Activity, format: (v: number) => v.toFixed(3), field: "snr" as const },
+  { id: "efficiency" as const, label: "Efficiency", icon: Gauge, format: (v: number) => `${(v * 100).toFixed(1)}%`, field: "efficiency" as const },
+  { id: "scale_v" as const, label: "Scale V", icon: Scale, format: (v: number) => formatNumber(v), field: "scale_v" as const },
+];
+
+function HallTopTenBoards({ data }: { data: NonNullable<Awaited<ReturnType<typeof getLeaderboard>>> }) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="flex items-center gap-2 text-xl font-bold">
+          <Crown className="h-5 w-5 text-amber-600" />
+          Hall Top Boards
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          The top 5 operators on each canonical metric, fresh from the hall.{" "}
+          <Link href="https://signalaf.com/hall" className="text-primary hover:underline">
+            View full hall →
+          </Link>
+        </p>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {HALL_METRICS.map((metric) => {
+          const sorted = [...data.entries]
+            .filter((e) => typeof e[metric.field] === "number" && e[metric.field] > 0)
+            .sort((a, b) => (b[metric.field] as number) - (a[metric.field] as number))
+            .slice(0, 5);
+          if (sorted.length === 0) return null;
+          const Icon = metric.icon;
+          return (
+            <div key={metric.id} className="rounded-lg border border-border bg-card p-4">
+              <h3 className="flex items-center gap-2 text-sm font-semibold">
+                <Icon className="h-4 w-4 text-muted-foreground" />
+                {metric.label}
+              </h3>
+              <div className="mt-3 space-y-1.5">
+                {sorted.map((entry, i) => (
+                  <Link
+                    key={entry.codename}
+                    href={`https://signalaf.com/user/${entry.codename}`}
+                    className="flex items-center justify-between rounded px-2 py-1.5 text-sm transition-colors hover:bg-muted/50"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="w-5 text-xs font-bold text-muted-foreground tabular-nums">
+                        {i + 1}
+                      </span>
+                      <span className="truncate font-medium">
+                        {operatorDisplayName(entry.display_name, entry.codename)}
+                      </span>
+                    </div>
+                    <span className="ml-2 shrink-0 font-bold tabular-nums">
+                      {metric.format(entry[metric.field] as number)}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// SpotlightComparison — head-to-head between the #1 on different metrics.
+// Picks the Yield leader, Velocity leader, and Leverage leader and shows
+// their stats side by side so the reader can see how different "best" looks
+// across metrics.
+// ============================================================================
+function SpotlightComparison({ data }: { data: NonNullable<Awaited<ReturnType<typeof getLeaderboard>>> }) {
+  const entries = data.entries;
+  if (entries.length < 2) return null;
+
+  const yieldLeader = [...entries].sort((a, b) => b.yield_ - a.yield_)[0];
+  const velocityLeader = [...entries].sort((a, b) => b.velocity - a.velocity)[0];
+  const leverageLeader = [...entries].sort((a, b) => b.leverage - a.leverage)[0];
+
+  // Deduplicate — if the same operator leads multiple metrics, pick the next
+  const contenders = [yieldLeader];
+  if (velocityLeader.codename !== yieldLeader.codename) contenders.push(velocityLeader);
+  if (leverageLeader.codename !== yieldLeader.codename && leverageLeader.codename !== velocityLeader.codename) {
+    contenders.push(leverageLeader);
+  }
+  if (contenders.length < 2) return null;
+
+  const stats = [
+    { label: "Yield (Υ)", getValue: (e: typeof entries[0]) => formatYield(e.yield_) },
+    { label: "Velocity", getValue: (e: typeof entries[0]) => `${e.velocity.toFixed(1)}×` },
+    { label: "Leverage", getValue: (e: typeof entries[0]) => `${formatNumber(e.leverage)}×` },
+    { label: "SNR", getValue: (e: typeof entries[0]) => e.snr.toFixed(3) },
+    { label: "Output", getValue: (e: typeof entries[0]) => formatNumber(e.output_tokens) },
+    { label: "Cache Read", getValue: (e: typeof entries[0]) => formatNumber(e.cache_read_tokens) },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="flex items-center gap-2 text-xl font-bold">
+          <Activity className="h-5 w-5 text-primary" />
+          Spotlight Comparison
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          The #1 operator on different metrics, head to head. Different metrics reward different AI usage patterns.
+        </p>
+      </div>
+      <div className="rounded-lg border border-border bg-card p-6 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="py-2 pr-4 text-left font-semibold text-muted-foreground">Metric</th>
+              {contenders.map((c, i) => (
+                <th key={c.codename} className="py-2 px-4 text-left font-semibold">
+                  <Link
+                    href={`https://signalaf.com/user/${c.codename}`}
+                    className="hover:underline"
+                  >
+                    {operatorDisplayName(c.display_name, c.codename)}
+                  </Link>
+                  <div className="text-xs font-normal text-muted-foreground">
+                    {i === 0 && "Yield leader"}
+                    {i === 1 && c.codename === velocityLeader.codename && "Velocity leader"}
+                    {i === 1 && c.codename === leverageLeader.codename && "Leverage leader"}
+                    {i === 2 && "Leverage leader"}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {stats.map((stat) => (
+              <tr key={stat.label} className="border-b border-border/50 last:border-0">
+                <td className="py-2 pr-4 text-muted-foreground">{stat.label}</td>
+                {contenders.map((c) => {
+                  const values = contenders.map((e) => stat.getValue(e));
+                  const max = Math.max(...values.map((v) => parseFloat(v.replace(/[^0-9.-]/g, "")) || 0));
+                  const currentVal = parseFloat(stat.getValue(c).replace(/[^0-9.-]/g, "")) || 0;
+                  const isBest = currentVal === max && currentVal > 0;
+                  return (
+                    <td key={c.codename} className={`py-2 px-4 font-bold tabular-nums ${isBest ? "text-primary" : ""}`}>
+                      {stat.getValue(c)}
+                      {isBest && <span className="ml-1 text-xs text-primary">★</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+            <tr className="border-t border-border">
+              <td className="py-2 pr-4 text-muted-foreground">Class</td>
+              {contenders.map((c) => (
+                <td key={c.codename} className="py-2 px-4 text-sm">{c.class_tier}</td>
+              ))}
+            </tr>
+            <tr>
+              <td className="py-2 pr-4 text-muted-foreground">Platform</td>
+              {contenders.map((c) => (
+                <td key={c.codename} className="py-2 px-4 text-sm">{c.platform}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="text-center">
+        <Link
+          href="/compare"
+          className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+        >
+          <Scale className="h-4 w-4" />
+          Compare any two operators →
+        </Link>
+      </div>
     </div>
   );
 }
