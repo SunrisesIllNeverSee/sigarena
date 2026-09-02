@@ -55,7 +55,7 @@ export default async function WeeklyPage() {
 
   return (
     <div className="space-y-6">
-    <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
+    <p className="text-xs text-muted-foreground">Last updated: {new Date(data.generated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
     <JsonLd data={[
       leaderboardSchema(data.entries, "Weekly Rankings Drop", "https://sigeconomy.com/weekly"),
       articleSchema(
@@ -71,7 +71,7 @@ export default async function WeeklyPage() {
         {
           question: "What is the weekly operator evals drop?",
           answer:
-            "The weekly drop summarizes the biggest movers, new challengers, and class distribution on the public operator evals leaderboard. It tracks which AI users are climbing, which are falling, and how the field is evolving week over week.",
+            "The weekly drop summarizes the biggest movers, new challengers, and class distribution on the public operator evals leaderboard. It tracks which AI users are climbing, which are shifting rank, and how the field is evolving week over week.",
         },
         {
           question: "How often do the AI user rankings update?",
@@ -172,7 +172,7 @@ export default async function WeeklyPage() {
       <div className="rounded-lg border border-border bg-card p-4 text-center">
         <TrendingDown className="mx-auto h-5 w-5 text-muted-foreground" />
         <div className="mt-2 text-2xl font-bold tabular-nums">
-          {drop.biggestLosers.length}
+          {drop.fieldMovement.length}
         </div>
         <div className="text-xs text-muted-foreground">Field movement</div>
       </div>

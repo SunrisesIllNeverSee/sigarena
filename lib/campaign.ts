@@ -89,7 +89,7 @@ export interface WeeklyDrop {
   totalOperators: number;
   topOperator: LeaderboardEntry | null;
   biggestMovers: LeaderboardEntry[];
-  biggestLosers: LeaderboardEntry[];
+  fieldMovement: LeaderboardEntry[];
   newChallengers: LeaderboardEntry[];
   classDistribution: Record<string, number>;
   platformDistribution: Record<string, number>;
@@ -109,7 +109,7 @@ export function buildWeeklyDrop(data: LeaderboardResponse): WeeklyDrop {
 
   const sorted = [...entries].sort((a, b) => b.movement_24h - a.movement_24h);
   const biggestMovers = sorted.filter((e) => e.movement_24h > 0).slice(0, 3);
-  const biggestLosers = sorted
+  const fieldMovement = sorted
     .filter((e) => e.movement_24h < 0)
     .slice(-3)
     .reverse();
@@ -139,7 +139,7 @@ export function buildWeeklyDrop(data: LeaderboardResponse): WeeklyDrop {
     totalOperators: data.total_operators,
     topOperator: topOp,
     biggestMovers,
-    biggestLosers,
+    fieldMovement,
     newChallengers,
     classDistribution,
     platformDistribution,
