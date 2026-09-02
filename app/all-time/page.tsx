@@ -93,8 +93,8 @@ export default async function AllTimePage({
       answer: "Yield = (cache_read × output) / input². It measures how efficiently an operator converts input tokens into useful output, rewarding context reuse and output generation while penalizing wasteful input consumption. Higher Yield means better AI usage efficiency.",
     },
     {
-      question: "What is the difference between Human and All categories?",
-      answer: "The Human category applies the Human Center of Mass filter, which excludes statistical outliers (bots, input-dump scripts, and operators with extreme input-to-total ratios). The All category includes every operator, including outliers and automated systems.",
+      question: "What is the difference between Operators and Extreme Outliers?",
+      answer: "The Operators category applies the Human Center of Mass filter, which excludes statistical outliers (bots, input-dump scripts, and operators with extreme input-to-total ratios). The Extreme Outliers category includes every operator, including outliers and automated systems.",
     },
     {
       question: "How often is this leaderboard updated?",
@@ -147,7 +147,7 @@ export default async function AllTimePage({
             <Users className="h-4 w-4 text-blue-600" aria-hidden="true" />
             <span className="text-blue-900">
               {totalOperators}{" "}
-              {category === "human" ? "human operators" : "operators (incl. outliers)"}
+              {category === "human" ? "operators" : "operators + extreme outliers"}
             </span>
           </div>
           <div className="text-muted-foreground">
@@ -157,26 +157,26 @@ export default async function AllTimePage({
       </section>
 
       {/* Category toggle */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <Link
           href="/all-time"
-          className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+          className={`rounded-xl px-5 py-2.5 text-sm font-bold tracking-wide transition-all ${
             category === "human"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/25 scale-105"
+              : "bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-102"
           }`}
         >
-          Human
+          Operators
         </Link>
         <Link
           href="/all-time?cat=all"
-          className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+          className={`rounded-xl px-5 py-2.5 text-sm font-bold tracking-wide transition-all ${
             category === "all"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              ? "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-lg shadow-rose-500/25 scale-105"
+              : "bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-102"
           }`}
         >
-          All (incl. outliers)
+          Extreme Outliers
         </Link>
       </div>
 
