@@ -71,7 +71,7 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-8">
-      <p className="text-xs text-muted-foreground">Last updated: August 14, 2026</p>
+      <p className="text-xs text-muted-foreground">Last updated: {new Date(data.generated_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
       <JsonLd data={[
         leaderboardSchema(data.entries.slice(0, 50), "AI User Leaderboard", "https://sigeconomy.com"),
         articleSchema(
