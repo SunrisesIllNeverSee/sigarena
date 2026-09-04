@@ -60,6 +60,11 @@ export function RankCard({ entry, deltaFromAverage }: RankCardProps) {
               ✓
             </span>
           )}
+          {entry.is_placeholder && (
+            <span className="shrink-0 rounded-md bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-700" title="Seeded/illustrative entry — not a live claimed operator">
+              seeded
+            </span>
+          )}
         </div>
         <div className="mt-1 flex items-center gap-2">
           <span
