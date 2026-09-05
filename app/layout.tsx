@@ -74,6 +74,15 @@ export default function RootLayout({
           <SiteFooter />
           <WebMcpRegistrar />
         </PostHogProvider>
+        {/* Cloudflare Web Analytics (RUM) — beacon for Core Web Vitals.
+            Auto-injection doesn't work with Workers/OpenNext, so we add it manually. */}
+        <Script
+          id="cf-web-analytics"
+          strategy="afterInteractive"
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "faac33bf5c854b168c17991b6dd3489c"}'
+        />
         {/* Google Analytics 4 (gtag.js) — measurement ID G-JGNZVT3M8E */}
         <Script
           id="ga4-gtag-src"
