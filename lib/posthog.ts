@@ -21,7 +21,7 @@ export function initPostHog() {
     capture_pageview: false, // SPA pageviews sent manually in PostHogProvider
     capture_pageleave: true,
     persistence: "localStorage+cookie",
-    capture_performance: false,
+    capture_performance: true,
   });
 }
 
