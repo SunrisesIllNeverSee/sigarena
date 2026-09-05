@@ -55,6 +55,8 @@ const PUBLIC_PATHS = new Set([
 const ARTICLE_PATHS = new Set([
   "/articles/operator-evals-vs-model-evals",
   "/articles/why-operator-evals-matter",
+  "/articles/why-search-results-for-ai-user-leaderboard-still-show-ai-models",
+  "/articles/what-should-an-ai-user-leaderboard-measure",
 ]);
 
 const COMPARISON_PATHS = new Set([
