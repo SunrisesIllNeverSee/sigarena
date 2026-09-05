@@ -6,7 +6,7 @@ export const revalidate = 3600;
 export async function GET() {
   const body = `# Public LLM Operator Evals — SigRank SignalAF — Full Content
 
-> Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ), not raw token count.
+> Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the account-level subjects operating AI. Ranked by Yield (Υ), not raw token count.
 
 ## What is this?
 
@@ -14,14 +14,14 @@ SigRank SignalAF (sigeconomy.com) is the public evaluation platform for AI opera
 It reads from SigRank's public API (signalaf.com) and evaluates operators on
 operator telemetry and leaderboard dimensions — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
-evaluating the HUMANS using AI, not the models themselves. Powered by SigRank SignalAF.
+evaluating the account-level subjects operating AI, not the models themselves. Powered by SigRank SignalAF.
 
 ## Model evals vs operator evals
 
 | Dimension | Model Evals | Operator Evals |
 |-----------|------------|----------------|
-| Subject | The AI model (GPT, Claude, Gemini) | The human operator |
-| Question | Which model is best? | Who is the best AI operator? |
+| Subject | The AI model (GPT, Claude, Gemini) | The operator (account-level subject) |
+| Question | Which model is best? | Who ranks highest at operating AI under the stated metric and time window? |
 | Method | Standardized benchmark suites | Token telemetry from real sessions |
 | Metric | Accuracy, pass rate, Elo | Yield (Υ) = (cache_read × output) / input² |
 | Data source | Test prompts run against models | Operator's own session telemetry |
@@ -64,9 +64,9 @@ base SigRank compatibility.
 - [Public Operator Evals Thesis](https://sigeconomy.com/public-operator-evals): why public operator evals matter — the case for public AI operator evaluation
 - [SigRank vs Vals AI](https://sigeconomy.com/vs/vals-ai): operator evals vs model evals — different subjects, different metrics
 
-## SigRank Standard and operator measurement
+## TTEOP and operator measurement
 
-- [AI Operator Standard](https://sigeconomy.com/ai-operator-standard): proposed portable specification for the human operator layer
+- [AI Operator Standard](https://sigeconomy.com/ai-operator-standard): TTEOP open telemetry protocol — Upsilon is the engine that implements it
 - [AI Operator Metrics](https://sigeconomy.com/ai-operator-metrics): I/O/W/R plus the five-metric SigRank v0.1 draft core
 - [Model vs Agent vs Operator Evals](https://sigeconomy.com/model-vs-agent-vs-operator-evals): the evaluation layers and what each measures
 - [Privacy-Preserving AI Telemetry](https://sigeconomy.com/privacy-preserving-ai-telemetry): content-independent measurement and its limits
@@ -75,6 +75,8 @@ base SigRank compatibility.
 
 - [Why Operator Evals Matter](https://sigeconomy.com/articles/why-operator-evals-matter): the case for public AI operator evaluation
 - [Operator Evals vs Model Evals](https://sigeconomy.com/articles/operator-evals-vs-model-evals): different subjects, different metrics, different questions
+- [Why Search Results for "AI User Leaderboard" Still Show AI Models](https://sigeconomy.com/articles/why-search-results-for-ai-user-leaderboard-still-show-ai-models): SERP analysis of why Google routes the query to model leaderboards
+- [What Should an AI User Leaderboard Measure?](https://sigeconomy.com/articles/what-should-an-ai-user-leaderboard-measure): usage volume vs efficiency — token counts, cost, Yield, privacy, provenance, gaming resistance
 
 ## Core pages
 
@@ -86,7 +88,7 @@ base SigRank compatibility.
 ## Topic hubs
 
 - [Best AI User](https://sigeconomy.com/best-ai-user): who is the best AI user? The definitive ranking by Yield (Υ)
-- [AI User Leaderboard](https://sigeconomy.com/ai-user-leaderboard): the public operator evals leaderboard
+- [AI User Leaderboard](https://sigeconomy.com/ai-user-leaderboard): operator profiles ranked by token-cascade efficiency (Yield), not model quality or raw token consumption
 - [All-Time Leaderboard](https://sigeconomy.com/all-time): the complete all-time archive — every operator, full history, paginated
 - [AI User Ranking](https://sigeconomy.com/ai-user-ranking): how AI operators are evaluated — the Yield cascade explained
 - [AI Power Users](https://sigeconomy.com/ai-power-users): the top AI power users, ranked by Yield
@@ -111,7 +113,7 @@ base SigRank compatibility.
 - [vs Langfuse](https://sigeconomy.com/vs/langfuse): SigRank vs Langfuse — operator evals vs LLM observability
 - [vs Braintrust](https://sigeconomy.com/vs/braintrust): SigRank vs Braintrust — operator evaluation vs AI app evaluation
 - [vs LangChain + LangSmith](https://sigeconomy.com/vs/langchain): SigRank vs LangChain/LangSmith — operator ranking vs agent framework + observability
-- [vs LMSYS Arena](https://sigeconomy.com/vs/lmsys-arena): operator evals vs model evals — ranking humans vs ranking models
+- [vs LMSYS Arena](https://sigeconomy.com/vs/lmsys-arena): operator evals vs model evals — ranking operators vs ranking models
 - [vs WakaTime](https://sigeconomy.com/vs/wakatime): token efficiency vs time tracking
 - [vs VibeRank](https://sigeconomy.com/vs/viberank): measured Yield vs vibe coding leaderboard — popularity vs efficiency
 - [vs TokenMaxxer](https://sigeconomy.com/vs/tokenmaxxer): efficiency vs token maximization — volume vs Yield
@@ -160,10 +162,10 @@ Each tier has 3 sub-stages (I, II, III) for 24 total classes.
 ## About SigRank
 
 SigRank is the public evaluation layer for AI operators — public LLM operator evals.
-Like Vals AI evaluates models, SigRank evaluates the humans using AI.
-The AI User Leaderboard — who's the best AI user? Unlike model leaderboards
-that rank AI models, SigRank ranks the HUMANS using AI — their skill at
-efficiently using AI tools. Operator skill should be measurable, comparable, and public.
+Like Vals AI evaluates models, SigRank evaluates the account-level subjects operating AI.
+The AI User Leaderboard — who ranks highest at operating AI? Unlike model leaderboards
+that rank AI models, SigRank ranks the operators operating AI — their efficiency at
+using AI tools, measured by token-cascade metrics. Operator efficiency should be measurable, comparable, and public.
 
 - GitHub: https://github.com/SunrisesIllNeverSee
 - X/Twitter: https://x.com/burnmydays
