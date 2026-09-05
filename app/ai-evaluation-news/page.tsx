@@ -37,7 +37,7 @@ export default function AiEvaluationNewsPage() {
             {
               question: "What is the latest trend in AI evaluation?",
               answer:
-                "The biggest trend in 2026 is the shift from model benchmarks to operator evaluation. Model benchmarks (MMLU, Vals AI, LMSYS Arena) are saturating — top models score near-perfect on many benchmarks, making them less discriminative. The frontier of AI evaluation is moving to the operator layer: measuring how effectively humans use AI. SigRank is the first and only public operator evaluation platform.",
+                "The biggest trend in 2026 is the shift from model benchmarks to operator evaluation. Model benchmarks (MMLU, Vals AI, LMSYS Arena) are saturating — top models score near-perfect on many benchmarks, making them less discriminative. The frontier of AI evaluation is moving to the operator layer: measuring how effectively operators use AI. SigRank is the first and only public operator evaluation platform.",
             },
             {
               question: "Why are AI model benchmarks saturating?",
@@ -75,7 +75,7 @@ export default function AiEvaluationNewsPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           When every top model scores 90%+ on MMLU, the benchmark stops
-          discriminating. The next frontier of AI evaluation is the human
+          discriminating. The next frontier of AI evaluation is the operator
           wielding the AI — and SigRank is there first.
         </p>
       </div>
@@ -98,7 +98,7 @@ export default function AiEvaluationNewsPage() {
         <p className="text-muted-foreground">
           The most significant trend in 2026 is the emergence of operator
           evaluation. SigRank is the first and only public platform running
-          operator evals — measuring the human using AI, not the AI model
+          operator evals — measuring the operator using AI, not the AI model
           itself. The metric is Yield (Υ) = (cache_read × output) / input²,
           computed from four token pillars: input, output, cache-read,
           cache-write. This is the layer that was missing from AI evaluation,
@@ -213,7 +213,7 @@ export default function AiEvaluationNewsPage() {
               are saturating — top models score near-perfect on many
               benchmarks, making them less discriminative. The frontier of AI
               evaluation is moving to the operator layer: measuring how
-              effectively humans use AI. SigRank is the first and only public
+              effectively operators use AI. SigRank is the first and only public
               operator evaluation platform.
             </dd>
           </div>

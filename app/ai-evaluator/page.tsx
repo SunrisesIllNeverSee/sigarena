@@ -37,12 +37,12 @@ export default function AiEvaluatorPage() {
             {
               question: "What is an AI evaluator?",
               answer:
-                "An AI evaluator is a system or platform that assesses AI performance. AI evaluators exist at multiple layers: model evaluators (Vals AI, LMSYS Arena) test AI models on benchmarks, output evaluators (Braintrust, Langfuse) score individual outputs, and operator evaluators (SigRank) measure the human using AI. Each type of evaluator answers a different question.",
+                "An AI evaluator is a system or platform that assesses AI performance. AI evaluators exist at multiple layers: model evaluators (Vals AI, LMSYS Arena) test AI models on benchmarks, output evaluators (Braintrust, Langfuse) score individual outputs, and operator evaluators (SigRank) measure the operator using AI. Each type of evaluator answers a different question.",
             },
             {
               question: "What makes SigRank different as an AI evaluator?",
               answer:
-                "SigRank is the only AI evaluator for the operator layer. Every other public evaluator assesses the AI model or the AI output. SigRank assesses the human operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is public (not private), content-free (token counts only, never prompts), continuous (not one-time), and governed (by the MO§ES framework).",
+                "SigRank is the only AI evaluator for the operator layer. Every other public evaluator assesses the AI model or the AI output. SigRank assesses the operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is public (not private), content-free (token counts only, never prompts), continuous (not one-time), and governed (by the MO§ES framework).",
             },
             {
               question: "What are SigRank's five core capabilities as an AI evaluator?",
@@ -64,7 +64,7 @@ export default function AiEvaluatorPage() {
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
           An AI evaluator assesses AI performance. SigRank is an AI evaluator
-          for the operator layer — the only one that evaluates the human, not
+          for the operator layer — the only one that evaluates the operator, not
           the model or the output.
         </p>
       </div>
@@ -112,7 +112,7 @@ export default function AiEvaluatorPage() {
             <strong className="text-foreground">5. Platform-agnostic.</strong>{" "}
             Works with Claude, GPT, Gemini, Cursor, Copilot, Windsurf, Codex,
             and any AI tool that produces token telemetry. Yield measures the
-            human&apos;s cascade architecture, not the model&apos;s capability.
+            operator&apos;s cascade architecture, not the model&apos;s capability.
           </p>
         </div>
       </section>
@@ -193,7 +193,7 @@ export default function AiEvaluatorPage() {
               performance. AI evaluators exist at multiple layers: model
               evaluators (Vals AI, LMSYS Arena) test AI models on benchmarks,
               output evaluators (Braintrust, Langfuse) score individual outputs,
-              and operator evaluators (SigRank) measure the human using AI. Each
+              and operator evaluators (SigRank) measure the operator using AI. Each
               type of evaluator answers a different question.
             </dd>
           </div>
@@ -202,7 +202,7 @@ export default function AiEvaluatorPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               SigRank is the only AI evaluator for the operator layer. Every
               other public evaluator assesses the AI model or the AI output.
-              SigRank assesses the human operator using token telemetry — Yield
+              SigRank assesses the operator using token telemetry — Yield
               (Υ) = (cache_read × output) / input² — from real sessions. It is
               public (not private), content-free (token counts only, never
               prompts), continuous (not one-time), and governed (by the MO§ES

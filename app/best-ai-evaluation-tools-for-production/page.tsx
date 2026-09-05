@@ -52,12 +52,12 @@ export default function BestAiEvaluationToolsForProductionPage() {
             {
               question: "What is the best AI evaluation tool for operator evaluation in production?",
               answer:
-                "SigRank is the only tool for operator evaluation. It measures the human operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is privacy-preserving (token counts only, never prompt content), platform-agnostic (Claude, GPT, Cursor, Copilot), and runs continuously. No other tool evaluates the operator layer.",
+                "SigRank is the only tool for operator evaluation. It measures the operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is privacy-preserving (token counts only, never prompt content), platform-agnostic (Claude, GPT, Cursor, Copilot), and runs continuously. No other tool evaluates the operator layer.",
             },
             {
               question: "How do I build a production AI evaluation stack?",
               answer:
-                "Build the stack in four layers: (1) Model layer — use Vals AI or LMSYS Arena to pick the right model. (2) Output layer — use Braintrust or Langfuse to score outputs in production. (3) Safety layer — use Garak to test for vulnerabilities. (4) Operator layer — use SigRank to evaluate the humans using AI. Each layer answers a different question and requires different tools.",
+                "Build the stack in four layers: (1) Model layer — use Vals AI or LMSYS Arena to pick the right model. (2) Output layer — use Braintrust or Langfuse to score outputs in production. (3) Safety layer — use Garak to test for vulnerabilities. (4) Operator layer — use SigRank to evaluate operators using AI. Each layer answers a different question and requires different tools.",
             },
           ]),
         ]}
@@ -80,7 +80,7 @@ export default function BestAiEvaluationToolsForProductionPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Model evals pick the model. Output evals score the output. Safety
-          evals test for harm. Operator evals measure the human. SigRank is the
+          evals test for harm. Operator evals measure the operator. SigRank is the
           operator layer.
         </p>
       </div>
@@ -152,7 +152,7 @@ export default function BestAiEvaluationToolsForProductionPage() {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-semibold mb-3">Layer 4: Operator Evaluation</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Measure the human operator using token telemetry. The only tool:
+            Measure the operator using token telemetry. The only tool:
             SigRank.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
@@ -183,7 +183,7 @@ export default function BestAiEvaluationToolsForProductionPage() {
         </p>
         <p className="text-muted-foreground">
           The operator layer was the missing piece. Without it, you can measure
-          the model, the output, and the safety — but not the human directing
+          the model, the output, and the safety — but not the operator directing
           the AI. Two operators using the same model and the same tools can have
           100× different Yield. SigRank makes that difference visible.
         </p>
@@ -276,7 +276,7 @@ export default function BestAiEvaluationToolsForProductionPage() {
             <dt className="font-semibold">What is the best AI evaluation tool for operator evaluation in production?</dt>
             <dd className="text-sm text-muted-foreground mt-1">
               SigRank is the only tool for operator evaluation. It measures the
-              human operator using token telemetry — Yield (Υ) = (cache_read ×
+              operator using token telemetry — Yield (Υ) = (cache_read ×
               output) / input² — from real sessions. It is privacy-preserving
               (token counts only, never prompt content), platform-agnostic
               (Claude, GPT, Cursor, Copilot), and runs continuously. No other
@@ -290,7 +290,7 @@ export default function BestAiEvaluationToolsForProductionPage() {
               LMSYS Arena to pick the right model. (2) Output layer — use
               Braintrust or Langfuse to score outputs in production. (3) Safety
               layer — use Garak to test for vulnerabilities. (4) Operator layer
-              — use SigRank to evaluate the humans using AI. Each layer answers
+              — use SigRank to evaluate operators using AI. Each layer answers
               a different question and requires different tools.
             </dd>
           </div>

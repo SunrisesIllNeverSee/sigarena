@@ -37,12 +37,12 @@ export default function EvaluatingAiPage() {
             {
               question: "What does evaluating AI mean?",
               answer:
-                "Evaluating AI means systematically assessing AI system performance. It includes model evaluation (benchmarks like MMLU, Vals AI), agent evaluation (task completion), output evaluation (quality scoring), and operator evaluation (how effectively a human uses AI). Evaluating AI is not one thing — it is a stack of evaluations, one per layer.",
+                "Evaluating AI means systematically assessing AI system performance. It includes model evaluation (benchmarks like MMLU, Vals AI), agent evaluation (task completion), output evaluation (quality scoring), and operator evaluation (how effectively an operator uses AI). Evaluating AI is not one thing — it is a stack of evaluations, one per layer.",
             },
             {
               question: "Why is the operator layer missing from AI evaluation?",
               answer:
-                "Because measuring the human requires different telemetry than measuring the model. Model evals use standardized test prompts. Output evals use LLM-as-judge. But evaluating the operator requires token telemetry from real sessions — input, output, cache-read, cache-write — which no existing framework collected and analyzed publicly. SigRank is the first to do so.",
+                "Because measuring the operator requires different telemetry than measuring the model. Model evals use standardized test prompts. Output evals use LLM-as-judge. But evaluating the operator requires token telemetry from real sessions — input, output, cache-read, cache-write — which no existing framework collected and analyzed publicly. SigRank is the first to do so.",
             },
             {
               question: "How does SigRank fill the gap?",
@@ -52,7 +52,7 @@ export default function EvaluatingAiPage() {
             {
               question: "Is evaluating the operator really necessary?",
               answer:
-                "Yes. Two operators using the same model, the same tools, and similar prompts can have 100× different Yield. The difference is the cascade architecture — how the human structures context reuse, output extraction, and input minimization. Model evals cannot see this. Agent evals cannot see this. Output evals cannot see this. Without operator evaluation, you are evaluating the car but not the driver.",
+                "Yes. Two operators using the same model, the same tools, and similar prompts can have 100× different Yield. The difference is the cascade architecture — how the operator structures context reuse, output extraction, and input minimization. Model evals cannot see this. Agent evals cannot see this. Output evals cannot see this. Without operator evaluation, you are evaluating the car but not the driver.",
             },
           ]),
         ]}
@@ -96,7 +96,7 @@ export default function EvaluatingAiPage() {
           lap times. The difference is the driver&apos;s skill — how they brake,
           how they corner, how they manage momentum. In AI, two operators using
           the same model and the same tools can have 100× different Yield. The
-          difference is the cascade architecture — how the human structures
+          difference is the cascade architecture — how the operator structures
           context reuse, output extraction, and input minimization.
         </p>
       </section>
@@ -182,15 +182,15 @@ export default function EvaluatingAiPage() {
               Evaluating AI means systematically assessing AI system
               performance. It includes model evaluation (benchmarks like MMLU,
               Vals AI), agent evaluation (task completion), output evaluation
-              (quality scoring), and operator evaluation (how effectively a
-              human uses AI). Evaluating AI is not one thing — it is a stack of
+              (quality scoring), and operator evaluation (how effectively an
+              operator uses AI). Evaluating AI is not one thing — it is a stack of
               evaluations, one per layer.
             </dd>
           </div>
           <div>
             <dt className="font-semibold">Why is the operator layer missing from AI evaluation?</dt>
             <dd className="text-sm text-muted-foreground mt-1">
-              Because measuring the human requires different telemetry than
+              Because measuring the operator requires different telemetry than
               measuring the model. Model evals use standardized test prompts.
               Output evals use LLM-as-judge. But evaluating the operator
               requires token telemetry from real sessions — input, output,
@@ -215,7 +215,7 @@ export default function EvaluatingAiPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               Yes. Two operators using the same model, the same tools, and
               similar prompts can have 100× different Yield. The difference is
-              the cascade architecture — how the human structures context reuse,
+              the cascade architecture — how the operator structures context reuse,
               output extraction, and input minimization. Model evals cannot see
               this. Agent evals cannot see this. Output evals cannot see this.
               Without operator evaluation, you are evaluating the car but not

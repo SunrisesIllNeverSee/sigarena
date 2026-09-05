@@ -182,7 +182,9 @@ export async function getLeaderboard(
     );
     if (!res.ok) return null;
     const data = (await res.json()) as LeaderboardResponse;
-    // Category filter: "human" excludes outliers (Human Center of Mass only).
+    // Category filter: "human" excludes outliers (Operator Center of Mass only).
+    // The "human" URL param value is kept for backward compatibility; internally
+    // this is the OCM (Operator Center of Mass) filter.
     if (category === "human") {
       const filtered = data.entries.filter((e) => !isOutlierEntry(e));
       return { ...data, entries: filtered, total_operators: filtered.length };
@@ -263,8 +265,10 @@ export function metricSortValue(entry: LeaderboardEntry, metric: CanonicalMetric
  *   scale_v, efficiency, cost_per_million, op_ratio)
  * - platform: filter to a single platform (all = no filter)
  * - view: "peak" (top N, outliers included) or "center" (outliers >100x median trimmed)
- * - category: "human" (Human Center of Mass only, outliers excluded — default)
+ * - category: "human" (Operator Center of Mass only, outliers excluded — default)
  *   or "all" (include outliers & bots). Mirrors signalaf.com's board filter.
+ *   The "human" URL param value is kept for backward compatibility; internally
+ *   this is the OCM (Operator Center of Mass) filter.
  * - limit: how many entries to return (default 100)
  */
 export function sortLeaderboard(
@@ -281,8 +285,8 @@ export function sortLeaderboard(
     entries = entries.filter((e) => e.platform === platform);
   }
 
-  // Category filter: "human" excludes outliers (Human Center of Mass only).
-  // Applied BEFORE sort so the median + Center trim use the human-only board.
+  // Category filter: "human" excludes outliers (Operator Center of Mass only).
+  // Applied BEFORE sort so the median + Center trim use the OCM-only board.
   if (category === "human") {
     entries = entries.filter((e) => !isOutlierEntry(e));
   }

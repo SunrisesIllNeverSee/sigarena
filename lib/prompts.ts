@@ -29,8 +29,10 @@ export type Platform = "all" | "claude" | "chatgpt" | "other" | "anthropic" | "g
 export type View = "peak" | "center";
 
 /** Category filter — mirrors signalaf.com's board category filter.
- * "human" = Human Center of Mass only (outliers excluded, the default).
- * "all" = include outliers & bots. */
+ * "human" = Operator Center of Mass only (outliers excluded, the default).
+ * "all" = include outliers & bots.
+ * The "human" URL param value is kept for backward compatibility; internally
+ * this is the OCM (Operator Center of Mass) filter. */
 export type Category = "human" | "all";
 
 /** Window filter — mirrors signalaf.com's board windows.

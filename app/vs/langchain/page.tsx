@@ -8,11 +8,11 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",
   description:
-    "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks the humans operating AI. Framework + observability vs operator efficiency — which do you need?",
+    "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks operators driving AI. Framework + observability vs operator efficiency — which do you need?",
   alternates: { canonical: "/vs/langchain" },
   openGraph: {
     title: "SigRank vs LangChain + LangSmith — User Ranking vs Agent Framework",
-    description: "Building and observing AI apps vs ranking the humans who use AI.",
+    description: "Building and observing AI apps vs ranking operators who use AI.",
     url: "https://sigeconomy.com/vs/langchain",
     type: "website",
   },
@@ -22,13 +22,13 @@ export default function VsLangChainPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        articleSchema("SigRank vs LangChain + LangSmith \u2014 User Ranking vs Agent Framework", "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks the humans who use AI.", "/vs/langchain"),
+        articleSchema("SigRank vs LangChain + LangSmith \u2014 User Ranking vs Agent Framework", "LangChain builds AI agents. LangSmith observes and evaluates them. SigRank ranks operators who use AI.", "/vs/langchain"),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/langchain" },
         ]),
         faqSchema([
-          { question: "What is the difference between SigRank and LangChain + LangSmith?", answer: "LangChain builds AI agents; LangSmith observes and evaluates them \u2014 trace latency, token cost, eval scores. SigRank ranks the human operating the AI by Yield. One builds and monitors the app; the other measures the developer using AI to code." },
+          { question: "What is the difference between SigRank and LangChain + LangSmith?", answer: "LangChain builds AI agents; LangSmith observes and evaluates them \u2014 trace latency, token cost, eval scores. SigRank ranks the operator driving the AI by Yield. One builds and monitors the app; the other measures the developer using AI to code." },
           { question: "Does SigRank compete with LangChain + LangSmith?", answer: "No \u2014 they're complementary. If you build AI agents, use LangChain to build them and LangSmith to observe them. If you use AI to code, use SigRank to measure your own efficiency. Both integrate with MCP, so a coding agent can wire in SigRank as a tool." },
           { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
           { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
@@ -56,7 +56,7 @@ export default function VsLangChainPage() {
           <tbody>
             <tr className="border-b border-border">
               <td className="px-4 py-3 font-semibold">What it is</td>
-              <td className="px-4 py-3 text-muted-foreground">Operator efficiency ranking — measures the human</td>
+              <td className="px-4 py-3 text-muted-foreground">Operator efficiency ranking — measures the operator</td>
               <td className="px-4 py-3 text-muted-foreground">Agent framework (LangChain) + observability platform (LangSmith) — builds and monitors the AI app</td>
             </tr>
             <tr className="border-b border-border">
@@ -118,7 +118,7 @@ export default function VsLangChainPage() {
           SigRank answers a different question entirely. Not &quot;how do I
           build an AI agent?&quot; or &quot;is my agent working?&quot; — but
           &quot;am <em>I</em> good at using AI?&quot; SigRank measures the
-          human operator&apos;s token-cascade efficiency. Yield (Υ) rewards
+          operator&apos;s token-cascade efficiency. Yield (Υ) rewards
           context reuse, meaningful output, and minimal waste. It ranks
           operators against each other on a public leaderboard.
         </p>
@@ -137,7 +137,7 @@ export default function VsLangChainPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between SigRank and LangChain + LangSmith?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              LangChain builds AI agents; LangSmith observes and evaluates them {"\u2014"} trace latency, token cost, eval scores. SigRank ranks the human operating the AI by Yield. One builds and monitors the app; the other measures the developer using AI to code.
+              LangChain builds AI agents; LangSmith observes and evaluates them {"\u2014"} trace latency, token cost, eval scores. SigRank ranks the operator driving the AI by Yield. One builds and monitors the app; the other measures the developer using AI to code.
             </p>
           </div>
           <div>

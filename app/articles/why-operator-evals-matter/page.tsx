@@ -38,7 +38,7 @@ export default function WhyOperatorEvalsMatterPage() {
             {
               question: "What are operator evals?",
               answer:
-                "Operator evals are public evaluations of AI users \u2014 the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.",
+                "Operator evals are public evaluations of AI users \u2014 operators using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.",
             },
             {
               question: "Why do operator evals matter?",
@@ -48,7 +48,7 @@ export default function WhyOperatorEvalsMatterPage() {
             {
               question: "What is the accountability gap?",
               answer:
-                "Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don't. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the human, not the model.",
+                "Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don't. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the operator, not the model.",
             },
             {
               question: "How do operator evals help with hiring developers?",
@@ -176,7 +176,7 @@ export default function WhyOperatorEvalsMatterPage() {
               What are operator evals?
             </h3>
             <p>
-              Operator evals are public evaluations of AI users {"\u2014"} the humans using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.
+              Operator evals are public evaluations of AI users {"\u2014"} operators using AI. Unlike model evals that test AI models, operator evals measure how effectively a person uses AI, based on token telemetry from their real sessions. SigRank is the only platform running public operator evals.
             </p>
           </div>
           <div className="space-y-2">
@@ -192,7 +192,7 @@ export default function WhyOperatorEvalsMatterPage() {
               What is the accountability gap?
             </h3>
             <p>
-              Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don&apos;t. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the human, not the model.
+              Models have public evals (Vals AI, LMSYS Arena, LiveBench). AI users don&apos;t. This creates an accountability gap where developer skill with AI is invisible. Public operator evals close that gap by benchmarking the operator, not the model.
             </p>
           </div>
           <div className="space-y-2">

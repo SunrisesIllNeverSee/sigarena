@@ -52,7 +52,7 @@ export default function AIUserRankingPage() {
           {
             question: "Does the ranking work across different AI tools?",
             answer:
-              "Yes. The Yield metric is platform-agnostic \u2014 it works across Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The ranking measures the human's efficiency, not the AI model's capability.",
+              "Yes. The Yield metric is platform-agnostic \u2014 it works across Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The ranking measures the operator's efficiency, not the AI model's capability.",
           },
           {
             question: "How do I get my AI user ranking?",

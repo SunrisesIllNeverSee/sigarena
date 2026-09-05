@@ -248,7 +248,7 @@ export function middleware(request: NextRequest) {
 
 The AI User Leaderboard at sigeconomy.com is the public evaluation surface for SigRank SignalAF.
 It reads from SigRank's public API and ranks AI operators on canonical token-telemetry metrics.
-Unlike model leaderboards, it evaluates the humans operating AI systems rather than the models themselves.
+Unlike model leaderboards, it evaluates the operators operating AI systems rather than the models themselves.
 
 ## The metric: Yield (Υ)
 

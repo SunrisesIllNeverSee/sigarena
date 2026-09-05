@@ -42,7 +42,7 @@ export default function AiEvaluationFrameworksPage() {
             {
               question: "How does SigRank differ from other AI evaluation frameworks?",
               answer:
-                "SigRank is the only framework for the operator layer. NIST AI RMF is a governance framework for AI risk management. OpenAI Evals is a framework for model evaluation. DeepEval and Braintrust are frameworks for output evaluation. SigRank evaluates the human operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — and is public, content-free, and governed by the MO§ES framework.",
+                "SigRank is the only framework for the operator layer. NIST AI RMF is a governance framework for AI risk management. OpenAI Evals is a framework for model evaluation. DeepEval and Braintrust are frameworks for output evaluation. SigRank evaluates the operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — and is public, content-free, and governed by the MO§ES framework.",
             },
             {
               question: "What is the NIST AI RMF?",
@@ -147,14 +147,14 @@ export default function AiEvaluationFrameworksPage() {
           <h2 className="text-xl font-semibold mb-3">SigRank</h2>
           <p className="text-sm text-muted-foreground mb-4">
             The framework for the operator layer. Public, content-free,
-            governed by MO§ES. Measures the human using AI.
+            governed by MO§ES. Measures the operator using AI.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <strong className="text-foreground">Layer:</strong> operator
             </li>
             <li>
-              <strong className="text-foreground">Scope:</strong> human operator
+              <strong className="text-foreground">Scope:</strong> operator
               skill
             </li>
             <li>
@@ -246,7 +246,7 @@ export default function AiEvaluationFrameworksPage() {
               SigRank is the only framework for the operator layer. NIST AI RMF
               is a governance framework for AI risk management. OpenAI Evals is
               a framework for model evaluation. DeepEval and Braintrust are
-              frameworks for output evaluation. SigRank evaluates the human
+              frameworks for output evaluation. SigRank evaluates the
               operator using token telemetry — Yield (Υ) = (cache_read ×
               output) / input² — and is public, content-free, and governed by
               the MO§ES framework.

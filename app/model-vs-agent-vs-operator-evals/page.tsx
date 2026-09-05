@@ -33,8 +33,8 @@ const LAYERS = [
   },
   {
     name: "Operator eval",
-    subject: "Human operation of AI",
-    asks: "How is the human operating the AI system?",
+    subject: "Operator operation of AI",
+    asks: "How is the operator operating the AI system?",
     examples: "operator telemetry, cascade metrics, field and cohort context",
   },
 ] as const;
@@ -57,12 +57,12 @@ export default function EvalLayersPage() {
             {
               question: "What is the difference between a model eval and an operator eval?",
               answer:
-                "A model eval measures capabilities or outputs of the AI model. An operator eval measures the human layer operating AI. They answer different questions and can be used together.",
+                "A model eval measures capabilities or outputs of the AI model. An operator eval measures the operator layer operating AI. They answer different questions and can be used together.",
             },
             {
               question: "Are operator evals a replacement for agent evals?",
               answer:
-                "No. Agent evals test execution behavior and reliability of agents. Operator evals measure the human operator layer. A real workflow may need both, plus task and business outcome measurements.",
+                "No. Agent evals test execution behavior and reliability of agents. Operator evals measure the operator layer. A real workflow may need both, plus task and business outcome measurements.",
             },
           ])
         ]}

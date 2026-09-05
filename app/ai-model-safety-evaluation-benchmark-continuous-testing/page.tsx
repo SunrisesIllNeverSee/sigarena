@@ -42,7 +42,7 @@ export default function AiModelSafetyEvaluationBenchmarkContinuousTestingPage() 
             {
               question: "Why is safety not just a model property?",
               answer:
-                "Because safety depends on the operator as much as the model. A safe model can be used unsafely — an operator who structures prompts to bypass safety guardrails, or who deploys the model in a risky context, creates safety risks that model evaluation cannot detect. Safety is a system property that includes the model, the deployment context, and the operator. SigRank extends safety evaluation to the operator layer by measuring how the human uses AI.",
+                "Because safety depends on the operator as much as the model. A safe model can be used unsafely — an operator who structures prompts to bypass safety guardrails, or who deploys the model in a risky context, creates safety risks that model evaluation cannot detect. Safety is a system property that includes the model, the deployment context, and the operator. SigRank extends safety evaluation to the operator layer by measuring how the operator uses AI.",
             },
             {
               question: "How does SigRank extend continuous testing to operators?",
@@ -75,7 +75,7 @@ export default function AiModelSafetyEvaluationBenchmarkContinuousTestingPage() 
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Model safety benchmarks test the model. SigRank extends continuous
-          testing to the human operating the model.
+          testing to the operator driving the model.
         </p>
       </div>
 
@@ -135,7 +135,7 @@ export default function AiModelSafetyEvaluationBenchmarkContinuousTestingPage() 
           <h2 className="text-xl font-semibold mb-3">Operator Continuous Testing (SigRank)</h2>
           <p className="text-sm text-muted-foreground mb-4">
             SigRank extends continuous testing to the operator layer —
-            measuring the human using AI ongoingly, not just once.
+            measuring the operator using AI ongoingly, not just once.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
@@ -143,7 +143,7 @@ export default function AiModelSafetyEvaluationBenchmarkContinuousTestingPage() 
               public, content-free
             </li>
             <li>
-              <strong className="text-foreground">Subject:</strong> the human
+              <strong className="text-foreground">Subject:</strong> the
               operator
             </li>
             <li>
@@ -266,7 +266,7 @@ export default function AiModelSafetyEvaluationBenchmarkContinuousTestingPage() 
               risky context, creates safety risks that model evaluation cannot
               detect. Safety is a system property that includes the model, the
               deployment context, and the operator. SigRank extends safety
-              evaluation to the operator layer by measuring how the human uses
+              evaluation to the operator layer by measuring how the operator uses
               AI.
             </dd>
           </div>

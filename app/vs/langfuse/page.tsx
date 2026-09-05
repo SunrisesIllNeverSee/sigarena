@@ -28,7 +28,7 @@ export default function VsLangfusePage() {
           { name: "Compare", path: "/vs/langfuse" },
         ]),
         faqSchema([
-          { question: "What is the difference between SigRank and Langfuse?", answer: "Langfuse traces your AI application's LLM calls \u2014 inputs, outputs, cost, latency \u2014 for debugging. SigRank measures the human operator's token-cascade efficiency for ranking. Langfuse answers 'is my app working?'; SigRank answers 'am I good at using AI?'." },
+          { question: "What is the difference between SigRank and Langfuse?", answer: "Langfuse traces your AI application's LLM calls \u2014 inputs, outputs, cost, latency \u2014 for debugging. SigRank measures the operator's token-cascade efficiency for ranking. Langfuse answers 'is my app working?'; SigRank answers 'am I good at using AI?'." },
           { question: "Does SigRank compete with Langfuse?", answer: "No \u2014 same telemetry, different purpose. If you build AI apps, use Langfuse to monitor your app's LLM calls. If you use AI to code, use SigRank to measure your efficiency and rank against other AI operators. A developer can run both." },
           { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
           { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
@@ -56,7 +56,7 @@ export default function VsLangfusePage() {
           <tbody>
             <tr className="border-b border-border">
               <td className="px-4 py-3 font-semibold">What it measures</td>
-              <td className="px-4 py-3 text-muted-foreground">The human operator — token-cascade efficiency (Yield)</td>
+              <td className="px-4 py-3 text-muted-foreground">The operator — token-cascade efficiency (Yield)</td>
               <td className="px-4 py-3 text-muted-foreground">The AI application — LLM call traces, cost, latency</td>
             </tr>
             <tr className="border-b border-border">
@@ -111,7 +111,7 @@ export default function VsLangfusePage() {
         <p>
           SigRank is built for a different question: not &quot;is my AI app
           working?&quot; but &quot;am I good at using AI?&quot; SigRank measures
-          the <em>human operator&apos;s</em> efficiency — how effectively you
+          the <em>operator&apos;s</em> efficiency — how effectively you
           use AI tokens in your coding sessions. Yield (Υ) rewards context
           reuse, meaningful output, and minimal waste.
         </p>
@@ -129,7 +129,7 @@ export default function VsLangfusePage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between SigRank and Langfuse?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Langfuse traces your AI application&apos;s LLM calls {"\u2014"} inputs, outputs, cost, latency {"\u2014"} for debugging. SigRank measures the human operator&apos;s token-cascade efficiency for ranking. Langfuse answers &quot;is my app working?&quot;; SigRank answers &quot;am I good at using AI?&quot;.
+              Langfuse traces your AI application&apos;s LLM calls {"\u2014"} inputs, outputs, cost, latency {"\u2014"} for debugging. SigRank measures the operator&apos;s token-cascade efficiency for ranking. Langfuse answers &quot;is my app working?&quot;; SigRank answers &quot;am I good at using AI?&quot;.
             </p>
           </div>
           <div>

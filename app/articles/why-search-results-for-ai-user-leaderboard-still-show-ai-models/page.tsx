@@ -57,7 +57,7 @@ export default function WhySearchResultsShowModelsPage() {
             {
               question: "What does Google show for \u201cAI user leaderboard\u201d?",
               answer:
-                "As of September 4, 2026, Google routes the query primarily to AI model leaderboards \u2014 Artificial Analysis, LiveBench, Hugging Face Arena, and similar sites that rank AI models, not AI users. The AI Overview discusses model evaluation. No result on the first page ranks human AI users by any efficiency metric.",
+                "As of September 4, 2026, Google routes the query primarily to AI model leaderboards \u2014 Artificial Analysis, LiveBench, Hugging Face Arena, and similar sites that rank AI models, not AI users. The AI Overview discusses model evaluation. No result on the first page ranks AI users by any efficiency metric.",
             },
             {
               question: "Why does Google show model leaderboards for a user-ranking query?",
@@ -72,7 +72,7 @@ export default function WhySearchResultsShowModelsPage() {
             {
               question: "What is the difference between a model leaderboard and a user leaderboard?",
               answer:
-                "A model leaderboard ranks AI models (GPT, Claude, Gemini) by accuracy, preference, or benchmark performance. A user leaderboard ranks the humans or accounts using AI tools by how efficiently they operate them. The questions are different: \u201cwhich model is best?\u201d vs \u201cwho ranks highest under the stated metric?\u201d",
+                "A model leaderboard ranks AI models (GPT, Claude, Gemini) by accuracy, preference, or benchmark performance. A user leaderboard ranks the accounts using AI tools by how efficiently they operate them. The questions are different: \u201cwhich model is best?\u201d vs \u201cwho ranks highest under the stated metric?\u201d",
             },
           ]),
         ]}
@@ -96,7 +96,7 @@ export default function WhySearchResultsShowModelsPage() {
         <p>
           When someone searches &quot;AI user leaderboard,&quot; they are
           likely asking: <em>where do I rank among people who use AI
-          tools?</em> The intent is to compare <strong>human AI users</strong>{" "}
+          tools?</em> The intent is to compare <strong>AI users</strong>{" "}
           (operators) against each other, not to compare AI models. But Google
           does not yet have enough content that explicitly ranks AI users as
           the subject, so it falls back to the closest thing it knows: model
@@ -121,7 +121,7 @@ export default function WhySearchResultsShowModelsPage() {
           The first page returned an AI Overview discussing model evaluation,
           a model leaderboard carousel, and nine organic results. Every
           organic result was a model leaderboard, model benchmark, or
-          model-related tool. <strong>None ranked human AI users.</strong>
+          model-related tool. <strong>None ranked AI users.</strong>
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -197,7 +197,7 @@ export default function WhySearchResultsShowModelsPage() {
           <li>Model evaluation platforms (Vellum, Artificial Analysis)</li>
         </ul>
         <p>
-          None of these measure how effectively a <em>human</em> operates an
+          None of these measure how effectively an <em>operator</em> operates an
           AI tool. They answer &quot;which model is best?&quot; not &quot;who
           ranks highest among AI users?&quot;
         </p>

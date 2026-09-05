@@ -177,7 +177,7 @@ export default function AiComplianceStandardsPage() {
           The NIST AI RMF Measure function calls for &quot;quantitative analysis
           of AI system performance and risk.&quot; SigRank directly supports
           this for the operator layer. It provides quantitative, continuous,
-          auditable measurement of how effectively humans use AI — using Yield
+          auditable measurement of how effectively operators use AI — using Yield
           (Υ) = (cache_read × output) / input², computed from four token
           pillars: input, output, cache-read, cache-write.
         </p>

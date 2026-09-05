@@ -68,7 +68,7 @@ export default async function AIUserLeaderboardPage() {
           {
             question: "Are these real people or AI models?",
             answer:
-              "The leaderboard ranks operator profiles — the account-level subjects associated with AI-work telemetry. An operator is not necessarily a legal person, employer, or unique human. Some profiles are claimed by their owners; others are pseudonymous or unclaimed. Profiles are not AI models.",
+              "The leaderboard ranks operator profiles — the individuals whose AI-work telemetry is measured. An operator is not necessarily a legal person, employer, or unique human. Some profiles are claimed by their owners; others are pseudonymous or unclaimed. Profiles are not AI models.",
           },
           {
             question: "How do I get on the AI User Leaderboard?",
@@ -247,7 +247,7 @@ export default async function AIUserLeaderboardPage() {
           displayed here.
         </p>
         <p className="text-sm text-muted-foreground">
-          The leaderboard shows the all-time window with the default human
+          The leaderboard shows the all-time window with the default OCM
           category filter. Token counts only — never prompt content, response
           text, source code, or repository contents.
         </p>

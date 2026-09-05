@@ -37,7 +37,7 @@ export default function AiEvaluationPlatformPage() {
             {
               question: "What is an AI evaluation platform?",
               answer:
-                "An AI evaluation platform is a system that systematically assesses AI performance at scale. It defines what to measure, how to measure it, and how to present results. Existing platforms evaluate models (Vals AI, LMSYS Arena) or outputs (Braintrust, Langfuse). SigRank is the only AI evaluation platform for the operator layer — measuring the humans using AI.",
+                "An AI evaluation platform is a system that systematically assesses AI performance at scale. It defines what to measure, how to measure it, and how to present results. Existing platforms evaluate models (Vals AI, LMSYS Arena) or outputs (Braintrust, Langfuse). SigRank is the only AI evaluation platform for the operator layer — measuring operators using AI.",
             },
             {
               question: "How is SigRank different from other AI evaluation platforms?",
@@ -65,7 +65,7 @@ export default function AiEvaluationPlatformPage() {
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
           SigRank is an AI evaluation platform for operators. Public,
           content-free, continuous, and governed — the only platform that
-          evaluates the human, not the model or the output.
+          evaluates the operator, not the model or the output.
         </p>
       </div>
 
@@ -75,7 +75,7 @@ export default function AiEvaluationPlatformPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Other platforms evaluate models or outputs. SigRank evaluates
-          operators — the humans wielding AI — with public, governed, continuous
+          operators — operators wielding AI — with public, governed, continuous
           evals.
         </p>
       </div>
@@ -133,7 +133,7 @@ export default function AiEvaluationPlatformPage() {
         <p className="text-muted-foreground">
           The platform is platform-agnostic — it works with Claude, GPT,
           Gemini, Cursor, Copilot, Windsurf, Codex, and any AI tool that
-          produces token telemetry. Yield measures the human&apos;s cascade
+          produces token telemetry. Yield measures the operator&apos;s cascade
           architecture, not the model&apos;s capability.
         </p>
         <div className="rounded-lg bg-muted/30 p-4 text-center font-mono text-lg">
@@ -194,7 +194,7 @@ export default function AiEvaluationPlatformPage() {
               measure it, and how to present results. Existing platforms
               evaluate models (Vals AI, LMSYS Arena) or outputs (Braintrust,
               Langfuse). SigRank is the only AI evaluation platform for the
-              operator layer — measuring the humans using AI.
+              operator layer — measuring operators using AI.
             </dd>
           </div>
           <div>

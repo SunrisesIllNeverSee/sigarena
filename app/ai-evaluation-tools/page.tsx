@@ -42,17 +42,17 @@ export default function AiEvaluationToolsPage() {
             {
               question: "What are the categories of AI evaluation tools?",
               answer:
-                "The four categories are: (1) Model evaluation tools — benchmark suites like Vals AI, LMSYS Arena, LiveBench that test AI models on standardized tasks. (2) Output evaluation tools — LLM-as-judge and human-rater platforms like Braintrust, Langfuse, Ragas that score individual outputs. (3) Safety evaluation tools — adversarial testing and red-teaming tools like Garak. (4) Operator evaluation tools — telemetry-based platforms like SigRank that measure the human using AI.",
+                "The four categories are: (1) Model evaluation tools — benchmark suites like Vals AI, LMSYS Arena, LiveBench that test AI models on standardized tasks. (2) Output evaluation tools — LLM-as-judge and human-rater platforms like Braintrust, Langfuse, Ragas that score individual outputs. (3) Safety evaluation tools — adversarial testing and red-teaming tools like Garak. (4) Operator evaluation tools — telemetry-based platforms like SigRank that measure the operator using AI.",
             },
             {
               question: "How do I choose AI evaluation tools?",
               answer:
-                "Choose based on what layer you need to evaluate. If you need to pick a model, use model benchmark tools (Vals AI, LMSYS Arena). If you need to score outputs in production, use output evaluation tools (Braintrust, Langfuse). If you need to test safety, use safety tools (Garak). If you need to evaluate the human operator, use SigRank — the only public operator evaluation tool. Most teams need tools from multiple categories.",
+                "Choose based on what layer you need to evaluate. If you need to pick a model, use model benchmark tools (Vals AI, LMSYS Arena). If you need to score outputs in production, use output evaluation tools (Braintrust, Langfuse). If you need to test safety, use safety tools (Garak). If you need to evaluate the operator, use SigRank — the only public operator evaluation tool. Most teams need tools from multiple categories.",
             },
             {
               question: "What makes SigRank different from other AI evaluation tools?",
               answer:
-                "SigRank is the only public operator evaluation tool. Every other public evaluation tool evaluates the AI model (Vals AI, LMSYS Arena) or the AI output (Braintrust, Langfuse). SigRank evaluates the human operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is privacy-preserving (token counts only, never prompt content) and platform-agnostic (works with Claude, GPT, Cursor, Copilot).",
+                "SigRank is the only public operator evaluation tool. Every other public evaluation tool evaluates the AI model (Vals AI, LMSYS Arena) or the AI output (Braintrust, Langfuse). SigRank evaluates the operator using token telemetry — Yield (Υ) = (cache_read × output) / input² — from real sessions. It is privacy-preserving (token counts only, never prompt content) and platform-agnostic (works with Claude, GPT, Cursor, Copilot).",
             },
           ]),
         ]}
@@ -158,7 +158,7 @@ export default function AiEvaluationToolsPage() {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-semibold mb-3">Operator Evaluation Tools</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Telemetry-based platforms that measure how effectively a human
+            Telemetry-based platforms that measure how effectively an
             operator uses AI — the cascade architecture, not the model
             capability.
           </p>
@@ -186,7 +186,7 @@ export default function AiEvaluationToolsPage() {
           evaluation tools ask &quot;is this output good?&quot; Safety
           evaluation tools ask &quot;is this system safe?&quot; But no tool
           asked &quot;who is the best AI operator?&quot; — because measuring the
-          human requires a different kind of telemetry.
+          operator requires a different kind of telemetry.
         </p>
         <p className="text-muted-foreground">
           SigRank fills this gap with token-cascade telemetry. The four token
@@ -260,7 +260,7 @@ export default function AiEvaluationToolsPage() {
               individual outputs. (3) Safety evaluation tools — adversarial
               testing and red-teaming tools like Garak. (4) Operator evaluation
               tools — telemetry-based platforms like SigRank that measure the
-              human using AI.
+              operator using AI.
             </dd>
           </div>
           <div>
@@ -270,7 +270,7 @@ export default function AiEvaluationToolsPage() {
               pick a model, use model benchmark tools (Vals AI, LMSYS Arena). If
               you need to score outputs in production, use output evaluation
               tools (Braintrust, Langfuse). If you need to test safety, use
-              safety tools (Garak). If you need to evaluate the human operator,
+              safety tools (Garak). If you need to evaluate the operator,
               use SigRank — the only public operator evaluation tool. Most teams
               need tools from multiple categories.
             </dd>
@@ -281,7 +281,7 @@ export default function AiEvaluationToolsPage() {
               SigRank is the only public operator evaluation tool. Every other
               public evaluation tool evaluates the AI model (Vals AI, LMSYS
               Arena) or the AI output (Braintrust, Langfuse). SigRank evaluates
-              the human operator using token telemetry — Yield (Υ) = (cache_read
+              the operator using token telemetry — Yield (Υ) = (cache_read
               × output) / input² — from real sessions. It is privacy-preserving
               (token counts only, never prompt content) and platform-agnostic
               (works with Claude, GPT, Cursor, Copilot).

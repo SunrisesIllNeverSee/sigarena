@@ -64,7 +64,9 @@ export default async function AllTimePage({
     );
   }
 
-  // Apply category filter (human = HCM, all = include outliers)
+  // Apply category filter (human = OCM, all = include outliers).
+  // The "human" URL param value is kept for backward compatibility; internally
+  // this is the Operator Center of Mass (OCM) filter.
   const filtered =
     category === "human"
       ? data.entries.filter((e) => !isOutlierEntry(e))
@@ -94,7 +96,7 @@ export default async function AllTimePage({
     },
     {
       question: "What is the difference between Operators and Extreme Outliers?",
-      answer: "The Operators category applies the Human Center of Mass filter, which excludes statistical outliers (bots, input-dump scripts, and operators with extreme input-to-total ratios). The Extreme Outliers category includes every operator, including outliers and automated systems.",
+      answer: "The Operators category applies the Operator Center of Mass filter, which excludes statistical outliers (bots, input-dump scripts, and operators with extreme input-to-total ratios). The Extreme Outliers category includes every operator, including outliers and automated systems.",
     },
     {
       question: "How often is this leaderboard updated?",

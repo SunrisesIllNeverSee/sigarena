@@ -7,10 +7,10 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "SigRank vs LMSYS Arena — Operator Evals vs Model Evals",
   description:
-    "LMSYS Arena runs public model evals. SigRank runs public operator evals — evaluating the humans using AI. Different subjects, different metrics, different leaderboards.",
+    "LMSYS Arena runs public model evals. SigRank runs public operator evals — evaluating operators using AI. Different subjects, different metrics, different leaderboards.",
   alternates: { canonical: "/vs/lmsys-arena" },
   openGraph: {
-    title: "SigRank vs LMSYS Arena — Humans vs Models",
+    title: "SigRank vs LMSYS Arena — Operators vs Models",
     description: "Ranking AI users vs ranking AI models.",
     url: "https://sigeconomy.com/vs/lmsys-arena",
     type: "website",
@@ -21,13 +21,13 @@ export default function VsLMSYSArenaPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        articleSchema("SigRank vs LMSYS Arena \u2014 Ranking Humans vs Ranking Models", "LMSYS Arena ranks AI models. SigRank ranks the humans who use AI. Different questions, different answers.", "/vs/lmsys-arena"),
+        articleSchema("SigRank vs LMSYS Arena \u2014 Ranking Operators vs Ranking Models", "LMSYS Arena ranks AI models. SigRank ranks operators who use AI. Different questions, different answers.", "/vs/lmsys-arena"),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/lmsys-arena" },
         ]),
         faqSchema([
-          { question: "What is the difference between SigRank and LMSYS Arena?", answer: "LMSYS Arena ranks AI models by human preference in blind A/B votes (Elo). SigRank ranks the humans who use AI by Yield from token telemetry. LMSYS measures the tool; SigRank measures the person wielding it. A great AI user with a mediocre model can out-Yield a poor one with the best model." },
+          { question: "What is the difference between SigRank and LMSYS Arena?", answer: "LMSYS Arena ranks AI models by human preference in blind A/B votes (Elo). SigRank ranks operators who use AI by Yield from token telemetry. LMSYS measures the tool; SigRank measures the person wielding it. A great AI user with a mediocre model can out-Yield a poor one with the best model." },
           { question: "Does SigRank compete with LMSYS Arena?", answer: "No \u2014 they measure different subjects. LMSYS ranks models (GPT, Claude, Gemini); SigRank ranks the developers operating them. They're not competing \u2014 one evaluates the AI, the other evaluates the coder using the AI." },
           { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
           { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
@@ -55,7 +55,7 @@ export default function VsLMSYSArenaPage() {
           <tbody>
             <tr className="border-b border-border">
               <td className="px-4 py-3 font-semibold">What it ranks</td>
-              <td className="px-4 py-3 text-muted-foreground">AI operators (the humans using AI)</td>
+              <td className="px-4 py-3 text-muted-foreground">AI operators</td>
               <td className="px-4 py-3 text-muted-foreground">AI models (GPT, Claude, Gemini, etc.)</td>
             </tr>
             <tr className="border-b border-border">
@@ -98,7 +98,7 @@ export default function VsLMSYSArenaPage() {
         </p>
         <p>
           SigRank answers &quot;who is the best AI <em>user</em>?&quot; — it
-          ranks the humans who operate AI tools, by measuring how efficiently
+          ranks operators who operate AI tools, by measuring how efficiently
           they use tokens. A great operator with a mediocre model can out-Yield
           a poor operator with the best model.
         </p>
@@ -114,7 +114,7 @@ export default function VsLMSYSArenaPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between SigRank and LMSYS Arena?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              LMSYS Arena ranks AI models by human preference in blind A/B votes (Elo). SigRank ranks the humans who use AI by Yield from token telemetry. LMSYS measures the tool; SigRank measures the person wielding it. A great AI user with a mediocre model can out-Yield a poor one with the best model.
+              LMSYS Arena ranks AI models by human preference in blind A/B votes (Elo). SigRank ranks operators who use AI by Yield from token telemetry. LMSYS measures the tool; SigRank measures the person wielding it. A great AI user with a mediocre model can out-Yield a poor one with the best model.
             </p>
           </div>
           <div>

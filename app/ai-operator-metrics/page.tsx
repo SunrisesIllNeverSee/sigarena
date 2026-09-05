@@ -9,7 +9,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Operator Metrics — Measuring the Operator Driving AI",
   description:
-    "AI operator metrics measure how operators (account-level subjects) operate generative AI systems. Learn the Upsilon primitives, core metrics, privacy boundary, and what operator metrics do not measure.",
+    "AI operator metrics measure how operators (individuals whose AI-work telemetry is measured) operate generative AI systems. Learn the Upsilon primitives, core metrics, privacy boundary, and what operator metrics do not measure.",
   alternates: { canonical: "/ai-operator-metrics" },
 };
 
@@ -31,7 +31,7 @@ export default function AiOperatorMetricsPage() {
             {
               question: "What are AI operator metrics?",
               answer:
-                "AI operator metrics are measurements of how an operator (the account-level subject) operates an AI system, distinct from measurements of model capability or task correctness. Upsilon's draft core uses token telemetry to define Yield, Leverage, Velocity, SNR, and 10xDEV.",
+                "AI operator metrics are measurements of how an operator (the individual whose AI-work telemetry is measured) operates an AI system, distinct from measurements of model capability or task correctness. Upsilon's draft core uses token telemetry to define Yield, Leverage, Velocity, SNR, and 10xDEV.",
             },
             {
               question: "What data does Upsilon need?",
@@ -51,7 +51,7 @@ export default function AiOperatorMetricsPage() {
         <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Category guide</p>
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">AI Operator Metrics</h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Model metrics tell you about the model. Operator metrics describe the operator layer — the account-level subject that selects, directs, iterates with, and extracts work from that model.
+          Model metrics tell you about the model. Operator metrics describe the operator layer — the individual that selects, directs, iterates with, and extracts work from that model.
         </p>
       </header>
 

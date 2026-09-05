@@ -38,7 +38,7 @@ export default function OperatorEvalsPage() {
             {
               question: "What are public LLM operator evals?",
               answer:
-                "Public LLM operator evals are public evaluations of AI operators \u2014 the account-level subjects using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.",
+                "Public LLM operator evals are public evaluations of AI operators \u2014 the individuals whose AI-work telemetry is measured. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.",
             },
             {
               question: "How are AI users measured and ranked?",
@@ -48,7 +48,7 @@ export default function OperatorEvalsPage() {
             {
               question: "What is the difference between evaluating AI models and evaluating AI users?",
               answer:
-                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model \u2014 GPT, Claude, Gemini \u2014 using standardized test prompts. Operator evals (SigRank) evaluate the operator \u2014 the account-level subject driving the AI \u2014 using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who ranks highest at operating AI under the stated metric and time window?'",
+                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model \u2014 GPT, Claude, Gemini \u2014 using standardized test prompts. Operator evals (SigRank) evaluate the operator \u2014 the individual driving the AI \u2014 using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who ranks highest at operating AI under the stated metric and time window?'",
             },
             {
               question: "Why do public benchmarks for AI coders matter?",
@@ -105,7 +105,7 @@ export default function OperatorEvalsPage() {
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
           Public LLM operator evals are public evaluations of AI operators
-          — the account-level subjects who drive AI tools — not autonomous
+          — the individuals who drive AI tools — not autonomous
           agents. Like Vals AI evaluates models, SigRank evaluates the operators
           using AI. Performative evals assess the operator&apos;s behavior in
           real tasks, not just the model&apos;s output quality.
@@ -118,8 +118,7 @@ export default function OperatorEvalsPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Vals AI, LMSYS Arena, and LiveBench run public evals for LLM models.
-          SigRank runs public evals for LLM operators \u2014 the account-level
-          subjects wielding AI every day.
+          SigRank runs public evals for LLM operators \u2014 the individuals wielding AI every day.
         </p>
       </div>
 
@@ -162,7 +161,7 @@ export default function OperatorEvalsPage() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               <strong className="text-foreground">Subject:</strong> the operator
-              (account-level subject)
+              (the individual whose AI-work telemetry is measured)
             </li>
             <li>
               <strong className="text-foreground">Question:</strong> who ranks
@@ -279,7 +278,7 @@ export default function OperatorEvalsPage() {
               <tr className="border-b border-border bg-primary/5">
                 <td className="px-4 py-3 font-semibold">SigRank</td>
                 <td className="px-4 py-3 text-muted-foreground">
-                  AI operators (account-level subjects)
+                  AI operators (individuals whose AI-work telemetry is measured)
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">Yes</td>
                 <td className="px-4 py-3 text-muted-foreground">
@@ -373,7 +372,7 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">What are public LLM operator evals?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Public LLM operator evals are public evaluations of AI operators {"\u2014"} the account-level subjects using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.
+              Public LLM operator evals are public evaluations of AI operators {"\u2014"} the individuals whose AI-work telemetry is measured. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.
             </p>
           </div>
           <div>
@@ -385,7 +384,7 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between evaluating AI models and evaluating AI users?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model {"\u2014"} GPT, Claude, Gemini {"\u2014"} using standardized test prompts. Operator evals (SigRank) evaluate the operator {"\u2014"} the account-level subject driving the AI {"\u2014"} using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who ranks highest at operating AI under the stated metric and time window?&quot;
+              Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model {"\u2014"} GPT, Claude, Gemini {"\u2014"} using standardized test prompts. Operator evals (SigRank) evaluate the operator {"\u2014"} the individual driving the AI {"\u2014"} using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who ranks highest at operating AI under the stated metric and time window?&quot;
             </p>
           </div>
           <div>

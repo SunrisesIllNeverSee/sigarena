@@ -171,7 +171,9 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
         </span>
       </div>
 
-      {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
+      {/* OCM / +Outliers category toggle — mirrors signalaf.com's board filter.
+           The "human" URL param value is kept for backward compatibility;
+           internally this is the Operator Center of Mass (OCM) filter. */}
       <div className="flex items-center justify-center gap-2">
         <Link
           href={promptUrl(canonicalSlug, platform, view, "human", win)}
@@ -181,7 +183,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
               : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
           }`}
         >
-          Human
+          Operators
         </Link>
         <Link
           href={promptUrl(canonicalSlug, platform, view, "all", win)}
@@ -195,7 +197,7 @@ export function PromptPage({ prompt, data, platform, view, category, window: win
         </Link>
         <span className="ml-2 text-xs text-muted-foreground">
           {category === "human"
-            ? "Human Center of Mass — outliers & bots excluded"
+            ? "Operator Center of Mass — outliers & bots excluded"
             : "Including outliers & bots"}
         </span>
       </div>

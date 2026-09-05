@@ -8,7 +8,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "SigRank vs Braintrust — User Evaluation vs AI App Evaluation",
   description:
-    "Braintrust evaluates your AI application's outputs. SigRank evaluates the human operating the AI. Different sides of the same coin — which evaluation do you need?",
+    "Braintrust evaluates your AI application's outputs. SigRank evaluates the operator operating the AI. Different sides of the same coin — which evaluation do you need?",
   alternates: { canonical: "/vs/braintrust" },
   openGraph: {
     title: "SigRank vs Braintrust — User Evaluation vs AI App Evaluation",
@@ -22,13 +22,13 @@ export default function VsBraintrustPage() {
   return (
     <div className="space-y-6">
       <JsonLd data={[
-        articleSchema("SigRank vs Braintrust \u2014 User Evaluation vs AI App Evaluation", "Braintrust evaluates your AI application's outputs. SigRank evaluates the human operator. Same goal, different target.", "/vs/braintrust"),
+        articleSchema("SigRank vs Braintrust \u2014 User Evaluation vs AI App Evaluation", "Braintrust evaluates your AI application's outputs. SigRank evaluates the operator. Same goal, different target.", "/vs/braintrust"),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: "Compare", path: "/vs/braintrust" },
         ]),
         faqSchema([
-          { question: "What is the difference between SigRank and Braintrust?", answer: "Braintrust evaluates your AI application's outputs \u2014 prompt quality, model selection, accuracy, factuality. SigRank evaluates the human operating the AI \u2014 how efficiently a developer turns tokens into output across Claude, GPT, Gemini, Cursor, or Copilot. One scores the app; the other scores the person using AI." },
+          { question: "What is the difference between SigRank and Braintrust?", answer: "Braintrust evaluates your AI application's outputs \u2014 prompt quality, model selection, accuracy, factuality. SigRank evaluates the operator operating the AI \u2014 how efficiently a developer turns tokens into output across Claude, GPT, Gemini, Cursor, or Copilot. One scores the app; the other scores the person using AI." },
           { question: "Does SigRank compete with Braintrust?", answer: "No \u2014 they're complementary. If you build AI apps, use Braintrust to evaluate your app's outputs. If you use AI to code, use SigRank to measure your own efficiency and rank against other AI operators. Both ship MCP servers, so a coding agent can wire in both." },
           { question: "What score does SigRank use?", answer: "Yield (\u03a5) = (cache_read \u00d7 output) / input\u00b2 \u2014 token-cascade efficiency from real sessions. Works across Claude, GPT, Gemini, Cursor, Copilot, and any AI coding tool." },
           { question: "How do I get my AI user score and rank?", answer: "Visit signalaf.com/score to enroll and submit your token telemetry. SigRank will compute your Yield, your rank, and your operator class. Token counts only \u2014 never prompt content, never code." },
@@ -56,7 +56,7 @@ export default function VsBraintrustPage() {
           <tbody>
             <tr className="border-b border-border">
               <td className="px-4 py-3 font-semibold">What it evaluates</td>
-              <td className="px-4 py-3 text-muted-foreground">The human operator — how efficiently you use AI</td>
+              <td className="px-4 py-3 text-muted-foreground">The operator — how efficiently you use AI</td>
               <td className="px-4 py-3 text-muted-foreground">The AI application — prompt quality, model selection, output accuracy</td>
             </tr>
             <tr className="border-b border-border">
@@ -115,7 +115,7 @@ export default function VsBraintrustPage() {
           building an AI product and need to evaluate the AI&apos;s outputs.
         </p>
         <p>
-          SigRank evaluates a different thing: the <em>human</em> operating
+          SigRank evaluates a different thing: the <em>operator</em> operating
           the AI. Not &quot;is this output good?&quot; but &quot;is this
           person good at using AI?&quot; Yield (Υ) measures how efficiently
           an operator uses tokens — rewarding context reuse, meaningful
@@ -137,7 +137,7 @@ export default function VsBraintrustPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between SigRank and Braintrust?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Braintrust evaluates your AI application&apos;s outputs {"\u2014"} prompt quality, model selection, accuracy, factuality. SigRank evaluates the human operating the AI {"\u2014"} how efficiently a developer turns tokens into output across Claude, GPT, Gemini, Cursor, or Copilot. One scores the app; the other scores the person using AI.
+              Braintrust evaluates your AI application&apos;s outputs {"\u2014"} prompt quality, model selection, accuracy, factuality. SigRank evaluates the operator operating the AI {"\u2014"} how efficiently a developer turns tokens into output across Claude, GPT, Gemini, Cursor, or Copilot. One scores the app; the other scores the person using AI.
             </p>
           </div>
           <div>

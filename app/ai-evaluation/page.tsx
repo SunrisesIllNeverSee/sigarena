@@ -8,12 +8,12 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Evaluation — The Operator Layer",
   description:
-    "AI evaluation has four layers: model, agent, output, and operator. SigRank covers the operator layer with public evals for the humans wielding AI. Ranked by Yield (Υ) — token-cascade efficiency.",
+    "AI evaluation has four layers: model, agent, output, and operator. SigRank covers the operator layer with public evals for operators wielding AI. Ranked by Yield (Υ) — token-cascade efficiency.",
   alternates: { canonical: "/ai-evaluation" },
   openGraph: {
     title: "AI Evaluation — The Operator Layer | SigRank SignalAF",
     description:
-      "AI evaluation has four layers. SigRank covers the operator layer — public evals for the humans wielding AI.",
+      "AI evaluation has four layers. SigRank covers the operator layer — public evals for operators wielding AI.",
     url: "https://sigeconomy.com/ai-evaluation",
     type: "website",
   },
@@ -26,7 +26,7 @@ export default function AiEvaluationPage() {
         data={[
           articleSchema(
             "AI Evaluation — The Operator Layer",
-            "AI evaluation has four layers: model, agent, output, and operator. SigRank covers the operator layer with public evals for the humans wielding AI.",
+            "AI evaluation has four layers: model, agent, output, and operator. SigRank covers the operator layer with public evals for operators wielding AI.",
             "/ai-evaluation",
           ),
           breadcrumbSchema([
@@ -37,12 +37,12 @@ export default function AiEvaluationPage() {
             {
               question: "What is AI evaluation?",
               answer:
-                "AI evaluation is the systematic assessment of AI system performance. It spans four layers: model evaluation (benchmarks like MMLU, Vals AI), agent evaluation (task completion), output evaluation (quality scoring), and operator evaluation (how effectively a human uses AI). Each layer answers a different question and requires different methods.",
+                "AI evaluation is the systematic assessment of AI system performance. It spans four layers: model evaluation (benchmarks like MMLU, Vals AI), agent evaluation (task completion), output evaluation (quality scoring), and operator evaluation (how effectively an operator uses AI). Each layer answers a different question and requires different methods.",
             },
             {
               question: "What is the difference between model evals and operator evals?",
               answer:
-                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model — GPT, Claude, Gemini — using standardized test prompts. Operator evals (SigRank) evaluate the human — the developer, coder, or AI user — using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?'",
+                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model — GPT, Claude, Gemini — using standardized test prompts. Operator evals (SigRank) evaluate the operator — the developer, coder, or AI user — using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?'",
             },
             {
               question: "How does SigRank evaluate operators?",
@@ -57,7 +57,7 @@ export default function AiEvaluationPage() {
             {
               question: "Is SigRank the only operator evaluation platform?",
               answer:
-                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the humans using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.",
+                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the operators using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.",
             },
           ]),
         ]}
@@ -80,7 +80,7 @@ export default function AiEvaluationPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Model evals, agent evals, and output evals all exist. Operator evals
-          — measuring the human directing the AI — did not. SigRank fills that
+          — measuring the operator directing the AI — did not. SigRank fills that
           gap with public, content-free, continuous evaluation.
         </p>
       </div>
@@ -153,13 +153,13 @@ export default function AiEvaluationPage() {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-semibold mb-3">Operator Evaluation</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Telemetry-based evaluations that measure how effectively a human
+            Telemetry-based evaluations that measure how effectively an
             operator uses AI — the cascade architecture, not the model
             capability.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Subject:</strong> the human
+              <strong className="text-foreground">Subject:</strong> the
               operator
             </li>
             <li>
@@ -186,7 +186,7 @@ export default function AiEvaluationPage() {
         <p className="text-muted-foreground">
           Two operators using the same model, the same tools, and similar
           prompts can have 100× different Yield. The difference is the cascade
-          architecture — how the human structures context reuse, output
+          architecture — how the operator structures context reuse, output
           extraction, and input minimization. Model evals cannot see this.
           Agent evals cannot see this. Output evals cannot see this. Only
           operator evals can.
@@ -267,7 +267,7 @@ export default function AiEvaluationPage() {
               performance. It spans four layers: model evaluation (benchmarks
               like MMLU, Vals AI), agent evaluation (task completion), output
               evaluation (quality scoring), and operator evaluation (how
-              effectively a human uses AI). Each layer answers a different
+              effectively an operator uses AI). Each layer answers a different
               question and requires different methods.
             </dd>
           </div>
@@ -276,7 +276,7 @@ export default function AiEvaluationPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI
               model — GPT, Claude, Gemini — using standardized test prompts.
-              Operator evals (SigRank) evaluate the human — the developer,
+              Operator evals (SigRank) evaluate the operator — the developer,
               coder, or AI user — using token telemetry from real sessions.
               Model evals answer &quot;which model is best?&quot; Operator evals
               answer &quot;who is the best AI user?&quot;
@@ -308,7 +308,7 @@ export default function AiEvaluationPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               Yes. SigRank is the only platform running public operator evals.
               All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging
-              Face Open LLM) evaluate models, not the humans using them.
+              Face Open LLM) evaluate models, not the operators using them.
               Braintrust and Langfuse evaluate AI applications privately, not
               developers publicly.
             </dd>

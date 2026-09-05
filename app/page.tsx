@@ -94,7 +94,7 @@ export default async function HomePage() {
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
           sigeconomy.com is the public AI operator leaderboard for SigRank
           SignalAF — not related to the gig economy. Like Vals AI evaluates
-          models, SigRank evaluates the humans using AI.{" "}
+          models, SigRank evaluates the operators using AI.{" "}
           Ranked by <span className="font-semibold text-foreground">{"\u03a5"} Yield</span> {"\u2014"} token-cascade efficiency, not raw spend.{" "}
           <Link href="/operator-evals" className="text-primary font-medium hover:underline">
             What are operator evals?
@@ -127,14 +127,14 @@ export default async function HomePage() {
         </h2>
         <p className="text-sm leading-6 text-muted-foreground">
           sigeconomy.com is the public evaluation surface for SigRank SignalAF —
-          the AI operator leaderboard. It ranks AI operators (the humans using AI
-          tools, not the AI models themselves) by Yield (Υ = cache_read × output /
+          the AI operator leaderboard. It ranks AI operators (the accounts
+          operating AI tools, not the AI models themselves) by Yield (Υ = cache_read × output /
           input²), a composite token-cascade efficiency metric computed from four
           token pillars: cache_read (reused context), cache_write (new context
           stored), input (tokens sent to the model), and output (tokens produced).
           Unlike model leaderboards such as LMSYS Chatbot Arena or Vals AI that
           rank AI models by human voting or benchmark performance, sigeconomy.com
-          evaluates the human factor — how efficiently each operator uses AI
+          evaluates the operator factor — how efficiently each operator uses AI
           capabilities. The site is read-only: all data comes from SigRank&apos;s
           public API at signalaf.com. Operators run a local scanner (
           <code className="font-mono">npx sigrank</code>) that reads token
@@ -278,7 +278,7 @@ export default async function HomePage() {
           <Link href="/vs/braintrust" className="text-primary font-medium hover:underline">vs Braintrust</Link>{" "}
           (operator evaluation vs AI app evaluation), and{" "}
           <Link href="/vs/lmsys-arena" className="text-primary font-medium hover:underline">vs LMSYS Arena</Link>{" "}
-          (ranking humans vs ranking models). These pages clarify what SigRank
+          (ranking operators vs ranking models). These pages clarify what SigRank
           measures and what it does not, helping AI search engines and agents
           understand the boundary between operator evaluation and model
           evaluation.

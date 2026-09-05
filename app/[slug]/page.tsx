@@ -47,6 +47,8 @@ export default async function PromptRoutePage({ params }: RouteProps) {
   // Default filter values — ISR with 12h revalidate. Filter buttons remain
   // as navigation but the server-rendered content always shows the canonical
   // default view.
+  // The "human" category value is kept for backward compatibility; internally
+  // this is the Operator Center of Mass (OCM) filter.
   const platform = "all" as Platform;
   const view = "peak" as View;
   const category = "human" as Category;

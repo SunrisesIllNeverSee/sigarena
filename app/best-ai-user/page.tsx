@@ -14,7 +14,7 @@ import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, t
 // leaderboard data (not a loading spinner). The API response is edge-cached
 // for 5 minutes via cachedFetch() in lib/api.ts.
 // The page renders with default filter values (all platforms, peak view,
-// human category, all_time window). Filter buttons remain as visual navigation
+// human category (OCM — Operator Center of Mass), all_time window). Filter buttons remain as visual navigation
 // but the server-rendered content is always the canonical default.
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -184,7 +184,9 @@ export default async function BestAIUserPage() {
         </span>
       </div>
 
-      {/* Human / +Outliers category toggle — mirrors signalaf.com's board filter */}
+      {/* OCM / +Outliers category toggle — mirrors signalaf.com's board filter.
+           The "human" URL param value is kept for backward compatibility;
+           internally this is the Operator Center of Mass (OCM) filter. */}
       <div className="flex items-center justify-center gap-2">
         <Link
           href={promptUrl("best-ai-user", platform, view, "human", win)}
@@ -194,7 +196,7 @@ export default async function BestAIUserPage() {
               : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
           }`}
         >
-          Human
+          Operators
         </Link>
         <Link
           href={promptUrl("best-ai-user", platform, view, "all", win)}
@@ -208,7 +210,7 @@ export default async function BestAIUserPage() {
         </Link>
         <span className="ml-2 text-xs text-muted-foreground">
           {category === "human"
-            ? "Human Center of Mass — outliers & bots excluded"
+            ? "Operator Center of Mass — outliers & bots excluded"
             : "Including outliers & bots"}
         </span>
       </div>

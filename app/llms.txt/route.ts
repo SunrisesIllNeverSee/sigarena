@@ -31,7 +31,7 @@ SigRank SignalAF (sigeconomy.com) is the public evaluation platform for AI opera
 It reads from SigRank's public API (signalaf.com) and evaluates operators on
 operator telemetry and leaderboard dimensions — the "yield cascade." Unlike model
 evals (Vals AI, LMSYS Arena, LiveBench), this runs public OPERATOR evals —
-evaluating the account-level subjects operating AI tools, not the models themselves. Upsilon measures; SigRank presents public proof.
+evaluating operators, not the models themselves. Upsilon measures; SigRank presents public proof.
 
 Yield (Υ) = (cache_read × output) / input² — token-cascade efficiency, not raw spend.
 Volume is noise. Yield is signal. The operator who burns 10M tokens to produce 1K output

@@ -110,7 +110,7 @@ export default function PublicOperatorEvalsPage() {
           </h2>
           <p>
             Models are evaluated. Operators are not. There is no Vals AI for the
-            human wielding the AI. No LMSYS Arena for the person writing the
+            operator wielding the AI. No LMSYS Arena for the person writing the
             prompts. No LiveBench for the operator managing the context window.
             Operator skill is vibes \u2014 &quot;they seem productive,&quot;
             &quot;they&apos;re fast,&quot; &quot;they ship a lot.&quot;

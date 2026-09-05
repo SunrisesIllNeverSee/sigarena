@@ -8,12 +8,12 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "Operator Evals vs Model Evals \u2014 Different Subjects, Different Metrics",
   description:
-    "Model evals measure AI models. Operator evals measure the humans using AI. Why they're complementary, not competing \u2014 and why both matter.",
+    "Model evals measure AI models. Operator evals measure operators using AI. Why they're complementary, not competing \u2014 and why both matter.",
   alternates: { canonical: "/articles/operator-evals-vs-model-evals" },
   openGraph: {
     title: "Operator Evals vs Model Evals \u2014 Different Subjects, Different Metrics",
     description:
-      "Model evals measure AI models. Operator evals measure the humans using AI. Why they're complementary, not competing \u2014 and why both matter.",
+      "Model evals measure AI models. Operator evals measure operators using AI. Why they're complementary, not competing \u2014 and why both matter.",
     url: "https://sigeconomy.com/articles/operator-evals-vs-model-evals",
     type: "article",
   },
@@ -26,7 +26,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
         data={[
           articleSchema(
             "Operator Evals vs Model Evals \u2014 Different Subjects, Different Metrics",
-            "Model evals measure AI models. Operator evals measure the humans using AI. Why they're complementary, not competing \u2014 and why both matter.",
+            "Model evals measure AI models. Operator evals measure operators using AI. Why they're complementary, not competing \u2014 and why both matter.",
             "/articles/operator-evals-vs-model-evals",
           ),
           breadcrumbSchema([
@@ -39,7 +39,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
               question:
                 "What is the difference between operator evals and model evals?",
               answer:
-                "Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate the humans using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.",
+                "Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate operators using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.",
             },
             {
               question: "Are operator evals and model evals competing?",
@@ -54,7 +54,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
             {
               question: "What is the only public operator eval?",
               answer:
-                "SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not the humans using them.",
+                "SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not the operators using them.",
             },
             {
               question: "Why is there a missing layer in AI evaluation?",
@@ -64,7 +64,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
             {
               question: "Does SigRank rank Claude, GPT, and Gemini, or does it rank developers?",
               answer:
-                "SigRank ranks developers \u2014 the humans using AI. Vals AI and LMSYS Arena rank the models (Claude, GPT, Gemini). SigRank is the missing layer: public evals for the person, not the platform.",
+                "SigRank ranks developers \u2014 the operators using AI. Vals AI and LMSYS Arena rank the models (Claude, GPT, Gemini). SigRank is the missing layer: public evals for the person, not the platform.",
             },
           ]),
         ]}
@@ -103,13 +103,13 @@ export default function OperatorEvalsVsModelEvalsPage() {
           The operator eval
         </h2>
         <p>
-          What SigRank does. Telemetry from real sessions. Subject = the human.
+          What SigRank does. Telemetry from real sessions. Subject = the operator.
           Question = &quot;who is the best AI operator?&quot; Method = token
           cascade analysis. Output = Yield (\u03a5).
         </p>
         <p>
           Operator evals measure telemetry from real work sessions \u2014 not
-          test prompts, not benchmarks. The subject is the human operator. The
+          test prompts, not benchmarks. The subject is the operator. The
           question is &quot;who is the best AI operator?&quot; The method is
           token cascade analysis. The output is Yield (\u03a5), a single
           comparable number that reflects how well the operator compounds signal
@@ -137,7 +137,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
                   The AI model
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">
-                  The human operator
+                  The operator
                 </td>
               </tr>
               <tr className="border-b border-border">
@@ -223,13 +223,13 @@ export default function OperatorEvalsVsModelEvalsPage() {
         </h2>
         <p>
           Model evals became infrastructure. Operator evals will too. The gap:
-          nobody was evaluating the human. SigRank fills that gap.
+          nobody was evaluating the operator. SigRank fills that gap.
         </p>
         <p>
           Vals AI, LMSYS Arena, and LiveBench built the public evaluation layer
           for models. That layer is now infrastructure \u2014 every AI lab checks
           it, every buyer references it. The same thing will happen for operator
-          evals. The gap was simple: nobody was evaluating the human wielding
+          evals. The gap was simple: nobody was evaluating the operator wielding
           the model. SigRank is the public evaluation layer for operators.
         </p>
       </div>
@@ -244,7 +244,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
               What is the difference between operator evals and model evals?
             </h3>
             <p>
-              Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate the humans using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.
+              Model evals evaluate AI models (GPT, Claude, Gemini) using standardized benchmarks. Operator evals evaluate operators using AI using token telemetry from real sessions. The subject is different: one evaluates the tool, the other evaluates the person wielding it.
             </p>
           </div>
           <div className="space-y-2">
@@ -268,7 +268,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
               What is the only public operator eval?
             </h3>
             <p>
-              SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not the humans using them.
+              SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench) evaluate models, not the operators using them.
             </p>
           </div>
           <div className="space-y-2">
@@ -284,7 +284,7 @@ export default function OperatorEvalsVsModelEvalsPage() {
               Does SigRank rank Claude, GPT, and Gemini, or does it rank developers?
             </h3>
             <p>
-              SigRank ranks developers {"\u2014"} the humans using AI. Vals AI and LMSYS Arena rank the models (Claude, GPT, Gemini). SigRank is the missing layer: public evals for the person, not the platform.
+              SigRank ranks developers {"\u2014"} the operators using AI. Vals AI and LMSYS Arena rank the models (Claude, GPT, Gemini). SigRank is the missing layer: public evals for the person, not the platform.
             </p>
           </div>
         </div>

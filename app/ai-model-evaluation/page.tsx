@@ -8,7 +8,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI Model Evaluation vs Operator Evaluation",
   description:
-    "AI model evaluation is necessary but not sufficient. SigRank is the complementary operator layer — public evals for the humans using AI. Ranked by Yield (Υ).",
+    "AI model evaluation is necessary but not sufficient. SigRank is the complementary operator layer — public evals for operators using AI. Ranked by Yield (Υ).",
   alternates: { canonical: "/ai-model-evaluation" },
   openGraph: {
     title: "AI Model Evaluation vs Operator Evaluation | SigRank SignalAF",
@@ -26,7 +26,7 @@ export default function AiModelEvaluationPage() {
         data={[
           articleSchema(
             "AI Model Evaluation vs Operator Evaluation",
-            "AI model evaluation is necessary but not sufficient. SigRank is the complementary operator layer — public evals for the humans using AI.",
+            "AI model evaluation is necessary but not sufficient. SigRank is the complementary operator layer — public evals for operators using AI.",
             "/ai-model-evaluation",
           ),
           breadcrumbSchema([
@@ -42,7 +42,7 @@ export default function AiModelEvaluationPage() {
             {
               question: "What is the difference between model evaluation and operator evaluation?",
               answer:
-                "Model evaluation tests the AI model — GPT, Claude, Gemini — on standardized benchmarks. Operator evaluation (SigRank) tests the human operator — the developer, coder, or AI user — using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?' They evaluate different subjects, use different methods, and answer different questions.",
+                "Model evaluation tests the AI model — GPT, Claude, Gemini — on standardized benchmarks. Operator evaluation (SigRank) tests the operator — the developer, coder, or AI user — using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?' They evaluate different subjects, use different methods, and answer different questions.",
             },
             {
               question: "Why do you need both model evaluation and operator evaluation?",
@@ -52,7 +52,7 @@ export default function AiModelEvaluationPage() {
             {
               question: "How does SigRank complement model evaluation?",
               answer:
-                "SigRank is a complement, not a competitor, to model evaluation. Model evals (Vals AI, LMSYS Arena, LiveBench) already cover model quality well. SigRank covers the layer they cannot: the human operator. SigRank measures operators using Yield (Υ) = (cache_read × output) / input² from four token pillars — input, output, cache-read, cache-write. Token counts only, never prompt content. Together, model evals and operator evals provide a complete picture of AI system performance.",
+                "SigRank is a complement, not a competitor, to model evaluation. Model evals (Vals AI, LMSYS Arena, LiveBench) already cover model quality well. SigRank covers the layer they cannot: the operator. SigRank measures operators using Yield (Υ) = (cache_read × output) / input² from four token pillars — input, output, cache-read, cache-write. Token counts only, never prompt content. Together, model evals and operator evals provide a complete picture of AI system performance.",
             },
           ]),
         ]}
@@ -112,13 +112,13 @@ export default function AiModelEvaluationPage() {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-semibold mb-3">Operator Evaluation</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Telemetry-based evaluations that measure how effectively a human
+            Telemetry-based evaluations that measure how effectively an
             operator uses AI — the cascade architecture, not the model
             capability.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Subject:</strong> the human
+              <strong className="text-foreground">Subject:</strong> the
               operator
             </li>
             <li>
@@ -148,7 +148,7 @@ export default function AiModelEvaluationPage() {
           model. But it does not tell you how close any given operator gets to
           that ceiling. Two operators using the same model, the same tools, and
           similar prompts can have 100× different Yield. The difference is the
-          cascade architecture — how the human structures context reuse, output
+          cascade architecture — how the operator structures context reuse, output
           extraction, and input minimization.
         </p>
         <p className="text-muted-foreground">
@@ -165,7 +165,7 @@ export default function AiModelEvaluationPage() {
           Model evaluation and operator evaluation are complements, not
           competitors. Model evals (Vals AI, LMSYS Arena, LiveBench) already
           cover model quality well. SigRank covers the layer they cannot: the
-          human operator. Together, they provide a complete picture of AI
+          operator. Together, they provide a complete picture of AI
           system performance — the model&apos;s capability and the
           operator&apos;s skill.
         </p>
@@ -239,7 +239,7 @@ export default function AiModelEvaluationPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               Model evaluation tests the AI model — GPT, Claude, Gemini — on
               standardized benchmarks. Operator evaluation (SigRank) tests the
-              human operator — the developer, coder, or AI user — using token
+              operator — the developer, coder, or AI user — using token
               telemetry from real sessions. Model evals answer &quot;which model
               is best?&quot; Operator evals answer &quot;who is the best AI
               user?&quot; They evaluate different subjects, use different
@@ -263,7 +263,7 @@ export default function AiModelEvaluationPage() {
             <dd className="text-sm text-muted-foreground mt-1">
               SigRank is a complement, not a competitor, to model evaluation.
               Model evals (Vals AI, LMSYS Arena, LiveBench) already cover model
-              quality well. SigRank covers the layer they cannot: the human
+              quality well. SigRank covers the layer they cannot: the
               operator. SigRank measures operators using Yield (Υ) = (cache_read
               × output) / input² from four token pillars — input, output,
               cache-read, cache-write. Token counts only, never prompt content.

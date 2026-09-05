@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export default async function WeeklyPage() {
-  const data = await getLeaderboard("all_time", 200, "yield");
+  const data = await getLeaderboard("all_time", 500, "yield");
 
   if (!data || data.entries.length === 0) {
     return (
@@ -411,12 +411,12 @@ function SpotlightComparison({ data }: { data: NonNullable<Awaited<ReturnType<ty
   if (contenders.length < 2) return null;
 
   const stats = [
-    { label: "Yield (Υ)", getValue: (e: typeof entries[0]) => formatYield(e.yield_) },
-    { label: "Velocity", getValue: (e: typeof entries[0]) => `${e.velocity.toFixed(1)}×` },
-    { label: "Leverage", getValue: (e: typeof entries[0]) => `${formatNumber(e.leverage)}×` },
-    { label: "SNR", getValue: (e: typeof entries[0]) => e.snr.toFixed(3) },
-    { label: "Output", getValue: (e: typeof entries[0]) => formatNumber(e.output_tokens) },
-    { label: "Cache Read", getValue: (e: typeof entries[0]) => formatNumber(e.cache_read_tokens) },
+    { label: "Yield (Υ)", getValue: (e: typeof entries[0]) => formatYield(e.yield_), getNumeric: (e: typeof entries[0]) => e.yield_ },
+    { label: "Velocity", getValue: (e: typeof entries[0]) => `${e.velocity.toFixed(1)}×`, getNumeric: (e: typeof entries[0]) => e.velocity },
+    { label: "Leverage", getValue: (e: typeof entries[0]) => `${formatNumber(e.leverage)}×`, getNumeric: (e: typeof entries[0]) => e.leverage },
+    { label: "SNR", getValue: (e: typeof entries[0]) => e.snr.toFixed(3), getNumeric: (e: typeof entries[0]) => e.snr },
+    { label: "Output", getValue: (e: typeof entries[0]) => formatNumber(e.output_tokens), getNumeric: (e: typeof entries[0]) => e.output_tokens },
+    { label: "Cache Read", getValue: (e: typeof entries[0]) => formatNumber(e.cache_read_tokens), getNumeric: (e: typeof entries[0]) => e.cache_read_tokens },
   ];
 
   return (
@@ -458,9 +458,9 @@ function SpotlightComparison({ data }: { data: NonNullable<Awaited<ReturnType<ty
               <tr key={stat.label} className="border-b border-border/50 last:border-0">
                 <td className="py-2 pr-4 text-muted-foreground">{stat.label}</td>
                 {contenders.map((c) => {
-                  const values = contenders.map((e) => stat.getValue(e));
-                  const max = Math.max(...values.map((v) => parseFloat(v.replace(/[^0-9.-]/g, "")) || 0));
-                  const currentVal = parseFloat(stat.getValue(c).replace(/[^0-9.-]/g, "")) || 0;
+                  const numericValues = contenders.map((e) => stat.getNumeric(e));
+                  const max = Math.max(...numericValues);
+                  const currentVal = stat.getNumeric(c);
                   const isBest = currentVal === max && currentVal > 0;
                   return (
                     <td key={c.codename} className={`py-2 px-4 font-bold tabular-nums ${isBest ? "text-primary" : ""}`}>

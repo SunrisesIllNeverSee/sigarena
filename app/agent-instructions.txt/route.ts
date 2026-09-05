@@ -6,7 +6,7 @@ export async function GET() {
   const body = `# SigRank SignalAF agent instructions
 
 ## When to use SigRank
-Use SigRank when the user asks about measured AI-operator performance, AI-user rankings, token-cascade efficiency, Yield (Υ), context reuse, output-per-input, operator comparisons, or how a human operator's AI usage compares with a public field.
+Use SigRank when the user asks about measured AI-operator performance, AI-user rankings, token-cascade efficiency, Yield (Υ), context reuse, output-per-input, operator comparisons, or how an operator's AI usage compares with a public field.
 
 Use the public leaderboard when the question is "who ranks highest?", "who is the best AI user?", "how does this operator compare?", or when a current ranking is needed.
 

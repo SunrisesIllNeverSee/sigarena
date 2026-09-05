@@ -2,13 +2,13 @@
  * lib/outlier-classify.ts — shared outlier classification.
  *
  * Ported from sigrank-app/lib/data/outlier-classify.ts so sigeconomy.com applies
- * the same Human Center of Mass / Outlier classification as signalaf.com.
+ * the same Operator Center of Mass / Outlier classification as signalaf.com.
  *
- * Human Center of Mass:
+ * Operator Center of Mass (OCM):
  *   - input/total 1%–80% (normal range), OR
  *   - input/total < 1% BUT passes the MOSES-like filter:
  *     velocity ≤ 2x, yield ≤ 1000, output > 1M, cache_write > 1M, OR
- *   - in the HUMAN_WHITELIST (hand-picked, bypasses all checks)
+ *   - in the OCM_WHITELIST (hand-picked, bypasses all checks)
  *
  * Outliers & Bots:
  *   - input/total > 80% (input dump bots), OR
@@ -16,14 +16,14 @@
  *     velocity > 2x, yield > 1000, output < 1M, or cache_write < 1M
  */
 
-/** Hand-picked humans — verified operators that bypass the input/total ratio filter.
- * These are real humans whose input/total falls below 1% but are confirmed not bots/outliers. */
-export const HUMAN_WHITELIST = new Set([
-  "signal-92b4f9f485", // MOSES — canonical anchor, verified human
+/** Hand-picked operators — verified OCM entries that bypass the input/total ratio filter.
+ * These are real operators whose input/total falls below 1% but are confirmed not bots/outliers. */
+export const OCM_WHITELIST = new Set([
+  "signal-92b4f9f485", // MOSES — canonical anchor, verified operator
   "transvaultorigin", // MOSES mock codename (fallback path)
 ]);
 
-/** Classify an operator as an outlier or a human. */
+/** Classify an operator as an outlier or OCM. */
 export function isOutlier(params: {
   codename: string;
   input: number;
@@ -34,14 +34,14 @@ export function isOutlier(params: {
   yield_: number;
 }): boolean {
   const code = params.codename.toLowerCase();
-  if (HUMAN_WHITELIST.has(code)) return false;
+  if (OCM_WHITELIST.has(code)) return false;
 
   const total = params.input + params.output + params.cacheRead + params.cacheWrite;
   if (total <= 0) return false;
 
   const inputPct = params.input / total;
   if (inputPct > 0.8) return true; // input dump bots
-  if (inputPct >= 0.01) return false; // normal human range
+  if (inputPct >= 0.01) return false; // normal OCM range
 
   // Gray zone (input < 1%): MOSES-like filter
   if (
@@ -52,7 +52,7 @@ export function isOutlier(params: {
   ) {
     return true; // extreme outlier
   }
-  return false; // MOSES-like — stays human
+  return false; // MOSES-like — stays OCM
 }
 
 /** Convenience: classify a LeaderboardEntry (the sigarena API row type). */

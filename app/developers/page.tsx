@@ -18,7 +18,7 @@ export default function DevelopersPage() {
           Build against the public AI operator leaderboard, call SigRank from an
           agent, or inspect the machine-readable contracts behind sigeconomy.com.
           sigeconomy.com is the public evaluation surface for SigRank SignalAF —
-          the AI operator leaderboard that ranks humans using AI tools by Yield
+          the AI operator leaderboard that ranks operators using AI tools by Yield
           (Υ) token-cascade efficiency.
         </p>
       </header>
