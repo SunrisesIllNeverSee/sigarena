@@ -296,7 +296,7 @@ export default async function AIUserLeaderboardPage() {
             <ExternalLink className="h-4 w-4 text-muted-foreground" />
             <span>SignalAF privacy policy</span>
           </Link>
-          <Link href="https://github.com/SunrisesIllNeverSee/otep-spec" className="flex items-center gap-2 rounded-lg border border-border p-3 text-sm hover:border-primary/40 transition-colors">
+          <Link href="https://github.com/SunrisesIllNeverSee/tteop-spec" className="flex items-center gap-2 rounded-lg border border-border p-3 text-sm hover:border-primary/40 transition-colors">
             <ExternalLink className="h-4 w-4 text-muted-foreground" />
             <span>TTEOP — open telemetry protocol</span>
           </Link>

@@ -123,6 +123,22 @@ export default function WhySearchResultsShowModelsPage() {
           organic result was a model leaderboard, model benchmark, or
           model-related tool. <strong>None ranked human AI users.</strong>
         </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/serp/ai-user-leaderboard-2026-09-04.png"
+          alt="Google SERP for &quot;ai user leaderboard&quot; on September 4, 2026 — all first-page results are model leaderboards, none rank AI users"
+          width={1280}
+          height={800}
+          className="w-full rounded-lg border border-border"
+          loading="lazy"
+        />
+        <p className="text-xs text-muted-foreground">
+          Full-page SERP capture. Text extraction is also available at{" "}
+          <a href="/serp/ai-user-leaderboard-2026-09-04.txt" className="text-primary hover:underline">
+            /serp/ai-user-leaderboard-2026-09-04.txt
+          </a>
+          .
+        </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

@@ -135,13 +135,13 @@ export default function AiOperatorStandardPage() {
       <section className="rounded-lg border border-border bg-card p-6">
         <h2 className="text-2xl font-semibold">Canonical references</h2>
         <p className="mt-3 text-sm text-muted-foreground">
-          TTEOP is maintained in the otep-spec repository. SignalAF is the
+          TTEOP is maintained in the tteop-spec repository. SignalAF is the
           public reference implementation. This site is a read-only discovery
           surface and points canonical definitions back to the protocol and
           platform.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <Link href="https://github.com/SunrisesIllNeverSee/otep-spec" className="text-primary hover:underline">TTEOP protocol (otep-spec) →</Link>
+          <Link href="https://github.com/SunrisesIllNeverSee/tteop-spec" className="text-primary hover:underline">TTEOP protocol (tteop-spec) →</Link>
           <Link href="https://signalaf.com/methodology" className="text-primary hover:underline">SignalAF methodology →</Link>
           <Link href="/operator-evals" className="text-primary hover:underline">Operator evals →</Link>
           <Link href="/ai-operator-metrics" className="text-primary hover:underline">Operator metrics →</Link>
