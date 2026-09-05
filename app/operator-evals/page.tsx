@@ -8,12 +8,12 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "Public LLM Operator Evals — The Public Evaluation Layer for AI Operators",
   description:
-    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI. Ranked by Yield (Υ) — token-cascade efficiency.",
+    "Public LLM operator evals — the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the operators using AI. Ranked by Yield (Υ) — token-cascade efficiency.",
   alternates: { canonical: "/operator-evals" },
   openGraph: {
     title: "Public LLM Operator Evals — SigRank SignalAF",
     description:
-      "The public evaluation layer for AI operators. Public evals for the humans wielding AI.",
+      "The public evaluation layer for AI operators. Public evals for the operators wielding AI.",
     url: "https://sigeconomy.com/operator-evals",
     type: "website",
   },
@@ -27,7 +27,7 @@ export default function OperatorEvalsPage() {
         data={[
           articleSchema(
             "Public LLM Operator Evals \u2014 The Public Evaluation Layer for AI Operators",
-            "Public LLM operator evals \u2014 the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the humans using AI.",
+            "Public LLM operator evals \u2014 the public evaluation layer for AI operators. Like Vals AI evaluates models, SigRank evaluates the operators using AI.",
             "/operator-evals",
           ),
           breadcrumbSchema([
@@ -38,7 +38,7 @@ export default function OperatorEvalsPage() {
             {
               question: "What are public LLM operator evals?",
               answer:
-                "Public LLM operator evals are public evaluations of AI operators \u2014 the humans using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively a person uses AI, based on token telemetry from their real coding sessions.",
+                "Public LLM operator evals are public evaluations of AI operators \u2014 the account-level subjects using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.",
             },
             {
               question: "How are AI users measured and ranked?",
@@ -48,7 +48,7 @@ export default function OperatorEvalsPage() {
             {
               question: "What is the difference between evaluating AI models and evaluating AI users?",
               answer:
-                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model \u2014 GPT, Claude, Gemini \u2014 using standardized test prompts. Operator evals (SigRank) evaluate the human \u2014 the developer, coder, or AI user \u2014 using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who is the best AI user?'",
+                "Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model \u2014 GPT, Claude, Gemini \u2014 using standardized test prompts. Operator evals (SigRank) evaluate the operator \u2014 the account-level subject driving the AI \u2014 using token telemetry from real sessions. Model evals answer 'which model is best?' Operator evals answer 'who ranks highest at operating AI under the stated metric and time window?'",
             },
             {
               question: "Why do public benchmarks for AI coders matter?",
@@ -68,12 +68,12 @@ export default function OperatorEvalsPage() {
             {
               question: "Is SigRank the only public leaderboard for AI developers?",
               answer:
-                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the humans using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.",
+                "Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the operators using them. Braintrust and Langfuse evaluate AI applications privately, not operators publicly.",
             },
             {
               question: "Does SigRank work with Claude, GPT, Cursor, and Copilot?",
               answer:
-                "Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry \u2014 Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human's cascade architecture, not the AI model's capability.",
+                "Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry \u2014 Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the operator's cascade architecture, not the AI model's capability.",
             },
             {
               question: "Why not just count tokens?",
@@ -88,12 +88,12 @@ export default function OperatorEvalsPage() {
             {
               question: "Doesn't the model matter more than the user?",
               answer:
-                "The data says no. Two operators using the same model, the same tools, and similar prompts can have 100× different Yield. The difference is the cascade architecture — how the human structures context reuse, output extraction, and input minimization. SigRank measures the human's skill, not the model's capability. Model evals (Vals AI, LMSYS) already cover model quality.",
+                "The data says no. Two operators using the same model, the same tools, and similar prompts can have 100× different Yield. The difference is the cascade architecture — how the operator structures context reuse, output extraction, and input minimization. SigRank measures the operator's cascade architecture, not the model's capability. Model evals (Vals AI, LMSYS) already cover model quality.",
             },
             {
               question: "Is SigRank just for Claude users?",
               answer:
-                "No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the human's cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.",
+                "No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the operator's cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.",
             },
           ]),
         ]}
@@ -104,11 +104,11 @@ export default function OperatorEvalsPage() {
           <span className="gradient-text">Public LLM Operator Evals</span>
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Public LLM operator evals are public evaluations of human AI operators
-          — the people who drive AI tools — not autonomous agents. Like Vals AI
-          evaluates models, SigRank evaluates the humans using AI. Performative
-          evals assess the AI user&apos;s behavior in real tasks, not just the
-          model&apos;s output quality.
+          Public LLM operator evals are public evaluations of AI operators
+          — the account-level subjects who drive AI tools — not autonomous
+          agents. Like Vals AI evaluates models, SigRank evaluates the operators
+          using AI. Performative evals assess the operator&apos;s behavior in
+          real tasks, not just the model&apos;s output quality.
         </p>
       </div>
 
@@ -118,8 +118,8 @@ export default function OperatorEvalsPage() {
         </p>
         <p className="mt-3 text-white/90 max-w-2xl mx-auto">
           Vals AI, LMSYS Arena, and LiveBench run public evals for LLM models.
-          SigRank runs public evals for LLM operators \u2014 the humans wielding
-          AI every day.
+          SigRank runs public evals for LLM operators \u2014 the account-level
+          subjects wielding AI every day.
         </p>
       </div>
 
@@ -156,18 +156,17 @@ export default function OperatorEvalsPage() {
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-semibold mb-3">Operator Evals</h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Telemetry-based evaluations that measure how effectively a human
-            operator uses AI \u2014 the cascade architecture, not the model
-            capability.
+            Telemetry-based evaluations that measure how effectively an operator
+            uses AI \u2014 the cascade architecture, not the model capability.
           </p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Subject:</strong> the human
-              operator
+              <strong className="text-foreground">Subject:</strong> the operator
+              (account-level subject)
             </li>
             <li>
-              <strong className="text-foreground">Question:</strong> who is the
-              best AI operator?
+              <strong className="text-foreground">Question:</strong> who ranks
+              highest at operating AI under the stated metric and time window?
             </li>
             <li>
               <strong className="text-foreground">Method:</strong> token
@@ -280,7 +279,7 @@ export default function OperatorEvalsPage() {
               <tr className="border-b border-border bg-primary/5">
                 <td className="px-4 py-3 font-semibold">SigRank</td>
                 <td className="px-4 py-3 text-muted-foreground">
-                  AI operators (humans)
+                  AI operators (account-level subjects)
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">Yes</td>
                 <td className="px-4 py-3 text-muted-foreground">
@@ -374,7 +373,7 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">What are public LLM operator evals?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Public LLM operator evals are public evaluations of AI operators {"\u2014"} the humans using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively a person uses AI, based on token telemetry from their real coding sessions.
+              Public LLM operator evals are public evaluations of AI operators {"\u2014"} the account-level subjects using AI. Unlike model evals (Vals AI, LMSYS Arena) that test AI models on benchmarks, operator evals measure how effectively an operator uses AI, based on token telemetry from their real coding sessions.
             </p>
           </div>
           <div>
@@ -386,7 +385,7 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">What is the difference between evaluating AI models and evaluating AI users?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model {"\u2014"} GPT, Claude, Gemini {"\u2014"} using standardized test prompts. Operator evals (SigRank) evaluate the human {"\u2014"} the developer, coder, or AI user {"\u2014"} using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who is the best AI user?&quot;
+              Model evals (Vals AI, LMSYS Arena, LiveBench) evaluate the AI model {"\u2014"} GPT, Claude, Gemini {"\u2014"} using standardized test prompts. Operator evals (SigRank) evaluate the operator {"\u2014"} the account-level subject driving the AI {"\u2014"} using token telemetry from real sessions. Model evals answer &quot;which model is best?&quot; Operator evals answer &quot;who ranks highest at operating AI under the stated metric and time window?&quot;
             </p>
           </div>
           <div>
@@ -410,13 +409,13 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">Is SigRank the only public leaderboard for AI developers?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the humans using them. Braintrust and Langfuse evaluate AI applications privately, not developers publicly.
+              Yes. SigRank is the only platform running public operator evals. All other public evals (Vals AI, LMSYS Arena, LiveBench, Hugging Face Open LLM) evaluate models, not the operators using them. Braintrust and Langfuse evaluate AI applications privately, not operators publicly.
             </p>
           </div>
           <div>
             <h3 className="font-semibold text-foreground">Does SigRank work with Claude, GPT, Cursor, and Copilot?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry {"\u2014"} Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the human&apos;s cascade architecture, not the AI model&apos;s capability.
+              Yes. SigRank measures token-cascade efficiency from any AI coding tool that produces token telemetry {"\u2014"} Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and others. The Yield metric is platform-agnostic because it measures the operator&apos;s cascade architecture, not the AI model&apos;s capability.
             </p>
           </div>
           <div>
@@ -434,13 +433,13 @@ export default function OperatorEvalsPage() {
           <div>
             <h3 className="font-semibold text-foreground">Doesn&apos;t the model matter more than the user?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              The data says no. Two operators using the same model, the same tools, and similar prompts can have 100{"\u00d7"} different Yield. The difference is the cascade architecture {"\u2014"} how the human structures context reuse, output extraction, and input minimization. SigRank measures the human&apos;s skill, not the model&apos;s capability. Model evals (Vals AI, LMSYS) already cover model quality.
+              The data says no. Two operators using the same model, the same tools, and similar prompts can have 100{"\u00d7"} different Yield. The difference is the cascade architecture {"\u2014"} how the operator structures context reuse, output extraction, and input minimization. SigRank measures the operator&apos;s cascade architecture, not the model&apos;s capability. Model evals (Vals AI, LMSYS) already cover model quality.
             </p>
           </div>
           <div>
             <h3 className="font-semibold text-foreground">Is SigRank just for Claude users?</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the human&apos;s cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.
+              No. SigRank is platform-agnostic. It works with Claude, ChatGPT, Gemini, Cursor, Copilot, Windsurf, Codex, and any AI coding tool that produces token telemetry. The Yield metric measures the operator&apos;s cascade architecture, which is independent of which AI model they use. The leaderboard includes operators across multiple platforms.
             </p>
           </div>
         </div>
