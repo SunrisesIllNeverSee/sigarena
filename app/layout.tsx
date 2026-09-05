@@ -8,7 +8,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
 import { WebMcpRegistrar } from "@/components/webmcp/register-tools";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const viewport: Viewport = {
   themeColor: "#3b82f6",
@@ -75,7 +74,6 @@ export default function RootLayout({
           <SiteFooter />
           <WebMcpRegistrar />
         </PostHogProvider>
-        <SpeedInsights />
         {/* Google Analytics 4 (gtag.js) — measurement ID G-JGNZVT3M8E */}
         <Script
           id="ga4-gtag-src"
