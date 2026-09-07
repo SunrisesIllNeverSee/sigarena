@@ -1,4 +1,5 @@
 import { getLeaderboard, getFullLeaderboard, sortLeaderboard } from "@/lib/api";
+import type { LeaderboardEntry } from "@/lib/api";
 import { buildWeeklyDrop } from "@/lib/campaign";
 import { formatYield, operatorDisplayName, formatNumber } from "@/lib/utils";
 import {
@@ -37,7 +38,18 @@ export const metadata: Metadata = {
 };
 
 export default async function WeeklyPage() {
-  const data = await getLeaderboard("all_time", 500, "yield");
+  // Fetch the weekly drop data (yield-sorted, for movers/rank/class distribution)
+  const data = await getLeaderboard("all_time", 100, "yield");
+
+  // Fetch per-metric top 10 directly from the signalaf.com API for the hall boards.
+  // This avoids the local-sort-from-500 workaround — the API sorts server-side.
+  const hallMetrics = ["yield", "velocity", "leverage", "snr", "efficiency", "scale_v"];
+  const hallFetches = hallMetrics.map((m) => getLeaderboard("all_time", 10, m));
+  const hallResults = await Promise.all(hallFetches);
+  const hallData: Record<string, LeaderboardEntry[]> = {};
+  hallMetrics.forEach((m, i) => {
+    hallData[m] = hallResults[i]?.entries ?? [];
+  });
 
   if (!data || data.entries.length === 0) {
     return (
@@ -288,15 +300,13 @@ export default async function WeeklyPage() {
     )}
 
     {/* Hall Top-Ten Boards — compact per-metric leaderboards from the hall.
-        Fetches the full board once (already fetched for the weekly drop),
-        then sorts locally for each metric. Shows top 5 per metric in a
-        compact grid (the hall shows top 10 — this is the weekly summary). */}
-    <HallTopTenBoards data={data} />
+        Fetches top 10 per metric directly from the signalaf.com API. */}
+    <HallTopTenBoards hallData={hallData} />
 
     {/* Spotlight Comparison — head-to-head between the #1 on different metrics.
         Picks the Yield leader vs the Velocity leader vs the Leverage leader
         and shows their stats side by side. */}
-    <SpotlightComparison data={data} />
+    <SpotlightComparison hallData={hallData} />
 
     {/* CTA */}
     <div className="rounded-2xl border border-primary/20 gradient-primary p-8 text-center text-white glow-primary">
@@ -330,7 +340,7 @@ const HALL_METRICS = [
   { id: "scale_v" as const, label: "Scale V", icon: Scale, format: (v: number) => formatNumber(v), field: "scale_v" as const },
 ];
 
-function HallTopTenBoards({ data }: { data: NonNullable<Awaited<ReturnType<typeof getLeaderboard>>> }) {
+function HallTopTenBoards({ hallData }: { hallData: Record<string, LeaderboardEntry[]> }) {
   return (
     <div className="space-y-6">
       <div>
@@ -347,11 +357,8 @@ function HallTopTenBoards({ data }: { data: NonNullable<Awaited<ReturnType<typeo
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {HALL_METRICS.map((metric) => {
-          const sorted = [...data.entries]
-            .filter((e) => typeof e[metric.field] === "number" && e[metric.field] > 0)
-            .sort((a, b) => (b[metric.field] as number) - (a[metric.field] as number))
-            .slice(0, 5);
-          if (sorted.length === 0) return null;
+          const entries = (hallData[metric.id] ?? []).slice(0, 5);
+          if (entries.length === 0) return null;
           const Icon = metric.icon;
           return (
             <div key={metric.id} className="rounded-lg border border-border bg-card p-4">
@@ -360,7 +367,7 @@ function HallTopTenBoards({ data }: { data: NonNullable<Awaited<ReturnType<typeo
                 {metric.label}
               </h3>
               <div className="mt-3 space-y-1.5">
-                {sorted.map((entry, i) => (
+                {entries.map((entry, i) => (
                   <Link
                     key={entry.codename}
                     href={`https://signalaf.com/user/${entry.codename}`}
@@ -394,29 +401,27 @@ function HallTopTenBoards({ data }: { data: NonNullable<Awaited<ReturnType<typeo
 // their stats side by side so the reader can see how different "best" looks
 // across metrics.
 // ============================================================================
-function SpotlightComparison({ data }: { data: NonNullable<Awaited<ReturnType<typeof getLeaderboard>>> }) {
-  const entries = data.entries;
-  if (entries.length < 2) return null;
+function SpotlightComparison({ hallData }: { hallData: Record<string, LeaderboardEntry[]> }) {
+  const yieldLeader = hallData["yield"]?.[0];
+  const velocityLeader = hallData["velocity"]?.[0];
+  const leverageLeader = hallData["leverage"]?.[0];
 
-  const yieldLeader = [...entries].sort((a, b) => b.yield_ - a.yield_)[0];
-  const velocityLeader = [...entries].sort((a, b) => b.velocity - a.velocity)[0];
-  const leverageLeader = [...entries].sort((a, b) => b.leverage - a.leverage)[0];
+  if (!yieldLeader) return null;
 
-  // Deduplicate — if the same operator leads multiple metrics, pick the next
   const contenders = [yieldLeader];
-  if (velocityLeader.codename !== yieldLeader.codename) contenders.push(velocityLeader);
-  if (leverageLeader.codename !== yieldLeader.codename && leverageLeader.codename !== velocityLeader.codename) {
+  if (velocityLeader && velocityLeader.codename !== yieldLeader.codename) contenders.push(velocityLeader);
+  if (leverageLeader && leverageLeader.codename !== yieldLeader.codename && leverageLeader.codename !== velocityLeader?.codename) {
     contenders.push(leverageLeader);
   }
   if (contenders.length < 2) return null;
 
   const stats = [
-    { label: "Yield (Υ)", getValue: (e: typeof entries[0]) => formatYield(e.yield_), getNumeric: (e: typeof entries[0]) => e.yield_ },
-    { label: "Velocity", getValue: (e: typeof entries[0]) => `${e.velocity.toFixed(1)}×`, getNumeric: (e: typeof entries[0]) => e.velocity },
-    { label: "Leverage", getValue: (e: typeof entries[0]) => `${formatNumber(e.leverage)}×`, getNumeric: (e: typeof entries[0]) => e.leverage },
-    { label: "SNR", getValue: (e: typeof entries[0]) => e.snr.toFixed(3), getNumeric: (e: typeof entries[0]) => e.snr },
-    { label: "Output", getValue: (e: typeof entries[0]) => formatNumber(e.output_tokens), getNumeric: (e: typeof entries[0]) => e.output_tokens },
-    { label: "Cache Read", getValue: (e: typeof entries[0]) => formatNumber(e.cache_read_tokens), getNumeric: (e: typeof entries[0]) => e.cache_read_tokens },
+    { label: "Yield (Υ)", getValue: (e: LeaderboardEntry) => formatYield(e.yield_), getNumeric: (e: LeaderboardEntry) => e.yield_ },
+    { label: "Velocity", getValue: (e: LeaderboardEntry) => `${e.velocity.toFixed(1)}×`, getNumeric: (e: LeaderboardEntry) => e.velocity },
+    { label: "Leverage", getValue: (e: LeaderboardEntry) => `${formatNumber(e.leverage)}×`, getNumeric: (e: LeaderboardEntry) => e.leverage },
+    { label: "SNR", getValue: (e: LeaderboardEntry) => e.snr.toFixed(3), getNumeric: (e: LeaderboardEntry) => e.snr },
+    { label: "Output", getValue: (e: LeaderboardEntry) => formatNumber(e.output_tokens), getNumeric: (e: LeaderboardEntry) => e.output_tokens },
+    { label: "Cache Read", getValue: (e: LeaderboardEntry) => formatNumber(e.cache_read_tokens), getNumeric: (e: LeaderboardEntry) => e.cache_read_tokens },
   ];
 
   return (
