@@ -8,7 +8,7 @@ export const dynamicParams = false;
 export const metadata: Metadata = {
   title: "AI User Ranking — How Operator Evals Work | SigRank SignalAF",
   description:
-    "How does SigRank rank AI users? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, class tiers. Public operator evals methodology.",
+    "How does SigRank rank AI users? The Yield (Υ) cascade explained — cache_read, output, input, leverage, velocity, SNR, rank tiers. Public operator evals methodology.",
   alternates: { canonical: "/ai-user-ranking" },
   openGraph: {
     title: "AI User Ranking — How Operator Evals Work | SigRank SignalAF",
@@ -45,9 +45,9 @@ export default function AIUserRankingPage() {
               "SigRank's portable core uses five metrics: Yield, Velocity, Leverage, SNR, and 10xDEV. The leaderboard adds four product-level views: Efficiency, Scale V, $/1M, and Op Ratio. Yield is the headline metric.",
           },
           {
-            question: "What are the class tiers for AI users?",
+            question: "What are the rank tiers for AI users?",
             answer:
-              "Operator classes qualify operating scale and participation; they are not an efficiency score or a substitute for rank. Yield and the other metrics are evaluated separately.",
+              "The rank tiers (APEX, S_CLASS, A_CLASS, B_CLASS, BASE) describe field position — where an operator stands relative to others on the leaderboard. They are distinct from operator class (IGNITER through ARCH+), which is an experience-based badge derived from total tokens accumulated. Rank and class are separate concepts and must not be mixed: a high-class operator is not necessarily a high-rank operator, and vice versa.",
           },
           {
             question: "Does the ranking work across different AI tools?",
@@ -119,10 +119,13 @@ export default function AIUserRankingPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold">Class tiers</h2>
+          <h2 className="text-xl font-semibold">Rank tiers</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Operators are classified into tiers based on their Yield and
-            behavioral profile:
+            Operators are ranked into field tiers based on their Yield and
+            behavioral profile. Rank describes where an operator stands
+            relative to others on the leaderboard — it is not the same as
+            operator class (IGNITER through ARCH+), which is an experience-based
+            badge from total tokens accumulated:
           </p>
           <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {[
