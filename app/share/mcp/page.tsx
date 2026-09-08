@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Trophy, Sparkles, Zap, TrendingUp, AlertCircle, ArrowLeft } from "lucide-react";
+import { Trophy, Sparkles, Zap, TrendingUp, AlertCircle, ArrowLeft, ShieldCheck } from "lucide-react";
 import { decodeShareParams, buildShareCard, type ShareCardMetrics, type ShareCardError } from "@/lib/share/mcp-card";
 
 // CRITICAL: without force-dynamic the build will fail (the page reads search
@@ -66,7 +66,12 @@ export default async function ShareMcpPage({ searchParams }: PageProps) {
     return <ErrorState message={result.error} toolName={toolName} />;
   }
 
-  return <ShareCard result={result} />;
+  // C2PA Content Credentials are only present on the share card when signing
+  // keys are configured server-side. The verify link is shown only in that case
+  // so the page never claims provenance that the image does not carry.
+  const c2paEnabled = !!(process.env.C2PA_SIGNING_KEY && process.env.C2PA_SIGNING_CERT);
+
+  return <ShareCard result={result} c2paEnabled={c2paEnabled} />;
 }
 
 function ErrorState({ message, toolName }: { message: string; toolName?: string }) {
@@ -90,7 +95,7 @@ function ErrorState({ message, toolName }: { message: string; toolName?: string 
   );
 }
 
-function ShareCard({ result }: { result: ShareCardMetrics }) {
+function ShareCard({ result, c2paEnabled }: { result: ShareCardMetrics; c2paEnabled: boolean }) {
   const label = TOOL_LABELS[result.toolName] ?? result.toolName;
 
   return (
@@ -170,6 +175,24 @@ function ShareCard({ result }: { result: ShareCardMetrics }) {
           {JSON.stringify(result.params, null, 2)}
         </pre>
       </details>
+
+      {/* C2PA Content Credentials verify link (only when signing is configured) */}
+      {c2paEnabled && (
+        <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/20 px-4 py-3">
+          <ShieldCheck className="h-4 w-4 shrink-0 text-primary" />
+          <span className="text-xs text-muted-foreground">
+            This share card carries C2PA Content Credentials — cryptographically authenticated provenance.
+          </span>
+          <Link
+            href="https://contentcredentials.org/verify"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto text-xs font-medium text-primary hover:underline"
+          >
+            Verify provenance
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
 import { decodeShareParams, buildShareCard } from "@/lib/share/mcp-card";
+import { signPngWithC2pa } from "@/lib/c2pa";
+import { uploadToCloudflareImages } from "@/lib/c2pa/cloudflare-images";
+import { computeParamsHash } from "@/lib/c2pa/share-pipeline";
 
 // CRITICAL: without force-dynamic the build will fail (the OG image reads
 // search params and fetches the MCP endpoint at request time).
@@ -57,7 +60,8 @@ export default async function OGImage({ searchParams }: OGProps) {
     ? interpretation.slice(0, maxInterpLen).trim() + "…"
     : interpretation;
 
-  return new ImageResponse(
+  // Generate the base OG image
+  const imageResponse = new ImageResponse(
     (
       <div
         style={{
@@ -125,4 +129,79 @@ export default async function OGImage({ searchParams }: OGProps) {
       ...size,
     },
   );
+
+  // Attempt to embed C2PA Content Credentials into the PNG.
+  // If signing keys are not configured or signing fails, return the unsigned image.
+  const signingKey = process.env.C2PA_SIGNING_KEY;
+  const signingCert = process.env.C2PA_SIGNING_CERT;
+
+  if (!signingKey || !signingCert) {
+    return imageResponse;
+  }
+
+  try {
+    const pngBuffer = await imageResponse.arrayBuffer();
+    const pngBytes = new Uint8Array(pngBuffer);
+
+    // Compute params hash early — used for both the C2PA instanceID and
+    // the Cloudflare Images deterministic image ID.
+    const paramsHash = toolName && params
+      ? await computeParamsHash({ t: toolName, d: sp.d ?? "" })
+      : "";
+
+    const signedPng = await signPngWithC2pa(
+      pngBytes,
+      {
+        claimGenerator: "SigRank/1.0.0",
+        claimGeneratorInfo: [
+          { name: "SigRank Share Card Generator", version: "1.0.0" },
+        ],
+        creator: {
+          name: "SigRank SignalAF",
+          identifier: "https://signalaf.com",
+        },
+        tool: {
+          name: "SigEconomy MCP Share Card",
+          version: "1.0.0",
+        },
+        actions: [
+          {
+            action: "c2pa.created",
+            when: new Date().toISOString(),
+            softwareAgent: "SigEconomy MCP",
+            digitalSourceType: "algorithmicMedia",
+          },
+        ],
+        assetFormat: "image/png",
+        // instanceID uniquely identifies this version of the asset (C2PA spec 2.4 §5.2.1).
+        instanceId: `sigeconomy.com/share/mcp?t=${toolName}&d=${paramsHash}`,
+      },
+      { signingKey, signingCert },
+    );
+
+    // Upload to Cloudflare Images for CDN caching (best-effort — does not
+    // block the response if the IMAGES binding or account hash is missing).
+    // The signed PNG is returned directly regardless of upload outcome.
+    if (toolName && params) {
+      const imageId = `share-mcp-${toolName}-${paramsHash}`;
+      void uploadToCloudflareImages(
+        signedPng,
+        imageId,
+        { tool: toolName, type: "share-card", c2pa: "signed" },
+        process.env as unknown as Record<string, unknown>,
+      ).catch(() => {
+        // Upload failure is non-fatal — the signed image is returned directly.
+      });
+    }
+
+    return new Response(signedPng.buffer as ArrayBuffer, {
+      headers: {
+        "Content-Type": "image/png",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  } catch {
+    // If C2PA signing fails, return the original unsigned image
+    return imageResponse;
+  }
 }

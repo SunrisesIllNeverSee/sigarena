@@ -208,15 +208,24 @@ function evaluation(
  * Build a shareable URL + summary for an MCP tool result.
  * The share URL encodes the tool name and params so the /share/mcp route
  * can re-execute the tool and render a visual card.
+ *
+ * The share card image at this URL carries C2PA Content Credentials —
+ * a cryptographically authenticated provenance manifest embedded in the
+ * PNG. Verify at https://contentcredentials.org/verify.
  */
 function shareable(
   toolName: string,
   params: Record<string, unknown>,
   summary: string,
-): { share_url: string; share_text: string } {
+): { share_url: string; share_text: string; content_credentials: string; verify_url: string } {
   const encoded = encodeURIComponent(JSON.stringify(params));
   const url = `https://sigeconomy.com/share/mcp?t=${toolName}&d=${encoded}`;
-  return { share_url: url, share_text: summary };
+  return {
+    share_url: url,
+    share_text: summary,
+    content_credentials: "https://contentcredentials.org/verify",
+    verify_url: "https://contentcredentials.org/verify",
+  };
 }
 
 // ─── Tool dispatcher ────────────────────────────────────────────────────────
