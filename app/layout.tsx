@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { websiteSchema, organizationSchema } from "@/lib/jsonld";
-import { WebMcpRegistrar } from "@/components/webmcp/register-tools";
+import { McpBridge } from "@/components/webmcp/mcp-bridge";
 
 export const viewport: Viewport = {
   themeColor: "#3b82f6",
@@ -72,7 +72,7 @@ export default function RootLayout({
           <SiteHeader />
           <main id="main-content" className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</main>
           <SiteFooter />
-          <WebMcpRegistrar />
+          <McpBridge />
         </PostHogProvider>
         {/* Cloudflare Web Analytics (RUM) — beacon for Core Web Vitals.
             Auto-injection doesn't work with Workers/OpenNext, so we add it manually. */}
