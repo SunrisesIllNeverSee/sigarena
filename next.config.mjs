@@ -85,6 +85,16 @@ const nextConfig = {
         destination: "https://signalaf.com/user/:codename*",
         permanent: true,
       },
+      {
+        source: "/vs/ccusage",
+        destination: "https://signalaf.com/vs/ccusage",
+        permanent: true,
+      },
+      {
+        source: "/vs/tokscale",
+        destination: "https://signalaf.com/vs/tokscale",
+        permanent: true,
+      },
     ];
   },
 };
