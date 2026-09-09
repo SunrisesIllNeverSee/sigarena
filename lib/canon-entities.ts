@@ -1,12 +1,23 @@
 /**
  * lib/canon-entities.ts — Canonical entity values from the MO§ES schema pipeline.
  *
- * Source: Search Authority v1.0.0 (frozen, master-canon-v1.0.0)
- *   → moses-integration Framework → generated Schema → this module
+ * Provenance chain:
+ *   Search Authority v1.0.0 (frozen, master-canon-v1.0.0, commit fd305af)
+ *     → moses-integration/framework/imports/sa_canon_snapshot.yaml
+ *     → moses-integration/schema/generated/schema/*.jsonld
+ *     → moses-integration/integrations/profiles/sigeconomy.yaml
+ *     → THIS MODULE (sigarena/lib/canon-entities.ts)
+ *
+ * Deployment profile: moses-integration/integrations/profiles/sigeconomy.yaml
+ *   profile_id: sigeconomy | profile_version: 0.1.0 | target_repo: sigarena
  *
  * These values are CANON-BACKED. They must match the canonical source exactly.
  * Do not hand-write or override these values. If a value conflicts with canon,
  * canon wins.
+ *
+ * Validation: run `python3 scripts/validate-canon-entities.py` to verify
+ *   that the values in this module exact-match the sigeconomy deployment
+ *   profile and the frozen master-canon-v1.0.0 source.
  *
  * Page-specific values (site name, SEO taglines, offers, keywords) remain in
  * lib/jsonld.ts and lib/seo.ts. This module only provides canonical entity
