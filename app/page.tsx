@@ -61,7 +61,10 @@ export default async function HomePage() {
   const promptOfDay = getPromptOfTheDay();
   const platformOfDay = getPlatformOfTheDay();
   const allPrompts = getActivePrompts();
-  const platformCount = Object.keys(aggregates.platforms).length;
+  // Static count of supported platforms (matches footer list).
+  // The dynamic API count only reflects platforms with active operators
+  // in the current window, not how many the site tracks.
+  const platformCount = 7;
 
   // Sort the already-fetched full board locally for the prompt-of-the-day and
   // platform-spotlight sections. Avoids 2 extra 1640-row network fetches per
