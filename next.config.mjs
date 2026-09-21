@@ -52,6 +52,24 @@ const nextConfig = {
         ],
       },
       {
+        // API endpoints — noindex to prevent GSC "Blocked due to other 4xx issue"
+        // warning. /api returns 402 (x402 payment), /api/indexnow and /api/mcp
+        // return 405 (GET not allowed). These are non-404 4xx responses that GSC
+        // flags. Also disallowed in robots.txt for general crawlers.
+        source: "/api/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
+        // Exact /api path (no trailing path) — needs its own rule because
+        // /api/:path* only matches /api/something, not /api alone.
+        source: "/api",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+      {
         // Dynamic leaderboard pages — these are force-dynamic (render at
         // request time with real API data) but the API responses are edge-cached
         // for 5 minutes via cachedFetch(). Set a short s-maxage so Cloudflare's

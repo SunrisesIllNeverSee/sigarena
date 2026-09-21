@@ -6,7 +6,14 @@
 
 User-agent: *
 Allow: /
+Disallow: /api
 Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
+
+# /api returns 402 (x402 payment) and /api/indexnow, /api/mcp return 405 (GET not
+# allowed). These are non-404 4xx responses that GSC flags as "Blocked due to
+# other 4xx issue." Disallow /api for general crawlers (Googlebot) to prevent
+# the warning. AI agents below have their own Allow: / sections so they can
+# still discover the API.
 
 # /operator/* 308-redirects to signalaf.com/user/* — allow crawling so
 # Google can discover the redirect and pass link equity to the canonical profile.
