@@ -41,7 +41,51 @@ export async function POST(req: NextRequest) {
   if (!allowedOrigin(req)) {
     return new Response("Forbidden", { status: 403 });
   }
-  return mcpHandler.fetch(req as unknown as Request);
+
+  // Intercept MCP client auth-probe tool calls. Some MCP clients (e.g.
+  // Claude) send a synthetic `__verifymcp_auth_probe_<hash>__` tools/call
+  // to test whether the server requires authentication. The SDK returns
+  // a ProtocolError ("Tool not found") which PostHog captures as an
+  // exception. Return a clean JSON-RPC error ourselves so it doesn't
+  // surface as an unhandled exception.
+  let body: string;
+  try {
+    body = await req.text();
+  } catch {
+    return new Response("Bad Request", { status: 400 });
+  }
+
+  try {
+    const message = JSON.parse(body) as { method?: string; params?: { name?: string }; id?: unknown };
+    if (
+      message.method === "tools/call" &&
+      typeof message.params?.name === "string" &&
+      message.params.name.startsWith("__verifymcp_auth_probe_") &&
+      message.params.name.endsWith("__")
+    ) {
+      return new Response(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: message.id ?? null,
+          result: {
+            isError: true,
+            content: [{ type: "text", text: JSON.stringify({ error: "Method not found", tool: message.params.name }) }],
+          },
+        }),
+        { headers: { "Content-Type": "application/json" } },
+      );
+    }
+  } catch {
+    // Parse failed — fall through to SDK handler with original body
+  }
+
+  // Reconstruct the request with the original body (we consumed it above)
+  const sdkRequest = new Request(req.url, {
+    method: "POST",
+    headers: req.headers,
+    body,
+  });
+  return mcpHandler.fetch(sdkRequest as unknown as Request);
 }
 
 // ── GET handler ─────────────────────────────────────────────────────────────
