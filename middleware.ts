@@ -108,12 +108,15 @@ async function captureHttpLog(request: NextRequest) {
   const scheme = request.headers.get("x-forwarded-proto") ?? "https";
   const path = request.nextUrl.pathname + request.nextUrl.search;
 
+  // djb2 hash — much cheaper than crypto.subtle.digest on Workers Free CPU budget
   const idSource = `${ip}:${ua}`;
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(idSource));
-  const hash = btoa(String.fromCharCode(...new Uint8Array(buf))).slice(0, 22);
-  const distinctId = `http_log_${hash}`;
+  let hash = 5381;
+  for (let i = 0; i < idSource.length; i++) {
+    hash = ((hash << 5) + hash + idSource.charCodeAt(i)) | 0;
+  }
+  const distinctId = `http_log_${(hash >>> 0).toString(36)}`;
 
-  await fetch(`${POSTHOG_HOST}/capture/`, {
+  fetch(`${POSTHOG_HOST}/capture/`, {
     method: "POST",
     keepalive: true,
     headers: { "Content-Type": "application/json" },

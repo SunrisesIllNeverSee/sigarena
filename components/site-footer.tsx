@@ -62,6 +62,8 @@ const FOOTER_COLUMNS: {
       { href: "/vs/tokenrank", label: "vs TokenRank" },
       { href: "/vs/tokentracker", label: "vs Token Tracker" },
       { href: "/vs/costhawk", label: "vs CostHawk" },
+      { href: "/vs/viberank", label: "vs VibeRank" },
+      { href: "/vs/ccstatusline", label: "vs ccstatusline" },
     ],
   },
   {
