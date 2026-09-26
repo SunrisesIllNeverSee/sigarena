@@ -6,7 +6,10 @@ const config: OpenNextConfig = {
       wrapper: "cloudflare-node",
       converter: "edge",
       proxyExternalRequest: "fetch",
-      incrementalCache: "dummy",
+      incrementalCache: () =>
+        import("@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache").then(
+          (m) => m.default,
+        ),
       tagCache: "dummy",
       queue: "dummy",
     },
