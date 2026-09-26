@@ -13,11 +13,10 @@ import {
 } from "@/lib/jsonld";
 import { formatYield, operatorDisplayName } from "@/lib/utils";
 
-// Force-dynamic: render at request time so the HTML always contains real
-// leaderboard data. The API response is edge-cached for 5 minutes via
-// cachedFetch() in lib/api.ts.
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static: pre-rendered at build time. Served from Cloudflare ASSETS binding
+// — zero Worker CPU cost. Data refreshed by daily cron rebuild.
+// Previous force-dynamic caused "Worker exceeded CPU time limit" on Free plan.
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "All-Time AI User Leaderboard — Full Archive | SigRank SignalAF",

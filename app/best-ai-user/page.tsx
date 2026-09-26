@@ -10,14 +10,10 @@ import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema }
 import { formatYield, operatorDisplayName } from "@/lib/utils";
 import { PLATFORMS, getActivePrompts, type Platform, type View, type Category, type Window, WINDOWS, WINDOW_LABELS } from "@/lib/prompts";
 
-// Force-dynamic: render at request time so the HTML always contains real
-// leaderboard data (not a loading spinner). The API response is edge-cached
-// for 5 minutes via cachedFetch() in lib/api.ts.
-// The page renders with default filter values (all platforms, peak view,
-// human category (OCM — Operator Center of Mass), all_time window). Filter buttons remain as visual navigation
-// but the server-rendered content is always the canonical default.
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static: pre-rendered at build time. Served from Cloudflare ASSETS binding
+// — zero Worker CPU cost. Data refreshed by daily cron rebuild.
+// Previous force-dynamic caused "Worker exceeded CPU time limit" on Free plan.
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Best AI User — Who Is the Best AI User Alive?",

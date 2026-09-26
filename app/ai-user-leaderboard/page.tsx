@@ -5,8 +5,10 @@ import { Trophy, Shield, Zap, Scale, Eye, Lock, FileText, ExternalLink } from "l
 import type { Metadata } from "next";
 import { JsonLd, leaderboardSchema, breadcrumbSchema, articleSchema, faqSchema } from "@/lib/jsonld";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static: pre-rendered at build time. Served from Cloudflare ASSETS binding
+// — zero Worker CPU cost. Data refreshed by daily cron rebuild.
+// Previous force-dynamic caused "Worker exceeded CPU time limit" on Free plan.
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "AI User Leaderboard — Top AI Operators Ranked | SigArena",

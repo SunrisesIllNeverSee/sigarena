@@ -4,14 +4,11 @@ import { getPromptBySlug, getActivePrompts, type Platform, type View, type Categ
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-// Force-dynamic: render at request time so the HTML always contains real
-// leaderboard data (not a loading spinner). The API response is edge-cached
-// for 5 minutes via cachedFetch() in lib/api.ts.
-// Unknown slugs 404 via notFound() if not in the prompts list.
-// Filter buttons remain as visual navigation but the server-rendered content
-// always shows the canonical default view.
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static: pre-rendered at build time via generateStaticParams. Served from
+// Cloudflare ASSETS binding — zero Worker CPU cost. Data refreshed by daily
+// cron rebuild. Filtered variants (?platform=, ?view=) use dynamicParams.
+// Previous force-dynamic caused "Worker exceeded CPU time limit" on Free plan.
+export const dynamic = "force-static";
 
 interface RouteProps {
   params: Promise<{ slug: string }>;

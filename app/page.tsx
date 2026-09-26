@@ -9,13 +9,11 @@ import { JsonLd, leaderboardSchema, articleSchema, websiteSchemaWithStats } from
 import { getPromptOfTheDay, getActivePrompts, getPlatformOfTheDay } from "@/lib/prompts";
 import { formatYield, operatorDisplayName } from "@/lib/utils";
 
-// Force-dynamic: render at request time so the HTML always contains real
-// leaderboard data (not a loading spinner). The API response is edge-cached
-// for 5 minutes via cachedFetch() in lib/api.ts, so the render is fast after
-// the first request. This fixes the SEO/Lighthouse issue where the static
-// build baked in "Loading rankings…" because the API wasn't reachable from CI.
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// Static: pre-rendered at build time (GitHub Actions has internet access to
+// fetch from signalaf.com API). Served from Cloudflare ASSETS binding — zero
+// Worker CPU cost. Data refreshed by daily cron rebuild. Previous force-dynamic
+// caused "Worker exceeded CPU time limit" errors on Workers Free plan (10ms).
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Performative Evals & Leaderboard for AI Users — Ranked by Yield | SigRank SignalAF",
