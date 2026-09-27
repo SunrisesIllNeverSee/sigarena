@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import type { NextRequest, NextFetchEvent } from "next/server";
 
 const EXPLOIT_RE = /\.(php|asp|aspx|cgi|pl|py|rb|jsp|env|git|sql|bak|ini)$/i;
 const WP_RE = /\/wp-(content|admin|includes)\//i;
@@ -131,6 +131,9 @@ async function captureHttpLog(request: NextRequest) {
         $host: host,
         $current_url: `${scheme}://${host}${path}`,
         $process_person_profile: false,
+        host,
+        path,
+        method: request.method,
       },
     }),
   }).catch(() => {});
@@ -207,7 +210,7 @@ function agentFriendly404(pathname: string) {
   });
 }
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
 
   if (EXPLOIT_RE.test(pathname) || WP_RE.test(pathname)) {
@@ -218,7 +221,8 @@ export function middleware(request: NextRequest) {
     return agentFriendly404(pathname);
   }
 
-  captureHttpLog(request);
+  // Defer PostHog logging to after response — zero CPU cost to the request
+  event.waitUntil(captureHttpLog(request));
 
   if (pathname !== "/") {
     return NextResponse.next();
