@@ -42,12 +42,36 @@ const files = [
   {
     path: join(root, ".open-next", "worker.js"),
     patches: [
-      // Wrap the handler response to override cache-control for SSG routes.
-      // This is the most reliable approach — it modifies the response at the
-      // Cloudflare Worker level, after all OpenNext/Next.js processing.
+      // Wrap the handler with Cache API serve-through for prerendered
+      // routes. On a GET hit the Next.js handler is skipped entirely
+      // (~600ms of worker overhead avoided); on a miss the response is
+      // stored per-URL (query variants cache separately) for 600s.
+      // The cache-control fix headers are applied on the way out.
       {
-        pattern: 'const { handler } = await import("./server-functions/default/handler.mjs");\n            return handler(reqOrResp, env, ctx, request.signal);',
-        replacement: `const { handler } = await import("./server-functions/default/handler.mjs");\n            const _res = await handler(reqOrResp, env, ctx, request.signal);\n            const _ssgPaths = ${ssgArrayLiteral};\n            const _url = new URL(request.url);\n            if (_ssgPaths.includes(_url.pathname) && _res.headers) {\n              const _newHeaders = new Headers(_res.headers);\n              _newHeaders.set("cache-control", "public, max-age=0, s-maxage=31536000, stale-while-revalidate=2592000, must-revalidate");\n              return new Response(_res.body, { status: _res.status, statusText: _res.statusText, headers: _newHeaders });\n            }\n            return _res;`,
+        pattern: 'return handler(reqOrResp, env, ctx, request.signal);',
+        replacement: `const _url = new URL(request.url);
+            const _ssgPaths = ${ssgArrayLiteral};
+            const _isGet = request.method === "GET" && _ssgPaths.includes(_url.pathname);
+            const _cache = (typeof caches !== "undefined" && caches.default) ? caches.default : null;
+            let _res = null;
+            if (_isGet && _cache) {
+              _res = await _cache.match(request.url);
+            }
+            if (!_res) {
+              const { handler } = await import("./server-functions/default/handler.mjs");
+              _res = await handler(reqOrResp, env, ctx, request.signal);
+              if (_isGet && _cache && _res.status === 200 && (_res.headers.get("content-type") || "").includes("text/html")) {
+                const _ch = new Headers(_res.headers);
+                _ch.set("cache-control", "public, max-age=600");
+                ctx.waitUntil(_cache.put(request.url, new Response(_res.clone().body, { status: _res.status, statusText: _res.statusText, headers: _ch })));
+              }
+            }
+            if (_isGet && _res.headers) {
+              const _newHeaders = new Headers(_res.headers);
+              _newHeaders.set("cache-control", "public, max-age=0, s-maxage=31536000, stale-while-revalidate=2592000, must-revalidate");
+              return new Response(_res.body, { status: _res.status, statusText: _res.statusText, headers: _newHeaders });
+            }
+            return _res;`,
       },
     ],
   },
