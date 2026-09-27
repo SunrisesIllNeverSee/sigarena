@@ -38,10 +38,10 @@ export function organizationSchema() {
       "https://github.com/SunrisesIllneverSee",
       "https://x.com/burnmydays",
     ],
-    sourceSystem: elloCelloLLC.sourceSystem,
-    canonBacked: elloCelloLLC.canonBacked,
-    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
-    associatedWith: { "@id": elloCelloLLC.associatedWith },
+    "moses:sourceSystem": elloCelloLLC.sourceSystem,
+    "moses:canonBacked": elloCelloLLC.canonBacked,
+    "moses:authorityApprovalRef": elloCelloLLC.authorityApprovalRef,
+    "moses:associatedWith": { "@id": elloCelloLLC.associatedWith },
   };
 }
 
@@ -62,10 +62,10 @@ export function websiteSchema() {
     description:
       "Performative evals and ranking for users not models. SigRank SignalAF is the statistical layer for AI users — operators, developers, coders. Custom metrics like Yield turn AI usage into stats.",
     publisher: { "@id": ORG_ID },
-    sourceSystem: elloCelloLLC.sourceSystem,
-    canonBacked: elloCelloLLC.canonBacked,
-    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
-    associatedWith: [
+    "moses:sourceSystem": elloCelloLLC.sourceSystem,
+    "moses:canonBacked": elloCelloLLC.canonBacked,
+    "moses:authorityApprovalRef": elloCelloLLC.authorityApprovalRef,
+    "moses:associatedWith": [
       { "@id": ORG_ID },
       { "@id": elloCelloLLC.associatedWith },
     ],
@@ -103,10 +103,10 @@ export function websiteSchemaWithStats(stats: AggregateStats, platformCount: num
       variableMeasured: ["Yield (Υ)", "Velocity", "Leverage", "SNR", "10xDEV", "Scale V", "Efficiency", "$/1M", "Op Ratio"],
       measurementTechnique: "Token telemetry from real AI coding sessions",
     },
-    sourceSystem: elloCelloLLC.sourceSystem,
-    canonBacked: elloCelloLLC.canonBacked,
-    authorityApprovalRef: elloCelloLLC.authorityApprovalRef,
-    associatedWith: [
+    "moses:sourceSystem": elloCelloLLC.sourceSystem,
+    "moses:canonBacked": elloCelloLLC.canonBacked,
+    "moses:authorityApprovalRef": elloCelloLLC.authorityApprovalRef,
+    "moses:associatedWith": [
       { "@id": ORG_ID },
       { "@id": elloCelloLLC.associatedWith },
     ],
@@ -174,6 +174,7 @@ export function articleSchema(
     "@type": "Article",
     headline: title,
     description,
+    image: `${SITE_URL}/og.png`,
     url: `${SITE_URL}${path}`,
     datePublished,
     dateModified: datePublished,
