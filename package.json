@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "cf:build": "opennextjs-cloudflare build && node scripts/patch-opennext-cache.mjs",
     "cf:preview": "opennextjs-cloudflare build && wrangler dev",
-    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "cf:deploy": "npm run cf:build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@modelcontextprotocol/node": "^2.0.0",
