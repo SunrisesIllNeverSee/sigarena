@@ -21,3 +21,4 @@ next-env.d.ts
 # Skylos scan output
 skylos-sec.json
 .skylos/
+worker-configuration.d.ts
