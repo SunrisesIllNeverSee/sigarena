@@ -308,7 +308,7 @@ describe("Initialization", () => {
     );
 
     expect(res.status).toBe(400);
-    const body = await res.json();
+    const body = await parseResponseBody(res);
     expect(body.error).toBeDefined();
   });
 });
@@ -437,7 +437,7 @@ describe("Modern protocol (2026-07-28)", () => {
     );
 
     expect(res.status).toBe(400);
-    const body = await res.json();
+    const body = await parseResponseBody(res);
     expect(body.error).toBeDefined();
   });
 });
@@ -643,8 +643,9 @@ describe("Transport and error handling", () => {
   it("rejects invalid JSON body with -32700 Parse error", async () => {
     const res = await POST(makePostRequest("not valid json{"));
     expect(res.status).toBe(400);
-    const body = await res.json();
-    expect(body.error.code).toBe(-32700);
+    const body = await parseResponseBody(res);
+    const error = body.error as Record<string, unknown>;
+    expect(error.code).toBe(-32700);
   });
 
   it("rejects invalid JSON-RPC version with -32600 Invalid Request", async () => {
@@ -652,8 +653,9 @@ describe("Transport and error handling", () => {
       makePostRequest({ jsonrpc: "1.0", id: 1, method: "initialize" }),
     );
     expect(res.status).toBe(400);
-    const body = await res.json();
-    expect(body.error.code).toBe(-32600);
+    const body = await parseResponseBody(res);
+    const error = body.error as Record<string, unknown>;
+    expect(error.code).toBe(-32600);
   });
 
   it("rejects disallowed origin with 403 Forbidden", async () => {
